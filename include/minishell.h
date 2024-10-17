@@ -44,29 +44,22 @@ typedef struct s_env
 	/* data */
 }					t_env;
 
-typedef struct s_minishell
+typedef struct s_prompt
 {
-	int				fd_in;
-	int				fd_out;
 	char			*read_line;
-}					t_minishell;
+}					t_prompt;
 
 typedef struct s_sig
 {
 	/* data */
 }					t_sig;
 
-typedef struct s_memory_management
+typedef struct s_data
 {
 	t_token			token;
 	t_env			envp;
 	t_sig			signal;
-}					t_memory;
-
-typedef struct s_data
-{
-	t_memory		memory_manag;
-	t_minishell		param;
+	t_prompt		prompt;
 	// exec;
 }					t_data;
 

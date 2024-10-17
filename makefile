@@ -6,7 +6,7 @@
 #    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/10/17 04:48:36 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/10/17 06:01:54 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ $(NAME): $(OBJ)
 	done
 	@echo "] 100 %"
 	@echo "Starting external projects $(MAGENTA)LIBFT$(CYAN) and $(MAGENTA)GNL$(CYAN) compilations..."
-	@$(MAKE) $(MAKEFLAGS) -C $(LIBFT)
+	@$(MAKE) $(MAKEFLAGS) -C $(LIBFT) bonus
 	@echo "$(CYAN)Starting $(MAGENTA)MINISHELL$(CYAN) compilations..."
 	@sleep 1
 	@$(CC) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -L$(LIBFT) -lft -o $(NAME)
@@ -88,13 +88,14 @@ clean: # Règles pour nettoyer les fichiers objets
 
 	@echo "$(RED)Cleaning up...$(NC)"
 	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of minishell.\n"
-	@
+	@$(MAKE) $(MAKEFLAGS) -C $(LIBFT) clean
 	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of libft.\n"
 	@rm -rf $(BUILD)
 
 fclean: clean # Règles pour nettoyer les fichiers objets et l'exécutable
 
 	@rm -f $(NAME)
+	@rm -f $(LIBFT)libft.a
 #	@rm -f $(NAME_BNS)
 
 

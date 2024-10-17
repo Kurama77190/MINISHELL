@@ -1,15 +1,88 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <string.h>
+# include "libft.h"
 
-enum e_token
+//////////////////////////////////////////////////////////////////
+/*                            STRUCT		                   */
+////////////////////////////////////////////////////////////////
+
+typedef enum e_type
 {
-	INPUT = 0,
+	INPUT,
 	OUTPUT,
 	PIPE,
 	HERE_DOC,
 	COMMAND,
-}
+	REDIR,
+	BUILT
+}	t_type;
+
+typedef struct s_token
+{
+	char			**token;
+	int				fd[2];
+	t_type			type;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
+
+typedef struct s_env
+{
+	/* data */
+}					t_env;
+
+typedef struct s_minishell
+{
+	int				fd_in;
+	int				fd_out;
+	char			*read_line;
+}					t_minishell;
+
+typedef struct s_sig
+{
+	/* data */
+}					t_sig;
+
+typedef struct s_memory_management
+{
+	t_token			token;
+	t_env			envp;
+	t_sig			signal;
+}					t_memory;
+
+typedef struct s_data
+{
+	t_memory		memory_manag;
+	t_minishell		param;
+	// exec;
+}					t_data;
+
+//////////////////////////////////////////////////////////////////
+//                          PARSING		                       //
+////////////////////////////////////////////////////////////////
+
+int 				main(int argc, char **argv, char **env);
+int					pars_shell(t_data *data);
+
+
+//////////////////////////////////////////////////////////////////
+//                          UTILS		                       //
+////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////
+//                          NOTE		                       //
+////////////////////////////////////////////////////////////////
+
+
 
 
 
@@ -17,14 +90,17 @@ enum e_token
 	ordre a suivre pour minishell  (fais par Garfi c'est DE CE QUE J'EN AI COMPRIT C'EST PEUT ETRE FAUX !!!!!!!!!!!)
 
 	GROSSO MODO:
-		traite l'entree -> en faire des tokens pour savoir qu'est ce qui est quoi -> les places dans la liste chaine final en fonction des tokens -> exec
+		traite l'entree
+			-> en faire des tokens pour savoir qu'est ce qui est quoi
+			-> les places dans la liste chaine final en fonction des tokens
+			-> exec
 		structure de la liste chaine:
 
 			la liste chaine est coupe sur des pipes donc:
 				0 pipe > 1 noeud
 				1 pipe > 2 noeuds
 				2 pipe > 3 noeuds
-				[...] 
+				[...]
 			il y a deux int fd in et fd out (attention ! ca peut aussi etre un here doc)
 			un tableau de tableau qui comporte la commande a executer (pas forcement dans execve ca peut etre un built-in)
 
@@ -35,40 +111,46 @@ enum e_token
 			1.a) savoir si l'input est correct (comment savoir si une input est bonne ? jsp du tout)
 
 			1.b) arrive a split l'entre en tableau de tableau (par example) pour ensuite les traites de case en case
-				donc si mon entre est "echo je suis la >fichier|pwd", oui il faut aussi arriver a split quand il y n'a a pas d'espaces, il faut que le parseur split en 
+				donc si mon entre est "echo je suis la >fichier|pwd",
+					oui il faut aussi arriver a split quand il y n'a a pas d'espaces,
+					il faut que le parseur split en
 				case 1 echo
 				case 2 je
 				case 3 suis
- 				case 4 la
- 				case 4 >
+				case 4 la
+				case 4 >
 				case 5 fichier
 				case 2 |
 				case 2 pwd
 
-				A quoi ca sert de faire ca ? c'est plus simple d'avoir tout bien organise dans un tableau pour ensuite les lires un part un 
-				et les traite avec des tokens, a quoi sert les tokens ? on verra plus tard chaque chose en son temps
+				A quoi ca sert de faire ca ? c'est plus simple d'avoir tout bien organise dans un tableau pour ensuite les lires un part un
+				et les traite avec des tokens,
+					a quoi sert les tokens ? on verra plus tard chaque chose en son temps
 
 
 
 	2) Lexeur
 		le lexeurs lui va utiliser le tableau de tableau qui est cree dans la parseurs pour leurs assignes des tokens.
-		
+
 			Pour la tokenisation il y a des token mandatory dont ( a voir si y'en a d'autre )
 				- heredoc
-				- redirection (> < >> <<) pour savoir comment open le fichier qui est cible  (trunc, append, est ce qu'il faut le creer ou pas ...)
+				- redirection (> < >> <<) pour savoir comment open le fichier qui est cible  (trunc,
+					append, est ce qu'il faut le creer ou pas ...)
 				- infile (le nom du fichier qu'il faudra open)
 				- outfile (pareil)
 					- il faut faire la difference entre infile et outfile et les signes de redirections parce qu'on va open l'infile et l'outfile et non la redirection (c'est evidant mais bon bref ne sait on jamais)
 						la redirection sert a savoir comment open le le file quand au file il sert a savoir qu'elle fichier doit etre open
 				- pipe ( | )
-				- commande (si c'est aucun des autres token alors mettre commande (l'exec fera le tri entre builtin et binaire), les options de la commande marche sur le meme fonctionnement)
+				- commande (si c'est aucun des autres token alors mettre commande (l'exec fera le tri entre builtin et binaire),
+					les options de la commande marche sur le meme fonctionnement)
 
 			Il faut appliquer une regle sur chaque token par example,
 			pour l'infile et outfile il faut regarder le signe > >> ou < <<
 
 			le pipe si c'est |
 
-			la commande si c'est aucun des autre token il est place a la fin des if / else if.
+			la commande si c'est aucun des autre token il est place a la fin des if
+				/ else if.
 			ect pour les autres
 
 			attention quand on applique la regle des redirections il faut faire attention au multiple redirection du genre:
@@ -80,6 +162,5 @@ enum e_token
 		L'expand sert a utiliser une variable d'environnement donc si toto=2 dans l'env et que je fais echo $toto alors le $toto devient 2 puis est passer dans a l'exec
 	4) exec
 */
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/17 02:35:10 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/17 04:43:44 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ int main(int argc, char **argv, char **env)
 		}
 		// pars_cmd(data);
 
-		//exec_command. a noter que a chaque fois que tu executes une
-		// commande tu dois reset la structure entiere.
+		//exec_command(data);
+		
+		//free_token_list(data);
+
 		free(data.param.read_line);
+		ft_memset(&data, 0, sizeof(t_data));
 	}
 	return (0);
 }

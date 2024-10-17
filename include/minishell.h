@@ -16,23 +16,28 @@
 
 typedef enum e_type
 {
-	INPUT,
-	OUTPUT,
-	PIPE,
-	HERE_DOC,
-	COMMAND,
-	REDIR,
-	BUILT
-}	t_type;
+    TYPE_NONE   = 0,
+    COMMAND     = 1 << 0,   // 0001
+    PIPE        = 1 << 1,   // 0010
+    REDIR_IN    = 1 << 2,   // 0100
+    REDIR_OUT   = 1 << 3,   // 1000
+}   t_type;
 
 typedef struct s_token
 {
-	char			**token;
-	int				fd[2];
-	t_type			type;
-	struct s_token	*next;
-	struct s_token	*prev;
-}					t_token;
+    char            *command;    // Nom de la commande
+    char            **args;      // Tableau des arguments
+    int             fd_in;       // Descripteur pour redirection d'entrée
+    int             fd_out;      // Descripteur pour redirection de sortie
+    char            *file_in;    // Nom du fichier d'entrée (si redirection)
+    char            *file_out;   // Nom du fichier de sortie (si redirection)
+    t_type          types;        // Type de la commande (COMMAND, PIPE, etc.)
+    t_type          redir_type;  // Type de redirection (REDIR, HERE_DOC, etc.)
+    int             builtin;     // 1 si c'est un builtin, 0 si binaire externe
+    int             fd_pipe[2];  // Pipe utilisé pour relier la sortie et l'entrée entre commandes
+    struct s_token  *next;       // Pointeur vers le prochain nœud
+    struct s_token  *prev;       // Pointeur vers le nœud précédent
+} 					t_token;
 
 typedef struct s_env
 {

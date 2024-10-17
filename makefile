@@ -6,7 +6,7 @@
 #    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/10/17 00:56:26 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/10/17 04:48:36 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,15 +83,13 @@ $(BUILD)%.o: %.c
 
 bonus:
 
-teste:
-	
-	$(MAKE) $(MAKEFLAGS) -C $(LIBFT)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -L$(LIBFT) -lftprintf -o $(NAME)
 
 clean: # Règles pour nettoyer les fichiers objets
 
 	@echo "$(RED)Cleaning up...$(NC)"
-	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of philosophers.\n"
+	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of minishell.\n"
+	@
+	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of libft.\n"
 	@rm -rf $(BUILD)
 
 fclean: clean # Règles pour nettoyer les fichiers objets et l'exécutable

@@ -10,6 +10,10 @@
 # include <string.h>
 # include "libft.h"
 
+# define ERROR 1
+# define SUCCESS 0
+
+
 //////////////////////////////////////////////////////////////////
 /*                            STRUCT		                   */
 ////////////////////////////////////////////////////////////////
@@ -22,6 +26,7 @@ typedef enum e_type
     REDIR_IN    = 1 << 2,   // 0100
     REDIR_OUT   = 1 << 3,   // 1000
 }   t_type;
+
 
 typedef struct s_token
 {
@@ -39,10 +44,21 @@ typedef struct s_token
     struct s_token  *prev;       // Pointeur vers le nœud précédent
 } 					t_token;
 
-typedef struct s_env
+typedef struct s_envp
 {
-	/* data */
-}					t_env;
+	char			*name;
+	char			*value;
+	struct s_envp	*next;
+	struct s_envp	*prev;
+}				t_envp;
+
+
+
+typedef struct s_env_management
+{
+	t_envp			*envp;
+	char			**env;
+}					t_env_manag;
 
 typedef struct s_prompt
 {
@@ -57,7 +73,7 @@ typedef struct s_sig
 typedef struct s_data
 {
 	t_token			token;
-	t_env			envp;
+	t_env_manag		envp;
 	t_sig			signal;
 	t_prompt		prompt;
 	// exec;
@@ -68,7 +84,7 @@ typedef struct s_data
 ////////////////////////////////////////////////////////////////
 
 int 				main(int argc, char **argv, char **env);
-int					pars_shell(t_data *data);
+int					pars_shell(t_data *data, int argc, char **argv, char **envp);
 
 
 //////////////////////////////////////////////////////////////////
@@ -79,6 +95,31 @@ int					pars_shell(t_data *data);
 //////////////////////////////////////////////////////////////////
 //                          NOTE		                       //
 ////////////////////////////////////////////////////////////////
+
+
+/* 
+								NOTE SAMY AND RALPH
+
+	
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/17 05:53:03 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/17 22:37:35 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,21 @@ int main(int argc, char **argv, char **env)
 		{
 			add_history(data.prompt.read_line);
 		}
-		// pars_cmd(data);
+		if (pars_cmd(&data) == ERROR)
+		{
+			free(data.prompt.read_line);
+			
+		}
 
-		//exec_command(data);
+		int	exec_command(data);
+		{
+			
+		}
 		
 		//free_token_list(data);
 
 		free(data.prompt.read_line);
+		// free token;
 		ft_memset(&data, 0, sizeof(t_data));
 	}
 	return (0);

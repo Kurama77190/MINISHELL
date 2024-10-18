@@ -44,7 +44,7 @@ typedef struct s_token
     struct s_token  *prev;       // Pointeur vers le nœud précédent
 } 					t_token;
 
-typedef struct s_envp
+	typedef struct s_envp
 {
 	char			*name;
 	char			*value;
@@ -56,6 +56,7 @@ typedef struct s_envp
 
 typedef struct s_env_management
 {
+	bool			sync;
 	t_envp			*envp;
 	char			**env;
 }					t_env_manag;
@@ -72,6 +73,7 @@ typedef struct s_sig
 
 typedef struct s_data
 {
+	int				exit_status;
 	t_token			token;
 	t_env_manag		envp;
 	t_sig			signal;
@@ -85,17 +87,33 @@ typedef struct s_data
 
 int 				main(int argc, char **argv, char **env);
 int					pars_shell(t_data *data, int argc, char **argv, char **envp);
+int					pars_env(t_data *data, char **envp);
+
 
 
 //////////////////////////////////////////////////////////////////
-//                          UTILS		                       //
+//                       PARS UTILS		                       //
 ////////////////////////////////////////////////////////////////
+
+t_envp				*lst_new_envp(char **splited);
+int					add_lst(t_data *data, char **splited);
+void				free_lst_envp(t_data *data);
+int					add_tab(t_data *data, char **envp);
+int					split_and_add(t_data *data, char **envp);
+int					ft_lstsize_envp(t_envp *lst);
 
 
 //////////////////////////////////////////////////////////////////
 //                          NOTE		                       //
 ////////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////////////////
+//                          TOOLS		                       //
+////////////////////////////////////////////////////////////////
+
+
+void put_lst_envp(t_envp *envp);
 
 /* 
 								NOTE SAMY AND RALPH

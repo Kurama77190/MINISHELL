@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 04:06:18 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/18 22:17:25 by sben-tay         ###   ########.fr       */
+/*   Created: 2024/10/18 02:33:16 by sben-tay          #+#    #+#             */
+/*   Updated: 2024/10/18 02:33:27 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+void	ft_free(void **ptr)
 {
-	size_t	i;
-
-	i = 0;
-	if (lst == NULL)
-		return (0);
-	while (lst != NULL)
+	if (ptr && *ptr)
 	{
-		i++;
-		lst = lst->next;
+		free(*ptr);
+		*ptr = NULL;
 	}
-	return (i);
+	return ;
 }

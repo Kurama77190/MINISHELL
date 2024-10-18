@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_cmd.c                                         :+:      :+:    :+:   */
+/*   pars_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:43:37 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/17 22:13:59 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/18 04:00:59 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 int	pars_shell(t_data *data, int argc, char **argv, char **envp)
 {
-	pars_sig(); // signaux
-	pars_env(); // envirement
-	pars_token();
+	(void)argc;
+	(void)argv;
+	if (pars_env(data, envp) == ERROR)
+	{
+		ft_putstr_fd("Error in pars_env\n", 2);
+		return (ERROR);
+	}
+	// pars_token();
+	// pars_sig(); // signaux
+	return (SUCCESS);
 }

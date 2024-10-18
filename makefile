@@ -6,7 +6,7 @@
 #    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/10/17 06:01:54 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/10/18 22:05:04 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -g3 -I./include -I./external/LIBFT/
 LDFLAGS = -L$(LIBFT) -lft -lreadline -lhistory
 PARS  = src/parsing/
+EXEC  = src/exec/
+BUILT = src/built/
 BUILD = builder/
 
 LIBFT = external/LIBFT/
@@ -28,7 +30,8 @@ LIBFT = external/LIBFT/
 # CFLAGS += -fsanitize=fork
 
 #=================================================__SRC__OF__PROJECT__=============================================================================
-SRC = src/main.c
+SRC = src/main.c \
+		$(addprefix $(PARS), pars_shell.c pars_env.c pars_shell_utils.c pars_env_utils.c )
 
 $(shell mkdir -p $(BUILD))
 
@@ -72,7 +75,7 @@ $(NAME): $(OBJ)
 #=============================================================================================
 
 %.o:%.c
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -g3 -c $< -o $@
 
 $(BUILD)%.o: %.c
 	@mkdir -p $(@D)

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 04:09:01 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/17 22:16:06 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:17:35 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+void			free_split(char **strs);
+
+void			ft_free(void **ptr);
 
 int				ft_atoi(const char *str);
 

@@ -6,22 +6,52 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/17 22:37:35 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/18 22:12:46 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void put_lst_envp(t_envp *envp)
+{
+    t_envp *current = envp;
+    while (current)
+    {
+        printf("%s%s\n", current->name, current->value);
+        current = current->next;
+    }
+}
+
+void put_tab_env(char **env)
+{
+    int i = 0;
+    while (env[i])
+    {
+        printf("%s\n", env[i]);
+        i++;
+    }
+}
+
 
 
 int main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
-	(void)env;
 
 	t_data data;
 
 	ft_memset(&data, 0, sizeof(t_data));
+	// printf("wqerwqerwqerqwerqwerqwe\n");
+	if (pars_shell(&data, argc, argv, env) == ERROR)
+	{
+		ft_putstr_fd("exit\n", 2);
+		return (2);
+	}
+	// put_tab_env(data.envp.env);
+	// printf("%p\n", data.envp.envp);
+	put_lst_envp(data.envp.envp);
+	return (0);
 	while (1)
 	{
 		data.prompt.read_line = readline("minishell-1.0$ ");
@@ -34,16 +64,8 @@ int main(int argc, char **argv, char **env)
 		{
 			add_history(data.prompt.read_line);
 		}
-		if (pars_cmd(&data) == ERROR)
-		{
-			free(data.prompt.read_line);
-			
-		}
-
-		int	exec_command(data);
-		{
-			
-		}
+		
+		// exec_command(data);
 		
 		//free_token_list(data);
 

@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_cmd_utils.c                                   :+:      :+:    :+:   */
+/*   free_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 02:16:16 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/17 02:28:44 by sben-tay         ###   ########.fr       */
+/*   Created: 2024/10/18 02:18:48 by sben-tay          #+#    #+#             */
+/*   Updated: 2024/10/18 02:19:11 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	maintenace(void)
+void	free_split(char **strs)
 {
-	/* data */
-}
+	int	i;
 
+	if (!strs)
+		return ;
+	i = 0;
+	while (strs[i])
+	{
+		ft_free((void **)&strs[i]);
+		i++;
+	}
+	ft_free((void **)&strs);
+	strs = NULL;
+}

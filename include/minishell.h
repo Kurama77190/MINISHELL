@@ -57,6 +57,7 @@ typedef struct s_token
 typedef struct s_env_management
 {
 	bool			sync;
+	bool			set;
 	t_envp			*envp;
 	char			**env;
 }					t_env_manag;
@@ -88,8 +89,7 @@ typedef struct s_data
 int 				main(int argc, char **argv, char **env);
 int					pars_shell(t_data *data, int argc, char **argv, char **envp);
 int					pars_env(t_data *data, char **envp);
-
-
+int					uptdate_env(t_data *data);
 
 //////////////////////////////////////////////////////////////////
 //                       PARS UTILS		                       //
@@ -101,7 +101,6 @@ void				free_lst_envp(t_data *data);
 int					add_tab(t_data *data, char **envp);
 int					split_and_add(t_data *data, char **envp);
 int					ft_lstsize_envp(t_envp *lst);
-
 
 //////////////////////////////////////////////////////////////////
 //                          NOTE		                       //

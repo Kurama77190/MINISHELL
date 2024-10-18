@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/18 22:12:46 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/19 00:49:08 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void put_tab_env(char **env)
     }
 }
 
-
+	// put_lst_envp(data.envp.envp);
+	// put_tab_env(data.envp.env);
 
 int main(int argc, char **argv, char **env)
 {
@@ -42,18 +43,13 @@ int main(int argc, char **argv, char **env)
 	t_data data;
 
 	ft_memset(&data, 0, sizeof(t_data));
-	// printf("wqerwqerwqerqwerqwerqwe\n");
-	if (pars_shell(&data, argc, argv, env) == ERROR)
-	{
-		ft_putstr_fd("exit\n", 2);
-		return (2);
-	}
-	// put_tab_env(data.envp.env);
-	// printf("%p\n", data.envp.envp);
-	put_lst_envp(data.envp.envp);
-	return (0);
 	while (1)
 	{
+		if (pars_shell(&data, argc, argv, env) == ERROR)
+		{
+			ft_putstr_fd("exit\n", 2);
+			return (1);
+		}
 		data.prompt.read_line = readline("minishell-1.0$ ");
 		if (!data.prompt.read_line)
 		{
@@ -64,6 +60,8 @@ int main(int argc, char **argv, char **env)
 		{
 			add_history(data.prompt.read_line);
 		}
+
+
 		
 		// exec_command(data);
 		

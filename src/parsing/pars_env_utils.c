@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:56:36 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/18 22:20:56 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/19 00:46:18 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ t_envp	*lst_new_envp(char **splited)
 
 void	free_lst_envp(t_data *data)
 {
-	t_envp *current;
-	t_envp *next;
+	t_envp	*current;
+	t_envp	*next;
 
 	current = data->envp.envp;
 	if (!current)
@@ -73,3 +73,25 @@ void	free_lst_envp(t_data *data)
 	data->envp.envp = NULL;
 }
 
+int	uptdate_env(t_data *data)
+{
+	size_t	len;
+	size_t	i;
+	t_envp	*tmp;
+
+	ft_free((void **)data->envp.env);
+	len = ft_lstsize_envp(data->envp.envp);
+	data->envp.env = ft_calloc((len + 1), sizeof(char *));
+	if (!data->envp.env)
+		return (ERROR);
+	i = 0;
+	tmp = data->envp.envp;
+	while (data->envp.envp)
+	{
+		data->envp.env[i] = ft_strjoin(tmp->name, tmp->value);
+		i++;
+		tmp = tmp->next;
+	}
+	data->envp.env[i] = NULL;
+	return (SUCCESS);
+}

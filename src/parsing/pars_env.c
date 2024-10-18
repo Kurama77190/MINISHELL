@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:47:08 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/18 22:21:21 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/19 00:55:31 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	pars_env(t_data *data, char **envp)
 {
+	if (!data->envp.set)
+		return (SUCCESS);
 	if (split_and_add(data, envp) == ERROR)
 	{
 		free_lst_envp(data);
 		free_split(data->envp.env);
 		return (ERROR);
 	}
+	data->envp.set = false;
 	return (SUCCESS);
 }
 
@@ -54,7 +57,6 @@ int	add_tab(t_data *data, char **envp)
 	int		i;
 	char	**tab;
 
-	// printf("WQERQWEREWQ %p\n", &data->envp);
 	len = (size_t)ft_lstsize_envp(data->envp.envp);
 	data->envp.env = ft_calloc((len + 1), sizeof(char *));
 	if (!data->envp.env)

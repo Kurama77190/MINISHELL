@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.paris.fr>    +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 04:07:16 by sben-tay          #+#    #+#             */
-/*   Updated: 2023/11/14 04:07:17 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:13:51 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	**ft_malloc_error(char **tab)
 	return (NULL);
 }
 
-void	ft_ajoutdesmots(char **tab, char *str, int i, char c)
+static void	ft_ajoutdesmots(char **tab, char *str, int i, char c)
 {
 	int	j;
 	int	k;

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/19 00:49:08 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/19 03:49:37 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,20 @@ int main(int argc, char **argv, char **env)
 	ft_memset(&data, 0, sizeof(t_data));
 	while (1)
 	{
-		if (pars_shell(&data, argc, argv, env) == ERROR)
-		{
-			ft_putstr_fd("exit\n", 2);
-			return (1);
-		}
 		data.prompt.read_line = readline("minishell-1.0$ ");
 		if (!data.prompt.read_line)
 		{
 			ft_putstr_fd("exit\n", 2);
+			// free_all;
 			break ;
 		}
 		if (*(data.prompt.read_line))
-		{
 			add_history(data.prompt.read_line);
-		}
-
-
-		
+		if (pars_shell(&data, argc, argv, env) == ERROR)
+			return (1);
 		// exec_command(data);
-		
 		//free_token_list(data);
-
 		free(data.prompt.read_line);
-		// free token;
 		ft_memset(&data, 0, sizeof(t_data));
 	}
 	return (0);

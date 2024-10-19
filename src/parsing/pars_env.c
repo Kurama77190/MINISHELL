@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:47:08 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/19 00:55:31 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/19 01:13:29 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 int	pars_env(t_data *data, char **envp)
 {
-	if (!data->envp.set)
+	if (!data->envp_manag.set)
 		return (SUCCESS);
 	if (split_and_add(data, envp) == ERROR)
 	{
 		free_lst_envp(data);
-		free_split(data->envp.env);
+		free_split(data->envp_manag.env);
 		return (ERROR);
 	}
-	data->envp.set = false;
+	data->envp_manag.set = false;
+	data->envp_manag.sync = true;
 	return (SUCCESS);
 }
 
@@ -57,11 +58,11 @@ int	add_tab(t_data *data, char **envp)
 	int		i;
 	char	**tab;
 
-	len = (size_t)ft_lstsize_envp(data->envp.envp);
-	data->envp.env = ft_calloc((len + 1), sizeof(char *));
-	if (!data->envp.env)
+	len = (size_t)ft_lstsize_envp(data->envp_manag.envp);
+	data->envp_manag.env = ft_calloc((len + 1), sizeof(char *));
+	if (!data->envp_manag.env)
 		return (ERROR);
-	tab = data->envp.env;
+	tab = data->envp_manag.env;
 	i = 0;
 	while (envp[i])
 	{
@@ -76,13 +77,13 @@ int	add_lst(t_data *data, char **splited)
 {
 	t_envp	*new;
 	t_envp	*last;
-	last = data->envp.envp;
+	last = data->envp_manag.envp;
 	new = lst_new_envp(splited);
 	if (!new)
 		return (ERROR);
-	if (!data->envp.envp)
+	if (!data->envp_manag.envp)
 	{
-		data->envp.envp = new;
+		data->envp_manag.envp = new;
 		return (SUCCESS);
 	}
 	while (last->next)

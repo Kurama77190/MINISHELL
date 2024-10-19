@@ -20,18 +20,20 @@
 
 typedef enum e_type
 {
-    TYPE_NONE   = 0,
-    COMMAND     = 1 << 0,   // 0001
-    PIPE        = 1 << 1,   // 0010
-    REDIR_IN    = 1 << 2,   // 0100
-    REDIR_OUT   = 1 << 3,   // 1000
-}   t_type;
-
+    TYPE_NONE   = 0,        // 000000
+    COMMAND     = 1 << 0,   // 000001
+    PIPE        = 1 << 1,   // 000010
+    REDIR_IN    = 1 << 2,   // 000100
+    REDIR_OUT   = 1 << 3,   // 001000
+    HERE_DOC    = 1 << 4,   // 010000
+    APPEND_OUT  = 1 << 5    // 100000
+} t_type;
 
 typedef struct s_token
 {
     char            *command;    // Nom de la commande
     char            **args;      // Tableau des arguments
+	char			*here_stop;	 // Nom stop here_doc
     int             fd_in;       // Descripteur pour redirection d'entrée
     int             fd_out;      // Descripteur pour redirection de sortie
     char            *file_in;    // Nom du fichier d'entrée (si redirection)
@@ -44,7 +46,13 @@ typedef struct s_token
     struct s_token  *prev;       // Pointeur vers le nœud précédent
 } 					t_token;
 
-	typedef struct s_envp
+typedef struct s_token_management
+{
+	t_token			*token;
+	char **			readed;
+}					t_token_manag;
+
+typedef struct s_envp
 {
 	char			*name;
 	char			*value;
@@ -75,8 +83,8 @@ typedef struct s_sig
 typedef struct s_data
 {
 	int				exit_status;
-	t_token			token;
-	t_env_manag		envp;
+	t_token_manag	token_manag;
+	t_env_manag		envp_manag;
 	t_sig			signal;
 	t_prompt		prompt;
 	// exec;
@@ -89,7 +97,8 @@ typedef struct s_data
 int 				main(int argc, char **argv, char **env);
 int					pars_shell(t_data *data, int argc, char **argv, char **envp);
 int					pars_env(t_data *data, char **envp);
-int					uptdate_env(t_data *data);
+int					pars_token(t_data *data);
+
 
 //////////////////////////////////////////////////////////////////
 //                       PARS UTILS		                       //
@@ -101,6 +110,7 @@ void				free_lst_envp(t_data *data);
 int					add_tab(t_data *data, char **envp);
 int					split_and_add(t_data *data, char **envp);
 int					ft_lstsize_envp(t_envp *lst);
+int					uptdate_env(t_data *data);
 
 //////////////////////////////////////////////////////////////////
 //                          NOTE		                       //

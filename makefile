@@ -6,7 +6,7 @@
 #    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/10/18 22:05:04 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/10/19 01:03:42 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ LIBFT = external/LIBFT/
 
 #=================================================__SRC__OF__PROJECT__=============================================================================
 SRC = src/main.c \
-		$(addprefix $(PARS), pars_shell.c pars_env.c pars_shell_utils.c pars_env_utils.c )
+		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_shell_utils.c pars_env_utils.c pars_token_utils.c )
 
 $(shell mkdir -p $(BUILD))
 

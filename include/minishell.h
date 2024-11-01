@@ -49,7 +49,8 @@ typedef struct s_token
 typedef struct s_token_management
 {
 	t_token			*token;
-	char **			readed;
+	char			*line;
+	char			**readed;
 }					t_token_manag;
 
 typedef struct s_envp
@@ -95,27 +96,33 @@ typedef struct s_data
 ////////////////////////////////////////////////////////////////
 
 int 				main(int argc, char **argv, char **env);
-int					pars_shell(t_data *data, int argc, char **argv, char **envp);
+int					pars_shell(t_data *data, int argc, char **argv);
 int					pars_env(t_data *data, char **envp);
 int					pars_token(t_data *data);
 
 
 //////////////////////////////////////////////////////////////////
-//                       PARS UTILS		                       //
+//                       ENVIRONMENT	                       //
 ////////////////////////////////////////////////////////////////
 
 t_envp				*lst_new_envp(char **splited);
-int					add_lst(t_data *data, char **splited);
-void				free_lst_envp(t_data *data);
-int					add_tab(t_data *data, char **envp);
-int					split_and_add(t_data *data, char **envp);
-int					ft_lstsize_envp(t_envp *lst);
 int					uptdate_env(t_data *data);
+int					ft_lstsize_envp(t_envp *lst);
+void				free_lst_envp(t_data *data);
+int					split_and_add(t_data *data, char **envp);
+int					add_lst(t_data *data, char **splited);
+int					add_tab(t_data *data, char **envp);
 
 //////////////////////////////////////////////////////////////////
-//                          NOTE		                       //
+//                       	TOKEN		                       //
 ////////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////////////////
+//                          REDIR		                       //
+////////////////////////////////////////////////////////////////
+
+void				set_redir(t_token **new, char *token);
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS		                       //

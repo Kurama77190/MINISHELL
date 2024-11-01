@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/19 21:28:13 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/11/01 06:02:33 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		identifier_token(t_data *data, char *token);
+// int		identifier_token(t_data *data, char *token);
 
 int	pars_token(t_data *data)
 {
 	int	i;
 
-	data->token_manag.readed = ft_split(data->prompt.read_line, '|');
+	data->token_manag.line = ft_strtrim(data->prompt.read_line, " ");
+	data->token_manag.readed = ft_split(data->token_manag.line, '|');
 	if (!data->token_manag.readed)
 		return (ERROR);
 	i = 0;
 	while (data->token_manag.readed[i])
 	{
+		printf("token[%i] = %s\n", i, data->token_manag.readed[i]);
 		if (identifier_token(data, data->token_manag.readed[i]) == ERROR)
 			return (free_split(data->token_manag.readed), ERROR);
 		i++;
@@ -32,119 +34,95 @@ int	pars_token(t_data *data)
 	return (SUCCESS);
 }
 
-// typedef enum e_type
-// {
-//     TYPE_NONE   = 0,
-//     COMMAND     = 1 << 0,   // 0001
-//     PIPE        = 1 << 1,   // 0010
-//     REDIR_IN    = 1 << 2,   // 0100
-//     REDIR_OUT   = 1 << 3,   // 1000
-// }   t_type;
-
-// typedef struct s_token
-// {
-//     char            *command;    // Nom de la commande
-//     char            **args;      // Tableau des arguments
-//     char				*here_stop;
-//     int             fd_in;       // Descripteur pour redirection d'entrée
-//     int             fd_out;      // Descripteur pour redirection de sortie
-//     char            *file_in;    // Nom du fichier d'entrée (si redirection)
-//     char            *file_out;   // Nom du fichier de sortie (si redirection)
-//     t_type          types;        // Type de la commande (COMMAND, PIPE,
-	// etc.)
-// t_type          redir_type;  // Type de redirection (REDIR, HERE_DOC, etc.)
-//     int             builtin;     // 1 si c'est un builtin,
-//     int             fd_pipe[2]; 
-	// Pipe utilisé pour relier la sortie et l'entrée entre commandes
-//     struct s_token  *next;       // Pointeur vers le prochain nœud
-//     struct s_token  *prev;       // Pointeur vers le nœud précédent
-// } 					t_token;
-
-// cmd : /dev/stdin < cat| ls > /dev/stdout
 int	identifier_token(t_data *data, char *token)
 {
-	char	**splited;
-	int		i;
-
-	(void)data;
-	splited = split_token(token);
-	i = 0;
-	while (splited[i])
-	{
-		printf("[tab%i] = %s", i, splited[i]);
-		i++;
-	}
-	printf("\n");
-	free_split(splited);
-	return (SUCCESS);
-	// printf("%s\n");
-	// if (is_builtin)
-	// if (is_pipe)
-	// if (is redir)
-	// if (is_here_doc)
-	// if (is)
-	// else
-	// is_command();
-}
-
-// int	add_in_list_token(t_data *data)
-// {
-// 	//
-// }
-
-void	set_redir(t_token **new, char *token);
-
-t_token	*new_lst_token(t_data *data, char *token, char **token_splited)
-{
 	t_token	*new;
-	int		i;
 
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
-		return (NULL);
-	set_redir(&new, token);// helpers
-	set_commands_args(&new, token_splited);// helpers
-	return (new);
+		return (ERROR);
+	if (search_token(data, token, &new) == ERROR);
+	{
+		free(new); // et liberer son contenue aussi stp.
+		return (ERROR);
+	}
+	add_back_token(data, new);
+	return (SUCCESS);
 }
 
-void set_redir(t_token **new, char *token)
+int	search_token(t_data *data, char *token, t_token **new)
 {
-    int len;
-    char *filename;
+	int		i;
+	int		j;
+	char	*token;
 
-    len = ft_strlen(token);
-    if (ft_strnstr(token, "<", len) != NULL)
-    {
-        (*new)->redir_type |= REDIR_IN;
-        filename = ft_strtrim(token + 1, " ");
-    }
-    else if (ft_strnstr(token, ">", len) != NULL)
-    {
-        (*new)->redir_type |= REDIR_OUT;
-        filename = ft_strtrim(token + 1, " ");
-    }
-    else if (ft_strnstr(token, ">>", len) != NULL)
-    {
-        (*new)->redir_type |= APPEND_OUT;
-        filename = ft_strtrim(token + 2, " ");
-    }
-    else if (ft_strnstr(token, "<<", len) != NULL)
-    {
-        (*new)->redir_type |= HERE_DOC;
-        filename = ft_strtrim(token + 2, " ");
-    }
-    else
-        return;
-    if (filename)
-        (*new)-> = filename;
+	i = 0;
+	j = 0;
+	while (token[i])
+	{
+		if (token[i] == '<' || token[i] == '>')
+		{
+			set_redir(&new, token + i);
+			i++;
+		}
+		while(token[i] && (token[i] != ' ' || token[i] != '<' || token[i] != '>'))
+			i++;
+		token = ft_substr(token, j, i);
+		if (!token)
+			return (ERROR);
+		token_id(data, token, new);
+		free(token);
+		j = i;
+		i++;
+	}	
+	return (SUCCESS);
 }
 
- 
-void	set_commands_arg(t_token **new, char **splited)
+int	add_back_token(t_data *data, t_token *new)
 {
+	t_token	*current;
+
+	if (!data->token_manag.token)
+	{
+		data->token_manag.token = new;
+		return (SUCCESS);
+	}
+	current = data->token_manag.token;
+	while (current->next)
+		current = current->next;
+	current->next = new;
+	new->prev = current;
+	return (SUCCESS);
 }
 
-
+int	token_id(t_data *data, char *token, t_token **new)
+{
+	if (is_args(data, token, new) == ERROR)
+	{
+		return (ERROR);
+	}
+	if (is_builtin_1(data, token, new) == ERROR)
+	{
+		return (ERROR);
+	}
+	if (is_builtin_2(data, token, new) == ERROR)
+	{
+		return (ERROR);
+	}
+	if (is_builtin_3(data, token, new) == ERROR)
+	{
+		return (ERROR);
+	}
+	else
+	{
+		if (is_command(data, token, new) == ERROR)
+		{
+			return (ERROR);
+		}
+		
+	}
+	return (SUCCESS);
+}
 
 // ordre d execution absolu, peut importe l ordre et les commands donner a UNIX, celui ci l interpretre dans un ordre bien specifique,
 // regarder les redir in and out et les set

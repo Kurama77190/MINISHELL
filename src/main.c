@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/19 03:49:37 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/10/29 19:31:52 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int main(int argc, char **argv, char **env)
 	t_data data;
 
 	ft_memset(&data, 0, sizeof(t_data));
+	pars_env(&data, env);
 	while (1)
 	{
 		data.prompt.read_line = readline("minishell-1.0$ ");
@@ -54,8 +55,7 @@ int main(int argc, char **argv, char **env)
 		}
 		if (*(data.prompt.read_line))
 			add_history(data.prompt.read_line);
-		if (pars_shell(&data, argc, argv, env) == ERROR)
-			return (1);
+		pars_shell(&data, argc, argv);
 		// exec_command(data);
 		//free_token_list(data);
 		free(data.prompt.read_line);

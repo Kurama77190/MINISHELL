@@ -99,6 +99,18 @@ int 				main(int argc, char **argv, char **env);
 int					pars_shell(t_data *data, int argc, char **argv);
 int					pars_env(t_data *data, char **envp);
 int					pars_token(t_data *data);
+int					identifier_token(t_data *data, char *token);
+int					search_token(t_data *data, char *token, t_token **new);
+int					add_back_token(t_data *data, t_token *new);
+int					token_id(t_data *data, char *token, t_token **new);
+int					is_builtin_1(t_data *data, char *token, t_token **new);
+int					is_builtin_2(t_data *data, char *token, t_token **new);
+int					is_builtin_3(t_data *data, char *token, t_token **new);
+int					is_args(t_data *data, char *token, t_token **new);
+int					is_command(t_data *data, char *token, t_token **new);
+
+
+
 
 
 //////////////////////////////////////////////////////////////////

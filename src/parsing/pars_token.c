@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/11/01 06:02:33 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/05 16:32:52 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	identifier_token(t_data *data, char *token)
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (ERROR);
-	if (search_token(data, token, &new) == ERROR);
+	if (search_token(data, token, &new) == ERROR)
 	{
 		free(new); // et liberer son contenue aussi stp.
 		return (ERROR);
@@ -54,7 +54,7 @@ int	search_token(t_data *data, char *token, t_token **new)
 {
 	int		i;
 	int		j;
-	char	*token;
+	// char	*token;
 
 	i = 0;
 	j = 0;
@@ -62,7 +62,7 @@ int	search_token(t_data *data, char *token, t_token **new)
 	{
 		if (token[i] == '<' || token[i] == '>')
 		{
-			set_redir(&new, token + i);
+			set_redir(new, token + i);
 			i++;
 		}
 		while(token[i] && (token[i] != ' ' || token[i] != '<' || token[i] != '>'))

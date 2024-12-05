@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:01:07 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/11/01 06:05:57 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/05 16:41:14 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,73 +15,74 @@
 
 int	is_builtin_1(t_data *data, char *token, t_token **new)
 {
-	if (ft_strcmp(token, "echo") == 0)
+	(void)data;
+	if (ft_strncmp(token, "echo", ft_strlen(token)) == 0)
 	{
 		(*new)->command = ft_strdup(token);
 		if (!(*new)->command)
 			return (ERROR);
 		(*new)->builtin = 1;
 	}
-	if (ft_strcmp(token, "cd") == 0)
+	if (ft_strncmp(token, "cd", ft_strlen(token)) == 0)
 	{
 		(*new)->command = ft_strdup(token);
 		if (!(*new)->command)
 			return (ERROR);
 		(*new)->builtin = 1;
 	}
-	if (ft_strcmp(token, "pwd") == 0)
+	if (ft_strncmp(token, "pwd", ft_strlen(token)) == 0)
 	{
 		(*new)->command = ft_strdup(token);
 		if (!(*new)->command)
 			return (ERROR);
 		(*new)->builtin = 1;
 	}
-	else
-		return (SUCCESS);
+	return (SUCCESS);
 }
 
 int	is_builtin_2(t_data *data, char *token, t_token **new)
 {
-	if (ft_strcmp(token, "export") == 0)
+	(void)data;
+	if (ft_strncmp(token, "export", ft_strlen(token)) == 0)
 	{
 		(*new)->command = ft_strdup(token);
 		if (!(*new)->command)
 			return (ERROR);
 		(*new)->builtin = 1;
 	}
-	if (ft_strcmp(token, "unset") == 0)
+	if (ft_strncmp(token, "unset", ft_strlen(token)) == 0)
 	{
 		(*new)->command = ft_strdup(token);
 		if (!(*new)->command)
 			return (ERROR);
 		(*new)->builtin = 1;
 	}
-	if (ft_strcmp(token, "env") == 0)
+	if (ft_strncmp(token, "env", ft_strlen(token)) == 0)
 	{
 		(*new)->command = ft_strdup(token);
 		if (!(*new)->command)
 			return (ERROR);
 		(*new)->builtin = 1;
 	}
-	else
-		return (SUCCESS);
+	return (SUCCESS);
 }
 
 int	is_builtin_3(t_data *data, char *token, t_token **new)
 {
-	if (ft_strcmp(token, "exit") == 0)
+	(void)data;
+	if (ft_strncmp(token, "exit", ft_strlen(token)) == 0)
 	{
 		(*new)->command = ft_strdup(token);
 		if (!(*new)->command)
 			return (ERROR);
 		(*new)->builtin = 1;
 	}
-	else
-		return (SUCCESS);
+	return (SUCCESS);
 }
 
 int	is_args(t_data *data, char *token, t_token **new)
 {
+	(void)data;
 	char	**tmp;
 
 	if (!(*new)->args)
@@ -102,6 +103,7 @@ int	is_args(t_data *data, char *token, t_token **new)
 
 int	is_command(t_data *data, char *token, t_token **new)
 {
+	(void)data;
 	(*new)->command = ft_strdup(token);
 	if (!(*new)->command)
 		return (ERROR);

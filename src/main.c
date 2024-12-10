@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/29 19:31:52 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/07 00:42:59 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void put_tab_env(char **env)
 	// put_lst_envp(data.envp.envp);
 	// put_tab_env(data.envp.env);
 
+
 int main(int argc, char **argv, char **env)
 {
 	(void)argc;
@@ -46,15 +47,8 @@ int main(int argc, char **argv, char **env)
 	pars_env(&data, env);
 	while (1)
 	{
-		data.prompt.read_line = readline("minishell-1.0$ ");
-		if (!data.prompt.read_line)
-		{
-			ft_putstr_fd("exit\n", 2);
-			// free_all;
-			break ;
-		}
-		if (*(data.prompt.read_line))
-			add_history(data.prompt.read_line);
+		if (handle_prompt(&data) == ERROR)
+			return (2);
 		pars_shell(&data, argc, argv);
 		// exec_command(data);
 		//free_token_list(data);

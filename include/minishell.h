@@ -29,6 +29,14 @@ typedef enum e_type
     APPEND_OUT  = 1 << 5    // 100000
 } t_type;
 
+typedef struct s_redir
+{
+	char			*file_name;
+	t_type			type;
+	struct s_redir	*next;
+	struct s_redir	*prev;
+}					t_redir;
+
 typedef struct s_token
 {
     char            *command;    // Nom de la commande
@@ -36,15 +44,15 @@ typedef struct s_token
 	char			*here_stop;	 // Nom stop here_doc
     int             fd_in;       // Descripteur pour redirection d'entrée
     int             fd_out;      // Descripteur pour redirection de sortie
-    char            *file_in;    // Nom du fichier d'entrée (si redirection)
-    char            *file_out;   // Nom du fichier de sortie (si redirection)
+    t_redir	        *redir_in;    // Nom du fichier d'entrée (si redirection)
+    t_redir         *redir_out;   // Nom du fichier de sortie (si redirection)
     t_type          types;        // Type de la commande (COMMAND, PIPE, etc.)
-    t_type          redir_type;  // Type de redirection (REDIR, HERE_DOC, etc.)
+    t_type       	redir_type;  // Type de redirection (REDIR, HERE_DOC, etc.)
     int             builtin;     // 1 si c'est un builtin, 0 si binaire externe
     int             fd_pipe[2];  // Pipe utilisé pour relier la sortie et l'entrée entre commandes
     struct s_token  *next;       // Pointeur vers le prochain nœud
     struct s_token  *prev;       // Pointeur vers le nœud précédent
-} 					t_token;
+} 					t_token; 
 
 typedef struct s_token_management
 {
@@ -95,11 +103,12 @@ typedef struct s_data
 //                          PARSING		                       //
 ////////////////////////////////////////////////////////////////
 
-int 				main(int argc, char **argv, char **env);
+// int 				main(int argc, char **argv, char **env);int	handle_prompt(t_data *data);
+int					handle_prompt(t_data *data);
 int					pars_shell(t_data *data, int argc, char **argv);
 int					pars_env(t_data *data, char **envp);
 int					pars_token(t_data *data);
-int					identifier_token(t_data *data, char *token);
+int					setup_token(t_data *data, char *token);
 int					search_token(t_data *data, char *token, t_token **new);
 int					add_back_token(t_data *data, t_token *new);
 int					token_id(t_data *data, char *token, t_token **new);

@@ -6,7 +6,7 @@
 #    By: samy <samy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/10/29 19:31:18 by samy             ###   ########.fr        #
+#    Updated: 2024/12/07 02:58:18 by samy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,15 @@ LIBFT = external/LIBFT/
 
 #=================================================__SRC__OF__PROJECT__=============================================================================
 SRC = src/main.c \
-		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_shell_utils.c pars_env_utils.c pars_token_utils.c pars_redir.c pars_redir_utils.c)
+		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_shell_utils.c pars_env_utils.c pars_token_utils.c pars_redir.c pars_redir_utils.c \
+		handle_prompt.c)
+SRC_TEST = test/test.c
 
 $(shell mkdir -p $(BUILD))
 
 OBJ = $(SRC:%.c=$(BUILD)%.o)
+
+OBJ_TEST = $(SRC_TEST:%.c=$(BUILD)%.o)
 #OBJ_BNS = $(SRC_BNS:%.c=$(BUILD)%.o)
 #==================================================================================================================================================
 
@@ -74,6 +78,10 @@ $(NAME): $(OBJ)
 
 #=============================================================================================
 
+test: $(OBJ_TEST)
+	@$(MAKE) $(MAKEFLAGS) -C $(LIBFT) bonus
+	@$(CC) $(OBJ_TEST) $(CFLAGS) $(CPPFLAGS) -L$(LIBFT) -lft -o $(NAME)
+
 %.o:%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -g3 -c $< -o $@
 
@@ -82,10 +90,10 @@ $(BUILD)%.o: %.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ -MMD -MP
 
 
+
  # Règle pour créer l'exécutable bonus
 
 bonus:
-
 
 clean: # Règles pour nettoyer les fichiers objets
 
@@ -104,6 +112,6 @@ fclean: clean # Règles pour nettoyer les fichiers objets et l'exécutable
 
 re: fclean all # Règle pour recompiler
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus test
 
 -include $(DEP)

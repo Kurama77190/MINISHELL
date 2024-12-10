@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/05 16:32:52 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/07 01:43:30 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pars_token(t_data *data)
 	while (data->token_manag.readed[i])
 	{
 		printf("token[%i] = %s\n", i, data->token_manag.readed[i]);
-		if (identifier_token(data, data->token_manag.readed[i]) == ERROR)
+		if (setup_token(data, data->token_manag.readed[i]) == ERROR)
 			return (free_split(data->token_manag.readed), ERROR);
 		i++;
 	}
@@ -34,16 +34,21 @@ int	pars_token(t_data *data)
 	return (SUCCESS);
 }
 
-int	identifier_token(t_data *data, char *token)
+int	setup_token(t_data *data, char *token)
 {
 	t_token	*new;
 
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (ERROR);
-	if (search_token(data, token, &new) == ERROR)
+	if (setup_redir(data, token, &new) == ERROR)
 	{
 		free(new); // et liberer son contenue aussi stp.
+		return (ERROR);
+	}
+	if (search_token(data, token, &new) == ERROR)
+	{
+		free(new); // et liberer son contenue aussi stp. (surtout les listes chainer des redir);
 		return (ERROR);
 	}
 	add_back_token(data, new);

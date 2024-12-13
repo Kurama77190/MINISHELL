@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:43:37 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/29 19:31:41 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/13 01:52:48 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	pars_shell(t_data *data, int argc, char **argv)
 	if (pars_token(data) == ERROR)
 	{
 		ft_putstr_fd("Error in pars_token\n", 2);
-		// free_all;
-		// exit(2)
 		return (ERROR);
 	}
 	// pars_sig(); // signaux

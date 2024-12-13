@@ -31,11 +31,18 @@ typedef enum e_type
 
 typedef struct s_redir
 {
+	char			*type;
 	char			*file_name;
-	t_type			type;
 	struct s_redir	*next;
 	struct s_redir	*prev;
 }					t_redir;
+
+typedef struct s_redir_manag
+{
+	t_redir			*head;
+	t_redir			*current;
+}					t_redir_manag;
+
 
 typedef struct s_token
 {
@@ -44,8 +51,8 @@ typedef struct s_token
 	char			*here_stop;	 // Nom stop here_doc
     int             fd_in;       // Descripteur pour redirection d'entrée
     int             fd_out;      // Descripteur pour redirection de sortie
-    t_redir	        *redir_in;    // Nom du fichier d'entrée (si redirection)
-    t_redir         *redir_out;   // Nom du fichier de sortie (si redirection)
+    t_redir_manag	*redir_in;    // Nom du fichier d'entrée (si redirection)
+    t_redir_manag   *redir_out;   // Nom du fichier de sortie (si redirection)
     t_type          types;        // Type de la commande (COMMAND, PIPE, etc.)
     t_type       	redir_type;  // Type de redirection (REDIR, HERE_DOC, etc.)
     int             builtin;     // 1 si c'est un builtin, 0 si binaire externe
@@ -57,6 +64,7 @@ typedef struct s_token
 typedef struct s_token_management
 {
 	t_token			*token;
+	t_token			*current_token;
 	char			*line;
 	char			**readed;
 }					t_token_manag;
@@ -109,7 +117,7 @@ int					pars_shell(t_data *data, int argc, char **argv);
 int					pars_env(t_data *data, char **envp);
 int					pars_token(t_data *data);
 int					setup_token(t_data *data, char *token);
-int					search_token(t_data *data, char *token, t_token **new);
+int					setup_cmd(char *token, t_token *new);
 int					add_back_token(t_data *data, t_token *new);
 int					token_id(t_data *data, char *token, t_token **new);
 int					is_builtin_1(t_data *data, char *token, t_token **new);
@@ -143,7 +151,15 @@ int					add_tab(t_data *data, char **envp);
 //                          REDIR		                       //
 ////////////////////////////////////////////////////////////////
 
-void				set_redir(t_token **new, char *token);
+int					setup_redir(t_data *data, char *token, t_token *new);
+bool				ft_is_operator(char c);
+t_redir				*new_redir_in(t_redir_manag	*param, char *token);
+t_redir				*new_redir_out(t_redir_manag	*param, char *token);
+char				*outfile_type(char *token);
+char				*infile_type(char *token);
+char				*outfile_name(char *token);
+char				*infile_name(char *token);
+int					add_redir_in(t_data *data, char *token, t_redir_manag *param);
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS		                       //

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 04:09:01 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/19 16:06:11 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/12 22:12:09 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+bool			ft_isspace(char c);
+
+bool			ft_is_operator(char c);
 
 bool			is_redir(char c);
 
@@ -72,6 +76,7 @@ void			ft_putstr_fd(char *s, int fd);
 
 char			**ft_split(char const *s, char c);
 
+//Recherche la première occurrence d'un caractère dans une chaîne.
 char			*ft_strchr(const char *s, int c);
 
 char			*ft_strdup(const char *s1);

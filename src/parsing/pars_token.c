@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/07 01:43:30 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/13 02:39:11 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	pars_token(t_data *data)
 	int	i;
 
 	data->token_manag.line = ft_strtrim(data->prompt.read_line, " ");
+	if (!data->token_manag.line)
+		return (ERROR);
 	data->token_manag.readed = ft_split(data->token_manag.line, '|');
 	if (!data->token_manag.readed)
 		return (ERROR);
@@ -27,9 +29,11 @@ int	pars_token(t_data *data)
 	{
 		printf("token[%i] = %s\n", i, data->token_manag.readed[i]);
 		if (setup_token(data, data->token_manag.readed[i]) == ERROR)
-			return (free_split(data->token_manag.readed), ERROR);
+			return (free_split(data->token_manag.readed), \
+			ft_free((void **)&data->token_manag.line), ERROR);
 		i++;
 	}
+	ft_free((void **)&data->token_manag.line);
 	free_split(data->token_manag.readed);
 	return (SUCCESS);
 }
@@ -41,45 +45,21 @@ int	setup_token(t_data *data, char *token)
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (ERROR);
-	if (setup_redir(data, token, &new) == ERROR)
+	if (setup_redir(data, token, new) == ERROR)
 	{
 		free(new); // et liberer son contenue aussi stp.
 		return (ERROR);
 	}
-	if (search_token(data, token, &new) == ERROR)
+	printf("intfile[%s] type[%s]\n", new->redir_in->head->file_name, new->redir_in->head->type);
+	printf("outfile[%s] type[%s]\n", new->redir_out->head->file_name, new->redir_out->head->type);
+	if (setup_cmd(token, new) == ERROR)
 	{
-		free(new); // et liberer son contenue aussi stp. (surtout les listes chainer des redir);
+		// free(redir);
+		free(new);
 		return (ERROR);
 	}
-	add_back_token(data, new);
-	return (SUCCESS);
-}
-
-int	search_token(t_data *data, char *token, t_token **new)
-{
-	int		i;
-	int		j;
-	// char	*token;
-
-	i = 0;
-	j = 0;
-	while (token[i])
-	{
-		if (token[i] == '<' || token[i] == '>')
-		{
-			set_redir(new, token + i);
-			i++;
-		}
-		while(token[i] && (token[i] != ' ' || token[i] != '<' || token[i] != '>'))
-			i++;
-		token = ft_substr(token, j, i);
-		if (!token)
-			return (ERROR);
-		token_id(data, token, new);
-		free(token);
-		j = i;
-		i++;
-	}	
+	printf("[command] = %s | [args] = %p\n", new->command, new->args);
+	// add_back_token(data, new);
 	return (SUCCESS);
 }
 
@@ -97,35 +77,6 @@ int	add_back_token(t_data *data, t_token *new)
 		current = current->next;
 	current->next = new;
 	new->prev = current;
-	return (SUCCESS);
-}
-
-int	token_id(t_data *data, char *token, t_token **new)
-{
-	if (is_args(data, token, new) == ERROR)
-	{
-		return (ERROR);
-	}
-	if (is_builtin_1(data, token, new) == ERROR)
-	{
-		return (ERROR);
-	}
-	if (is_builtin_2(data, token, new) == ERROR)
-	{
-		return (ERROR);
-	}
-	if (is_builtin_3(data, token, new) == ERROR)
-	{
-		return (ERROR);
-	}
-	else
-	{
-		if (is_command(data, token, new) == ERROR)
-		{
-			return (ERROR);
-		}
-		
-	}
 	return (SUCCESS);
 }
 

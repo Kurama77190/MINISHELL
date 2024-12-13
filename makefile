@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: samy <samy@student.42.fr>                  +#+  +:+       +#+         #
+#    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/12/07 02:58:18 by samy             ###   ########.fr        #
+#    Updated: 2024/12/13 02:30:53 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ MAKEFLAGS += --no-print-directory
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
-CPPFLAGS = -g3 -I./include -I./external/LIBFT/
+CFLAGS = -Wall -Wextra -Werror -g3
+CPPFLAGS = -I./include -I./external/LIBFT/
 LDFLAGS = -L$(LIBFT) -lft -lreadline -lhistory
 PARS  = src/parsing/
 EXEC  = src/exec/
@@ -31,9 +31,9 @@ LIBFT = external/LIBFT/
 
 #=================================================__SRC__OF__PROJECT__=============================================================================
 SRC = src/main.c \
-		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_shell_utils.c pars_env_utils.c pars_token_utils.c pars_redir.c pars_redir_utils.c \
-		handle_prompt.c)
-SRC_TEST = test/test.c
+		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_env_utils.c pars_token_utils.c \
+		handle_prompt.c handle_redir.c handle_cmd.c)
+SRC_TEST = test/main.c
 
 $(shell mkdir -p $(BUILD))
 
@@ -80,7 +80,7 @@ $(NAME): $(OBJ)
 
 test: $(OBJ_TEST)
 	@$(MAKE) $(MAKEFLAGS) -C $(LIBFT) bonus
-	@$(CC) $(OBJ_TEST) $(CFLAGS) $(CPPFLAGS) -L$(LIBFT) -lft -o $(NAME)
+	@$(CC) $(OBJ_TEST) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -L$(LIBFT) -lft -o $(NAME)
 
 %.o:%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -g3 -c $< -o $@

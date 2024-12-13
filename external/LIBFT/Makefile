@@ -6,7 +6,7 @@
 #    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 04:09:14 by sben-tay          #+#    #+#              #
-#    Updated: 2024/10/19 16:07:11 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/12/12 22:09:20 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS			=	ft_isalnum.c  ft_isprint.c  ft_isalpha.c  ft_memmove.c  ft_memcmp.c \
 					ft_strlen.c ft_memset.c  ft_strlcat.c  ft_strdup.c  ft_calloc.c  ft_split.c \
 					ft_toupper.c ft_isdigit.c ft_memcpy.c  ft_substr.c  ft_strjoin.c  ft_strtrim.c \
 					ft_striteri.c  ft_putchar_fd.c  ft_strmapi.c  ft_itoa.c  ft_putstr_fd.c  ft_putnbr_fd.c \
-					ft_putendl_fd.c free_split.c ft_free.c split_token.c is_redir.c 
+					ft_putendl_fd.c free_split.c ft_free.c split_token.c is_redir.c ft_is_operator.c ft_isspace.c
 					
 
 HEADER=libft.h

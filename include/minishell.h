@@ -125,6 +125,9 @@ int					is_builtin_2(t_data *data, char *token, t_token **new);
 int					is_builtin_3(t_data *data, char *token, t_token **new);
 int					is_args(t_data *data, char *token, t_token **new);
 int					is_command(t_data *data, char *token, t_token **new);
+bool				is_operator_in_quotes(char *token, char operator);
+void				found_index(char *tmp, int *i);
+void				delete_word(char *str, size_t i, unsigned int start);
 
 
 

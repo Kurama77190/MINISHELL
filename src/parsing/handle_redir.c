@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:42:18 by samy              #+#    #+#             */
-/*   Updated: 2024/12/13 03:53:53 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/13 05:45:19 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*outfile_type(char *token);
 char	*infile_type(char *token);
 int		add_redir_in(t_data *data, char *token, t_redir_manag *param);
 int		add_redir_out(t_data *data, char *token, t_redir_manag *param);
+void	delete_word(char *str, size_t i, unsigned int start);
+
 
 int	setup_redir(t_data *data, char *token, t_token *new)
 {
@@ -94,12 +96,7 @@ char	*outfile_type(char *token)
 	result = ft_substr(tmp, 0, i);
 	if (!result)
 		return (NULL);
-	while (*tmp && i > 0)
-	{
-		*tmp = ' ';
-		tmp++;
-		i--;
-	}
+	delete_word(tmp, i, 0);
 	return (result);
 }
 
@@ -118,12 +115,7 @@ char	*infile_type(char *token)
 	result = ft_substr(tmp, 0, i);
 	if (!result)
 		return (NULL);
-	while (*tmp && i > 0)
-	{
-		*tmp = ' ';
-		tmp++;
-		i--;
-	}
+	delete_word(tmp, i, 0);
 	return (result);
 }
 
@@ -135,53 +127,42 @@ char	*outfile_name(char *token)
 
 	i = 0;
 	tmp = ft_strchr(token, '>');
-	if (!tmp)
-		return ("NONE\0");
-	while (*tmp == '>')
+	if (!tmp || is_operator_in_quotes(token, '>'))
+		return ("NONE");
+	while (*tmp == '>' || ft_isspace(*tmp))
 		tmp++;
-	if (*tmp == '\0'  || *tmp == '<')
-		return ("NONE\0");
-	while (tmp[i] && !ft_is_operator(tmp[i]))
-		i++;
+	if (*tmp == '\0' || ft_is_operator(*tmp))
+		return ("NONE");
+	found_index(tmp, &i);
 	result = ft_substr(tmp, 0, i);
 	if (!result)
 		return (NULL);
-	while (*tmp && i > 0)
-	{
-		*tmp = ' ';
-		tmp++;
-		i--;
-	}
+	delete_word(tmp, i, 0);
 	return (result);
 }
 
-	char	*infile_name(char *token)
-	{
-		char	*tmp;
-		char	*result;
-		int		i;
+char	*infile_name(char *token)
+{
+	char	*tmp;
+	char	*result;
+	int		i;
 
-		i = 0;
-		tmp = ft_strchr(token, '<');
-		if (!tmp)
-			return ("NONE\0");
-		while (*tmp == '<')
-			tmp++;
-		if (*tmp == '\0' || *tmp == '>')
-			return ("NONE\0");
-		while (tmp[i] && !ft_is_operator(tmp[i]))
-			i++;
-		result = ft_substr(tmp, 0, i);
-		if (!result)
-			return (NULL);
-		while (*tmp && i > 0)
-		{
-			*tmp = ' ';
-			tmp++;
-			i--;
-		}
-		return (result);
-	}
+	i = 0;
+	tmp = ft_strchr(token, '<');
+	if (!tmp || is_operator_in_quotes(token, '<'))
+		return ("NONE");
+	while (*tmp == '<' || ft_isspace(*tmp))
+		tmp++;
+	if (*tmp == '\0' || ft_is_operator(*tmp))
+		return ("NONE");
+	found_index(tmp, &i);
+	result = ft_substr(tmp, 0, i);
+	if (!result)
+		return (NULL);
+	delete_word(tmp, i, 0);
+	return (result);
+}
+
 
 int	add_redir_in(t_data *data, char *token, t_redir_manag *param)
 {

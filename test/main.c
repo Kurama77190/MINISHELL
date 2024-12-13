@@ -6,77 +6,200 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 03:24:39 by samy              #+#    #+#             */
-/*   Updated: 2024/12/13 02:27:25 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/13 05:43:41 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// bool	ft_is_operator(char c)
+// {
+// 	return (c == '<' || c == '>' || c == '&' || c == '|' || c == ';' || c == '&' ||
+// 	c == '@' || c == '#' || c == '$' || c == '%' || c == '^' || c == '*' || c == '('
+// 	|| c == ')' || c == '+' || c == '-');
+// }
 
-int	found_args_cmd(char	*token, t_token	*new)
-{
+// char	*infile_name(char *token);
+// char	*infile_type(char *token);
+
+// t_redir	*new_redir_in(t_redir_manag	*param, char *token)
+// {
+// 	t_redir	*new;
+// 	char	*tmp;
+
+// 	new = ft_calloc(1, sizeof(t_redir));
+// 	if (!new)
+// 		return (NULL);
 	
-	return (SUCCESS);
-}
+// 	new->file_name = infile_name(token);
+// 	if (!new->file_name)
+// 		return (NULL);
+// 	new->type = infile_type(token);
+// 	if (!new->file_name)
+// 		return (NULL);
+// }
 
-int	setup_cmd(char *token, t_token *new)
+// t_redir	*new_redir_out(t_redir_manag	*param, char *token)
+// {
+// 	t_redir	*new;
+// 	char	*tmp;
+
+// 	new = ft_calloc(1, sizeof(t_redir));
+// 	if (!new)
+// 		return (NULL);
+	
+// 	new->file_name = outfile_name(token);
+// 	if (!new->file_name)
+// 		return (NULL);
+// 	new->type = outfile_type(token);
+// 	if (!new->file_name)
+// 		return (NULL);
+// }
+
+// char	*outfile_type(char *token)
+// {
+// 	char	*tmp;
+// 	char	*result;
+// 	int		i;
+
+// 	i = 0;
+// 	tmp = ft_strchr(token, '>');
+// 	if (!tmp)
+// 		return (token);
+// 	while (tmp[i] && tmp[i] != ' ')
+// 		i++;
+// 	result = ft_substr(tmp, 0, i);
+// 	if (!result)
+// 		return (NULL);
+// 	while (*tmp && i > 0)
+// 	{
+// 		*tmp = ' ';
+// 		tmp++;
+// 		i--;
+// 	}
+// 	return (result);
+// }
+
+// char	*infile_type(char *token)
+// {
+// 	char	*tmp;
+// 	char	*result;
+// 	int		i;
+
+// 	i = 0;
+// 	tmp = ft_strchr(token, '<');
+// 	if (!tmp)
+// 		return (token);
+// 	while (tmp[i] && tmp[i] != ' ')
+// 		i++;
+// 	result = ft_substr(tmp, 0, i);
+// 	if (!result)
+// 		return (NULL);
+// 	while (*tmp && i > 0)
+// 	{
+// 		*tmp = ' ';
+// 		tmp++;
+// 		i--;
+// 	}
+// 	return (result);
+// }
+
+// char	*outfile_name(char *token)
+// {
+// 	char	*tmp;
+// 	char	*result;
+// 	int		i;
+
+// 	i = 0;
+// 	tmp = ft_strchr(token, '>');
+// 	if (!tmp)
+// 		return (token);
+// 	while (ft_is_operator(*tmp))
+// 		tmp++;
+// 	if (*tmp == '\0')
+// 		return (token);
+// 	while (tmp[i] && !ft_is_operator(tmp[i]))
+// 		i++;
+// 	result = ft_substr(tmp, 0, i);
+// 	if (!result)
+// 		return (NULL);
+// 	while (*tmp && i > 0)
+// 	{
+// 		*tmp = ' ';
+// 		tmp++;
+// 		i--;
+// 	}
+// 	return (result);
+// }
+
+// char	*infile_name(char *token)
+// {
+// 	char	*tmp;
+// 	char	*result;
+// 	int		i;
+
+// 	i = 0;
+// 	tmp = ft_strchr(token, '<');
+// 	if (!tmp)
+// 		return (token);
+// 	while (ft_is_operator(*tmp))
+// 		tmp++;
+// 	if (*tmp == '\0')
+// 		return (token);
+// 	while (tmp[i] && !ft_is_operator(tmp[i]))
+// 		i++;
+// 	result = ft_substr(tmp, 0, i);
+// 	if (!result)
+// 		return (NULL);
+// 	while (*tmp && i > 0)
+// 	{
+// 		*tmp = ' ';
+// 		tmp++;
+// 		i--;
+// 	}
+// 	return (result);
+// }
+
+// int	add_redir_in(t_data *data, char *token, t_redir_manag *param)
+// {
+// 	t_redir	*new;
+// 	t_redir	*tmp;
+
+// 	new = new_redir_in(param, token);
+// 	if (!new)
+// 		return (ERROR);
+// 	if (param->head == NULL)
+// 	{
+// 		param->head = new;
+// 		new->next = NULL;
+// 		new->prev = NULL;
+// 	}
+// 	else
+// 	{
+// 		tmp = param->current;
+// 		while (tmp->next != NULL)
+// 			tmp->next;
+// 		tmp->next = new;z
+// 		new->prev = tmp;
+// 		new->next = NULL;
+// 	}
+// 	return (SUCCESS);
+// }
+
+
+
+int main(void)
 {
-	if (found_cmd_name(token, new) == ERROR)
-		return (ERROR);
-	// if (found_args_cmd() == ERROR)
-	// 	return (ERROR);
-	return (SUCCESS);
-}
-
-int	found_cmd_name(char *token, t_token *new)
-{
-	int	j;
-	int	cote;
-
-	cote = 0;
-	while (*token && ft_isspace(*token) && (*token != '\"' \
-			|| *token != '\''))
-		token++;
-	if (!(*token))
-		return (SUCCESS);
-	j = 0;
-	while (token[j] && ((cote != 2 && !ft_isspace(token[j])) || cote == 1))
-	{
-		if (token[j] == '\"' || token[j] == '\'')
-		{
-			if (cote == 0)
-				cote = 1;
-			else if (cote == 1)
-				cote = 0;
-		}
-		j++;
-	}
-	new->command = ft_substr(token, 0, j);
-	if (!new->command)
-		return (ERROR);
-	return (SUCCESS);
-}
-
-int	main(void)
-{
-	t_token	*new;
-	char	*token;
-
 	while (1)
 	{
-		new = ft_calloc(1, sizeof(t_token));
-		token = readline("MINISHELL TEST ");
+	
+		char *token = readline("MINISHELL TEST ");
 		if (!token)
-		{
-			ft_putstr_fd("exit\n", 2);
 			exit(0);
-		}
-		found_cmd_name(token, new);
-		printf("[command] :%s [adress]%p\n", new->command, new->command);
-		free(new->command);
-		memset(new, 0, sizeof(t_token));
-		free(token);
-		free(new);
+	printf("result name infile : %s\n", infile_name(token));
+	printf("resultat type infile : %s\n", infile_type(token));
+	printf("le reste du prompt : %s\n", token);
+		
 	}
 	return (0);
 }

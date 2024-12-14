@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:13:26 by samy              #+#    #+#             */
-/*   Updated: 2024/12/13 15:21:48 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/14 23:16:19 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ char	*outfile_type(char *token)
 
 	i = 0;
 	tmp = ft_strchr(token, '>');
-	if (!tmp)
+	if (!tmp || is_operator_in_quotes(token, '>'))
+	{
+		token++;
 		return ("NONE\0");
+	}
 	while (tmp[i] && tmp[i] != ' ')
 		i++;
 	result = ft_substr(tmp, 0, i);
@@ -40,7 +43,10 @@ char	*infile_type(char *token)
 	i = 0;
 	tmp = ft_strchr(token, '<');
 	if (!tmp || is_operator_in_quotes(token, '<'))
+	{
+		token++;
 		return ("NONE\0");
+	}
 	while (tmp[i] && tmp[i] != ' ' && tmp[i] != '>')
 		i++;
 	result = ft_substr(tmp, 0, i);
@@ -74,14 +80,16 @@ char	*outfile_name(char *token)
 
 char	*infile_name(char *token)
 {
-	char	*tmp;
-	char	*result;
-	int		i;
+	char *tmp;
+	char *result;
+	int i;
 
 	i = 0;
 	tmp = ft_strchr(token, '<');
 	if (!tmp || is_operator_in_quotes(token, '<'))
+	{
 		return ("NONE");
+	}
 	while (*tmp == '<' || ft_isspace(*tmp))
 		tmp++;
 	if (*tmp == '\0' || ft_is_operator(*tmp))

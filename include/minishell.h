@@ -151,16 +151,16 @@ int					add_tab(t_data *data, char **envp);
 //                          REDIR		                       //
 ////////////////////////////////////////////////////////////////
 
-int					setup_redir(t_data *data, char *token, t_token *new);
+int					setup_redir(char *token, t_token *new);
 bool				ft_is_operator(char c);
-t_redir				*new_redir_in(t_redir_manag	*param, char *token);
-t_redir				*new_redir_out(t_redir_manag	*param, char *token);
+t_redir				*new_redir_in(char *token);
+t_redir				*new_redir_out(char *token);
 char				*outfile_type(char *token);
 char				*infile_type(char *token);
 char				*outfile_name(char *token);
 char				*infile_name(char *token);
-int					add_redir_in(t_data *data, char *token, t_redir_manag *param);
-int					add_redir_out(t_data *data, char *token, t_redir_manag *param);
+int					add_redir_in(char *token, t_redir_manag *param);
+int					add_redir_out(char *token, t_redir_manag *param);
 bool				is_operator_in_quotes(char *token, char operator);
 void				found_index(char *tmp, int *i);
 void				delete_word(char *str, size_t i, unsigned int start);

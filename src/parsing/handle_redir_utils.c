@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 05:04:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/13 05:47:39 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/14 22:21:07 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ bool	is_operator_in_quotes(char *token, char operator)
 			s_quote = !s_quote;
 		i++;
 	}
-	if (!token[i])
-		return (true);
 	if (s_quote || d_quote)
 	{
 		return (true);

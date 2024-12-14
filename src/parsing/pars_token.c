@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/13 22:52:40 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/14 23:14:09 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	pars_token(t_data *data)
 			ft_free((void **)&data->token_manag.line), ERROR);
 		i++;
 	}
+	printf("PROMPT RESTANT :%s", data->token_manag.readed[0]);
 	ft_free((void **)&data->token_manag.line);
 	free_split(data->token_manag.readed);
 	return (SUCCESS);
@@ -45,20 +46,17 @@ int	setup_token(t_data *data, char *token)
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (ERROR);
-	if (setup_redir(data, token, new) == ERROR)
+	if (setup_redir(token, new) == ERROR)
 	{
 		free(new); // et liberer son contenue aussi stp.
 		return (ERROR);
 	}
-	// printf("intfile[%s] type[%s]\n", new->redir_in->head->file_name, new->redir_in->head->type);
-	// printf("outfile[%s] type[%s]\n", new->redir_out->head->file_name, new->redir_out->head->type);
 	if (setup_cmd(token, new) == ERROR)
 	{
 		// free(redir);
 		free(new);
 		return (ERROR);
 	}
-	// printf("[command] = %s | [args] = %p\n", new->command, new->args);
 	add_back_token(data, new);
 	return (SUCCESS);
 }

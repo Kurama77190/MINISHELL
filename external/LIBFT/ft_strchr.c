@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.paris.fr>    +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 04:07:23 by sben-tay          #+#    #+#             */
-/*   Updated: 2023/11/14 04:07:25 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/14 22:10:48 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strchr(const char *s, int c)
 	char		find;
 	size_t		i;
 
+	if (!s || !c)
+		return (NULL);
 	str = (char *)s;
 	find = (char)c;
 	i = 0;

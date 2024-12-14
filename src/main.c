@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/14 03:27:46 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/14 21:57:10 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ void	put_tokenizer_data(t_data *data)
 		{
 			printf("\033[37mredir_in\033[0m\033[33m[%s]\033[0m type\033[33m[%s]\033[0m\n", current->redir_in.head->file_name, current->redir_in.head->type);
 			current->redir_in.head = current->redir_in.head->next;
+			printf("%p", current->redir_in.head);
 		}
 		while (current->redir_out.head)
 		{
 			printf("redir_out[%s] type[%s]\n", current->redir_out.head->file_name, current->redir_out.head->type);
 			current->redir_out.head = current->redir_out.head->next;
+			printf("%p", current->redir_out.head);
 		}
 		printf("commands[%s]\033[0m\n",current->command);
 		i++;
@@ -75,12 +77,10 @@ int main(int argc, char **argv, char **env)
 	{
 		if (handle_prompt(&data) == ERROR)
 			return (2);
-		if (pars_shell(&data, argc, argv) == ERROR)
+		if (pars_shell(&data, argc, argv) != ERROR)
 		{
-			// JE DOIS PAS LANCER LE LEXEUR ET L EXEC
-		}
-		// put_lst_redir(&data);
 		// exec_command(data);
+		}
 		//free_token_list(data);
 		put_tokenizer_data(&data);
 		free(data.prompt.read_line);

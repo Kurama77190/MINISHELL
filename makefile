@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: samy <samy@student.42.fr>                  +#+  +:+       +#+         #
+#    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/12/13 15:15:59 by samy             ###   ########.fr        #
+#    Updated: 2024/12/14 23:16:39 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LIBFT = external/LIBFT/
 #=================================================__SRC__OF__PROJECT__=============================================================================
 SRC = src/main.c \
 		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_env_utils.c pars_token_utils.c \
-		handle_prompt.c handle_redir.c handle_cmd.c handle_redir_utils.c handle_redir_utils2.c)
+		handle_prompt.c handle_redir.c handle_cmd.c handle_redir_utils.c handle_redir_utils2.c handle_redir_utils3.c)
 SRC_TEST = test/main.c
 
 $(shell mkdir -p $(BUILD))

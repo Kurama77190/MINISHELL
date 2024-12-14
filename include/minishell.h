@@ -51,8 +51,8 @@ typedef struct s_token
 	char			*here_stop;	 // Nom stop here_doc
     int             fd_in;       // Descripteur pour redirection d'entrée
     int             fd_out;      // Descripteur pour redirection de sortie
-    t_redir_manag	*redir_in;    // Nom du fichier d'entrée (si redirection)
-    t_redir_manag   *redir_out;   // Nom du fichier de sortie (si redirection)
+    t_redir_manag	redir_in;    // Nom du fichier d'entrée (si redirection)
+    t_redir_manag   redir_out;   // Nom du fichier de sortie (si redirection)
     t_type          types;        // Type de la commande (COMMAND, PIPE, etc.)
     t_type       	redir_type;  // Type de redirection (REDIR, HERE_DOC, etc.)
     int             builtin;     // 1 si c'est un builtin, 0 si binaire externe
@@ -75,7 +75,7 @@ typedef struct s_envp
 	char			*value;
 	struct s_envp	*next;
 	struct s_envp	*prev;
-}				t_envp;
+}					t_envp;
 
 
 
@@ -125,9 +125,6 @@ int					is_builtin_2(t_data *data, char *token, t_token **new);
 int					is_builtin_3(t_data *data, char *token, t_token **new);
 int					is_args(t_data *data, char *token, t_token **new);
 int					is_command(t_data *data, char *token, t_token **new);
-bool				is_operator_in_quotes(char *token, char operator);
-void				found_index(char *tmp, int *i);
-void				delete_word(char *str, size_t i, unsigned int start);
 
 
 
@@ -163,6 +160,10 @@ char				*infile_type(char *token);
 char				*outfile_name(char *token);
 char				*infile_name(char *token);
 int					add_redir_in(t_data *data, char *token, t_redir_manag *param);
+int					add_redir_out(t_data *data, char *token, t_redir_manag *param);
+bool				is_operator_in_quotes(char *token, char operator);
+void				found_index(char *tmp, int *i);
+void				delete_word(char *str, size_t i, unsigned int start);
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS		                       //

@@ -3,55 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:42:18 by samy              #+#    #+#             */
-/*   Updated: 2024/12/13 05:45:19 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/14 03:37:08 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*infile_name(char *token);
-char	*infile_type(char *token);
-bool	ft_is_operator(char c);
-t_redir	*new_redir_in(t_redir_manag *param, char *token);
-t_redir	*new_redir_out(t_redir_manag *param, char *token);
-char	*outfile_type(char *token);
-char	*infile_type(char *token);
-int		add_redir_in(t_data *data, char *token, t_redir_manag *param);
-int		add_redir_out(t_data *data, char *token, t_redir_manag *param);
-void	delete_word(char *str, size_t i, unsigned int start);
-
-
 int	setup_redir(t_data *data, char *token, t_token *new)
 {
-	t_redir_manag	*redir_in;
-	t_redir_manag	*redir_out;
+	// t_redir_manag	redir_in;
+	// t_redir_manag	redir_out;
 
-	new->redir_in = ft_calloc(1, sizeof(t_redir_manag));
-	if (!new->redir_in)
-		return (ERROR);
-	new->redir_out = ft_calloc(1, sizeof(t_redir_manag));
-	if (!new->redir_out)
+	// new->redir_in = ft_calloc(1, sizeof(t_redir_manag));
+	// if (!new->redir_in)
+	// 	return (ERROR);
+	// new->redir_out = ft_calloc(1, sizeof(t_redir_manag));
+	// if (!new->redir_out)
+	// {
+	// 	ft_free((void **)&new->redir_in);
+	// 	return (ERROR);
+	// }
+	
+	
+	while (ft_strchr(token, '>') != NULL || ft_strchr(token, '<') != NULL)
 	{
-		ft_free((void **)&new->redir_in);
-		return (ERROR);
+		// redir_in = new->redir_in;
+		// redir_out = new->redir_out;
+		if (add_redir_in(data, token, &new->redir_in == ERROR)
+			return (ERROR);
+		if (add_redir_out(data, token, &redir_out))
+			return (ERROR);
 	}
-	redir_in = new->redir_in;
-	redir_out = new->redir_out;
-	if (add_redir_in(data, token, redir_in) == ERROR)
-		return (ERROR);
-	if (add_redir_out(data, token, redir_out))
-		return (ERROR);
 	return (SUCCESS);
 }
 
-t_redir	*new_redir_in(t_redir_manag *param, char *token)
+t_redir	*new_redir_in(char *token)
 {
 	t_redir	*new;
 
-	(void)param;
 	new = ft_calloc(1, sizeof(t_redir));
 	if (!new)
 		return (NULL);
@@ -64,11 +56,10 @@ t_redir	*new_redir_in(t_redir_manag *param, char *token)
 	return (new);
 }
 
-t_redir	*new_redir_out(t_redir_manag *param, char *token)
+t_redir	*new_redir_out(char *token)
 {
 	t_redir	*new;
 
-	(void)param;
 	new = ft_calloc(1, sizeof(t_redir));
 	if (!new)
 		return (NULL);
@@ -81,101 +72,18 @@ t_redir	*new_redir_out(t_redir_manag *param, char *token)
 	return (new);
 }
 
-char	*outfile_type(char *token)
-{
-	char	*tmp;
-	char	*result;
-	int		i;
-
-	i = 0;
-	tmp = ft_strchr(token, '>');
-	if (!tmp)
-		return ("NONE\0");
-	while (tmp[i] && tmp[i] != ' ')
-		i++;
-	result = ft_substr(tmp, 0, i);
-	if (!result)
-		return (NULL);
-	delete_word(tmp, i, 0);
-	return (result);
-}
-
-char	*infile_type(char *token)
-{
-	char	*tmp;
-	char	*result;
-	int		i;
-
-	i = 0;
-	tmp = ft_strchr(token, '<');
-	if (!tmp)
-		return ("NONE\0");
-	while (tmp[i] && tmp[i] != ' ' && tmp[i] != '>')
-		i++;
-	result = ft_substr(tmp, 0, i);
-	if (!result)
-		return (NULL);
-	delete_word(tmp, i, 0);
-	return (result);
-}
-
-char	*outfile_name(char *token)
-{
-	char	*tmp;
-	char	*result;
-	int		i;
-
-	i = 0;
-	tmp = ft_strchr(token, '>');
-	if (!tmp || is_operator_in_quotes(token, '>'))
-		return ("NONE");
-	while (*tmp == '>' || ft_isspace(*tmp))
-		tmp++;
-	if (*tmp == '\0' || ft_is_operator(*tmp))
-		return ("NONE");
-	found_index(tmp, &i);
-	result = ft_substr(tmp, 0, i);
-	if (!result)
-		return (NULL);
-	delete_word(tmp, i, 0);
-	return (result);
-}
-
-char	*infile_name(char *token)
-{
-	char	*tmp;
-	char	*result;
-	int		i;
-
-	i = 0;
-	tmp = ft_strchr(token, '<');
-	if (!tmp || is_operator_in_quotes(token, '<'))
-		return ("NONE");
-	while (*tmp == '<' || ft_isspace(*tmp))
-		tmp++;
-	if (*tmp == '\0' || ft_is_operator(*tmp))
-		return ("NONE");
-	found_index(tmp, &i);
-	result = ft_substr(tmp, 0, i);
-	if (!result)
-		return (NULL);
-	delete_word(tmp, i, 0);
-	return (result);
-}
-
-
-int	add_redir_in(t_data *data, char *token, t_redir_manag *param)
+int	add_redir_in(char *token, t_redir_manag *param)
 {
 	t_redir	*new;
 	t_redir	*tmp;
 
-	(void)data;
-	new = new_redir_in(param, token);
+	new = new_redir_in(token);
 	if (!new)
 		return (ERROR);
 	if (param->head == NULL)
 	{
 		param->head = new;
+		param->current = new;
 		new->next = NULL;
 		new->prev = NULL;
 	}
@@ -187,6 +95,7 @@ int	add_redir_in(t_data *data, char *token, t_redir_manag *param)
 		tmp->next = new;
 		new->prev = tmp;
 		new->next = NULL;
+		param->current = new;
 	}
 	return (SUCCESS);
 }
@@ -197,7 +106,7 @@ int	add_redir_out(t_data *data, char *token, t_redir_manag *param)
 	t_redir	*tmp;
 
 	(void)data;
-	new = new_redir_out(param, token);
+	new = new_redir_out(token);
 	if (!new)
 		return (ERROR);
 	if (param->head == NULL)

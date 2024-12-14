@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/13 01:53:15 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/14 03:27:46 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@ void put_lst_envp(t_envp *envp)
     }
 }
 
-void put_lst_redir(t_data	*param)
-{
-    t_redir_manag	*current = param->token_manag.token->redir_in;
-	printf("%p\n", current);
-	if (!current)
-	{
-		printf("current = NULL\n");
-	}
-	printf("filename[%s] type[%s]\n", current->head->file_name, current->head->type);
-}
-
 void put_tab_env(char **env)
 {
     int i = 0;
@@ -45,6 +34,32 @@ void put_tab_env(char **env)
 
 	// put_lst_envp(data.envp.envp);
 	// put_tab_env(data.envp.env);
+
+	// printf("intfile[%s] type[%s]\n", new->redir_in->head->file_name, new->redir_in->head->type);
+	// printf("outfile[%s] type[%s]\n", new->redir_out->head->file_name, new->redir_out->head->type);
+
+void	put_tokenizer_data(t_data *data)
+{
+	t_token	*current = data->token_manag.token;
+	int i = 0;
+	while (current)
+	{
+		printf("\033[37mtokenizer\033[33m[%i]\033[0m\n", i);
+		while (current->redir_in.head)
+		{
+			printf("\033[37mredir_in\033[0m\033[33m[%s]\033[0m type\033[33m[%s]\033[0m\n", current->redir_in.head->file_name, current->redir_in.head->type);
+			current->redir_in.head = current->redir_in.head->next;
+		}
+		while (current->redir_out.head)
+		{
+			printf("redir_out[%s] type[%s]\n", current->redir_out.head->file_name, current->redir_out.head->type);
+			current->redir_out.head = current->redir_out.head->next;
+		}
+		printf("commands[%s]\033[0m\n",current->command);
+		i++;
+		current = current->next;
+	}
+}
 
 
 int main(int argc, char **argv, char **env)
@@ -67,6 +82,7 @@ int main(int argc, char **argv, char **env)
 		// put_lst_redir(&data);
 		// exec_command(data);
 		//free_token_list(data);
+		put_tokenizer_data(&data);
 		free(data.prompt.read_line);
 		ft_memset(&data, 0, sizeof(t_data));
 	}

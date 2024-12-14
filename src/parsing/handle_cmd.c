@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 02:26:22 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/13 02:32:51 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:24:22 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,9 @@ static int	found_cmd_name(char *token, t_token *new)
 		return (ERROR);
 	return (SUCCESS);
 }
+
+// static int	found_args_cmd(char *token, t_token *new)
+// {
+	
+// 	return (SUCCESS);
+// }

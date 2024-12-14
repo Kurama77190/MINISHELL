@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/13 02:39:11 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/13 22:52:40 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ int	setup_token(t_data *data, char *token)
 		free(new); // et liberer son contenue aussi stp.
 		return (ERROR);
 	}
-	printf("intfile[%s] type[%s]\n", new->redir_in->head->file_name, new->redir_in->head->type);
-	printf("outfile[%s] type[%s]\n", new->redir_out->head->file_name, new->redir_out->head->type);
+	// printf("intfile[%s] type[%s]\n", new->redir_in->head->file_name, new->redir_in->head->type);
+	// printf("outfile[%s] type[%s]\n", new->redir_out->head->file_name, new->redir_out->head->type);
 	if (setup_cmd(token, new) == ERROR)
 	{
 		// free(redir);
 		free(new);
 		return (ERROR);
 	}
-	printf("[command] = %s | [args] = %p\n", new->command, new->args);
-	// add_back_token(data, new);
+	// printf("[command] = %s | [args] = %p\n", new->command, new->args);
+	add_back_token(data, new);
 	return (SUCCESS);
 }
 

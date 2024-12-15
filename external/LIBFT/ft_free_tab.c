@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 21:02:10 by rbalazs          ###   ########.fr       */
+/*   Created: 2024/08/16 14:22:48 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/10/29 15:42:09 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_pwd(t_data *data)
+void	ft_free_tab(char **tab)
 {
-	char	*pwd;
+	int	i;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
+	i = 0;
+	if (tab == NULL || *tab == NULL)
+		return;
+	while (tab[i])
 	{
-		perror("Error PWD");
-		data->exit_status = 1;
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
 	}
-	else
-	{
-		ft_putstr_fd(pwd, 1);
-		ft_putstr_fd("\n", 1);
-		free(pwd);
-	}
-	data->exit_status = 0;
+	free(tab);
+	tab = NULL;
 }

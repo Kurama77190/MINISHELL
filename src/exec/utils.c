@@ -6,13 +6,13 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:09 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/14 22:37:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 22:31:01 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_count_levels(t_shell_list *node, int level, t_data *data)
+void	ft_count_levels(t_token *node, int level, t_data *data)
 {
 	if (!node)
 		return ;

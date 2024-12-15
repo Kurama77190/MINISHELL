@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/15 00:00:30 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/15 23:31:56 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		g_exit_status;
 
 void put_lst_envp(t_envp *envp)
 {
@@ -86,10 +88,10 @@ int main(int argc, char **argv, char **env)
 			return (2);
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
-		// exec_command(data);
+			ft_execution(&data);
 		}
 		//free_token_list(data);
-		put_tokenizer_data(&data);
+		//put_tokenizer_data(&data);
 		free(data.prompt.read_line);
 		ft_memset(&data, 0, sizeof(t_data));
 	}

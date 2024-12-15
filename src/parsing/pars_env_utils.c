@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:56:36 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/19 03:33:31 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/15 22:43:16 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	free_lst_envp(t_data *data)
 	t_envp	*current;
 	t_envp	*next;
 
-	current = data->envp_manag.envp;
+	current = data->e.envp;
 	if (!current)
 		return ;
 	while (current->next)
@@ -70,7 +70,7 @@ void	free_lst_envp(t_data *data)
 		ft_free((void **)&current);
 		current = next;
 	}
-	data->envp_manag.envp = NULL;
+	data->e.envp = NULL;
 }
 
 int	uptdate_env(t_data *data)
@@ -79,20 +79,20 @@ int	uptdate_env(t_data *data)
 	size_t	i;
 	t_envp	*tmp;
 
-	ft_free((void **)data->envp_manag.env);
-	len = ft_lstsize_envp(data->envp_manag.envp);
-	data->envp_manag.env = ft_calloc((len + 1), sizeof(char *));
-	if (!data->envp_manag.env)
+	ft_free((void **)data->e.env);
+	len = ft_lstsize_envp(data->e.envp);
+	data->e.env = ft_calloc((len + 1), sizeof(char *));
+	if (!data->e.env)
 		return (ERROR);
 	i = 0;
-	tmp = data->envp_manag.envp;
-	while (data->envp_manag.envp)
+	tmp = data->e.envp;
+	while (data->e.envp)
 	{
-		data->envp_manag.env[i] = ft_strjoin(tmp->name, tmp->value);
+		data->e.env[i] = ft_strjoin(tmp->name, tmp->value);
 		i++;
 		tmp = tmp->next;
 	}
-	data->envp_manag.env[i] = NULL;
-	data->envp_manag.sync = true;
+	data->e.env[i] = NULL;
+	data->e.sync = true;
 	return (SUCCESS);
 }

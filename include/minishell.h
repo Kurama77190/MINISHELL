@@ -1,21 +1,32 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <unistd.h>
-# include <string.h>
 # include "libft.h"
+# include <errno.h>
+# include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <term.h>
+# include <termios.h>
+# include <unistd.h>
 
 # define ERROR 1
 # define SUCCESS 0
 
+# define ERR_SYN 1
+# define ERR_MEM 2
+# define ERR_MALLOC "Memory allocation failed"
+# define BUFF_SIZE 4096
 
 //////////////////////////////////////////////////////////////////
-/*                            STRUCT		                   */
+/*                            STRUCT			                */
 ////////////////////////////////////////////////////////////////
 
 typedef enum e_redir_type
@@ -24,12 +35,15 @@ typedef enum e_redir_type
 	OUT,
 	D_APPEND,
 	D_HEREDOC,
-}	t_redir_type;
+}					t_redir_type;
 
 typedef struct s_redir
 {
 	char			*type;
 	char			*file_name;
+	int				hd_fd;
+	int				in_fd;
+	int				out_fd;
 	struct s_redir	*next;
 	struct s_redir	*prev;
 }					t_redir;
@@ -40,19 +54,20 @@ typedef struct s_redir_manag
 	t_redir			*current;
 }					t_redir_manag;
 
-
 typedef struct s_token
 {
-    char            *command;    // Nom de la commande
-    char            **args;      // Tableau des arguments
-    int             fd_in;       // Descripteur pour redirection d'entrée
-    int             fd_out;      // Descripteur pour redirection de sortie
-    t_redir_manag	redir_in;    // Nom du fichier d'entrée (si redirection)
-    t_redir_manag   redir_out;   // Nom du fichier de sortie (si redirection)
-    int             fd_pipe[2];  // Pipe utilisé pour relier la sortie et l'entrée entre commandes
-    struct s_token  *next;       // Pointeur vers le prochain nœud
-    struct s_token  *prev;       // Pointeur vers le nœud précédent
-} 					t_token; 
+	char *command;           // Nom de la commande
+	char **args;             // Tableau des arguments
+	int fd_in;               // Descripteur pour redirection d'entrée
+	int fd_out;              // Descripteur pour redirection de sortie
+	t_redir_manag redir_in;  // Nom du fichier d'entrée (si redirection)
+	t_redir_manag redir_out; // Nom du fichier de sortie (si redirection)
+	int fd_pipe[2];         
+		// Pipe utilisé pour relier la sortie et l'entrée entre commandes
+	struct s_token *next;    // Pointeur vers le prochain nœud
+	struct s_token *prev;    // Pointeur vers le nœud précédent
+	pid_t			pid;
+}					t_token;
 
 typedef struct s_token_management
 {
@@ -69,8 +84,6 @@ typedef struct s_envp
 	struct s_envp	*next;
 	struct s_envp	*prev;
 }					t_envp;
-
-
 
 typedef struct s_env_management
 {
@@ -94,17 +107,156 @@ typedef struct s_data
 {
 	int				exit_status;
 	t_token_manag	token_manag;
-	t_env_manag		envp_manag;
+	t_env_manag		e;
 	t_sig			signal;
 	t_prompt		prompt;
+	int				fd_pipe[2];
+	int				fd[2];
+	int				stdin_backup;
+	int				stdout_backup;
+	int				wstatus;
+	struct termios	terminal;
+	int				nb_levels;
+	int				last_pid;
+	int 			free_value;
 	// exec;
 }					t_data;
 
+extern int			g_exit_status;
+
 //////////////////////////////////////////////////////////////////
-//                          PARSING		                       //
+//                          BUILTINS			                //
 ////////////////////////////////////////////////////////////////
 
-// int 				main(int argc, char **argv, char **env);int	handle_prompt(t_data *data);
+/**
+ * @file builtins_launch.c
+ */
+bool				ft_detect_builtin(char **argv, t_data *data);
+
+/**
+ * @file builtins_utils.c
+ */
+void				copy_env(char **envp, t_data *data);
+void				copy_env_char(t_data *data);
+void				ft_sort_env(t_envp *env);
+void				ft_swap_env_lines(t_envp *a, t_envp *b);
+
+/**
+ * @file env.c
+ */
+char				*put_name(char *line);
+char				*put_value(char *line);
+t_envp				*new_node_env(char *line, t_data *data);
+void				push_node_to_env(t_data *data, char *line);
+void				ft_env(char **argv, t_data *data);
+
+/**
+ * @file export.c
+ */
+bool				check_double(t_data *data, char *line);
+void				ft_exp_env(t_data *data);
+bool				check_change_value(t_data *data);
+void				ft_export(char **argv, t_data *data);
+
+/**
+ * @file echo.c
+ */
+void				ft_echo(char **argv, t_data *data);
+
+/**
+ * @file pwd.c
+ */
+void				ft_pwd(t_data *data);
+
+/**
+ * @file unset.c
+ */
+void				search_in_env(t_data *data, char *var);
+void				ft_unset(char **argv, t_data *data);
+char				*ft_strndup(const char *s, size_t n);
+
+/**
+ * @file exit.c
+ */
+bool				ft_is_number(char *str);
+int					ft_value(int value);
+void				ft_exit(char **argv, t_data *data);
+
+/**
+ * @file cd.c
+ */
+void				set_env_oldpwd(char *old_pwd, t_data *data);
+void				set_env_pwd(char *new_pwd, t_data *data);
+void				ft_move_directory(char *path, t_data *data);
+void				set_home(t_data *data);
+void				ft_cd(char **argv, t_data *data);
+
+//////////////////////////////////////////////////////////////////
+//                          EXEC			                    //
+////////////////////////////////////////////////////////////////
+
+/**
+ * @file exec_cases.c
+ */
+int					exec_onecommand(char **cmd, t_data *data);
+void				ft_multi_pipe(t_token *node, t_data *data, int i);
+void				ft_no_pipe(t_token *node, t_data *data);
+void				ft_erase_all_temp_here_doc(t_token *node);
+
+/**
+ * @file exec_core.c
+ */
+char				*ft_path(char *cmd, t_data *data);
+void				exec(t_data *data, char **cmd);
+
+/**
+ * @file exec_read.c
+ */
+void				ft_execution(t_data *data);
+void				ft_count_levels(t_token *node, int level, t_data *data);
+
+/**
+ * @file exec_utils.c
+ */
+bool				ft_is_delimiter(char *delimiter, char *str);
+void				ft_fds_dup2(t_data *data);
+bool				is_builtin(char *command);
+void				wait_commands(t_data *data);
+void				close_hd(t_redir *redir, t_data *data);
+
+/**
+ * @file exec_utils_2.c
+ */
+char				*find_path_to_find(t_data *data);
+void				search_index(t_data *data, int *i, char *path);
+void				increment_shlvl(t_data *data, int lvl_int);
+void				change_shlvl(t_data *data);
+
+/**
+ * @file exec_heredoc.c
+ */
+void				ft_process_heredoc(t_redir *redir, t_data *data);
+
+/**
+ * @file exec_redirs_read.c
+ */
+int					ft_read_heredoc(t_token *node, t_data *data);
+void				ft_read_infile(t_token *node, t_data *data);
+void				ft_read_outfile(t_token *node, t_data *data);
+void				ft_read_redirs(t_token *node, t_data *data);
+
+/**
+ * @file exec_redirs.c
+ */
+void				ft_process_infile(t_redir *current, t_data *data);
+void				ft_process_heredoc_file(t_redir *current, t_data *data);
+void				ft_exec_redirs(t_token *node, t_data *data);
+
+//////////////////////////////////////////////////////////////////
+//                          PARSING			                    //
+////////////////////////////////////////////////////////////////
+
+// int 				main(int argc, char **argv,char **env);
 int					handle_prompt(t_data *data);
 int					pars_shell(t_data *data, int argc, char **argv);
 int					pars_env(t_data *data, char **envp);
@@ -121,7 +273,7 @@ int					is_args(t_data *data, char *token, t_token **new);
 int					is_command(t_data *data, char *token, t_token **new);
 
 //////////////////////////////////////////////////////////////////
-//                       ENVIRONMENT	                       //
+//                       ENVIRONMENT		                    //
 ////////////////////////////////////////////////////////////////
 
 t_envp				*lst_new_envp(char **splited);
@@ -133,12 +285,11 @@ int					add_lst(t_data *data, char **splited);
 int					add_tab(t_data *data, char **envp);
 
 //////////////////////////////////////////////////////////////////
-//                       	TOKEN		                       //
+//                       	TOKEN			                    //
 ////////////////////////////////////////////////////////////////
 
-
 //////////////////////////////////////////////////////////////////
-//                          REDIR		                       //
+//                          REDIR			                    //
 ////////////////////////////////////////////////////////////////
 
 bool				ft_is_operator(char c);
@@ -156,7 +307,7 @@ void				delete_word(char *str, size_t i, unsigned int start);
 int					update_in_quote(char c, int in_quote);
 
 //////////////////////////////////////////////////////////////////
-//                          CMD 		                       //
+//                          CMD 			                    //
 ////////////////////////////////////////////////////////////////
 
 int					found_cmd_name(char *token, t_token *new);
@@ -167,39 +318,26 @@ char				*extract_word(char *str, int *i);
 char				**free_args(char **args);
 
 //////////////////////////////////////////////////////////////////
-//                          TOOLS		                       //
+//                          TOOLS			                    //
 ////////////////////////////////////////////////////////////////
 
+void				heredoc_sigint_handler(int sig);
+void				sigquit_handler(int sig);
+void				sigint_handler(int sig);
+void				signals(t_data *data);
+void				put_lst_envp(t_envp *envp);
+void				ft_close_fd(t_data *data, char *msg);
+void				ft_error(t_data *data, char *str);
+void				ft_error_exit(t_data *data, char *str);
+void				ft_free_all(t_data *data);	
 
-void put_lst_envp(t_envp *envp);
-
-/* 
+/*
 								NOTE SAMY AND RALPH
 
-	
+
 
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 	ordre a suivre pour minishell  (fais par Garfi c'est DE CE QUE J'EN AI COMPRIT C'EST PEUT ETRE FAUX !!!!!!!!!!!)

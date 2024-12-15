@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/12/14 23:16:39 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/12/15 23:30:30 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CPPFLAGS = -I./include -I./external/LIBFT/
 LDFLAGS = -L$(LIBFT) -lft -lreadline -lhistory
 PARS  = src/parsing/
 EXEC  = src/exec/
-BUILT = src/built/
+BUILT = src/builtins/
 BUILD = builder/
 
 LIBFT = external/LIBFT/
@@ -30,9 +30,11 @@ LIBFT = external/LIBFT/
 # CFLAGS += -fsanitize=fork
 
 #=================================================__SRC__OF__PROJECT__=============================================================================
-SRC = src/main.c \
-		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_env_utils.c pars_token_utils.c \
-		handle_prompt.c handle_redir.c handle_cmd.c handle_redir_utils.c handle_redir_utils2.c handle_redir_utils3.c)
+SRC = src/main.c src/signal/signal.c src/errors.c src/free.c \
+		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_env_utils.c \
+		handle_prompt.c handle_redir.c handle_cmd.c handle_redir_utils.c handle_redir_utils2.c handle_redir_utils3.c) \
+		$(addprefix $(EXEC), exec_cases.c exec_core.c utils.c utils_2.c exec_heredoc.c exec_redirs_process.c exec_start.c) \
+		$(addprefix $(BUILT), cd.c echo.c env.c exit.c export.c pwd.c unset.c builtins_utils.c builtins_launch.c)
 SRC_TEST = test/main.c
 
 $(shell mkdir -p $(BUILD))

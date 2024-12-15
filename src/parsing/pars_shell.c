@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:43:37 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/13 01:52:48 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/15 22:43:16 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	pars_shell(t_data *data, int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	if (!data->envp_manag.sync)
+	if (!data->e.sync)
 		uptdate_env(data);
 	if (pars_token(data) == ERROR)
 	{

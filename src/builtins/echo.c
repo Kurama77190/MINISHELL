@@ -6,11 +6,11 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:10 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/09 14:02:03 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 21:01:34 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 bool	verif_flag(char *str)
 {

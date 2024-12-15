@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/13 13:14:29 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/14 15:58:13 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_cd(char **argv, t_data *data)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
 		data->exit_status = 1;
-		return ;
+		return ; 
 	}
 	if (argv[1] == NULL)
 		set_home(data);

@@ -80,11 +80,9 @@ void	copy_env_char(t_data *data)
 	}
 	data->envc = malloc(sizeof(char *) * (i + 1));
 	if (!data->envc)
-		ft_error(data, "Malloc failed\n");
-	while (j <= i)
 	{
-		data->envc[j] = NULL;
-		j++;
+		ft_error(data, "error environment\n");
+		return ;
 	}
 	i = 0;
 	while (tmp)
@@ -93,7 +91,10 @@ void	copy_env_char(t_data *data)
 		{
 			data->envc[i] = ft_strdup(tmp->line);
 			if (!data->envc[i])
-				ft_error(data, "Malloc failed\n");
+			{
+				ft_error(data, "error environment\n");
+				return ;
+			}
 			i++;
 		}
 		tmp = tmp->next;

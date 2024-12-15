@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_heredoc.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/12/15 00:08:14 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	create_filename(t_redir *redir)
@@ -37,8 +49,9 @@ static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
 	if (i != start)
 	{
 		var = ft_substr(str, start, i);
-		if (!(var = ft_get_env_value(var, data)))
-			ft_putstr_fd(var, fd);
+		var = ft_get_env_value(var, data);
+		if (!var)
+			ft_putstr_fd("", fd);
 		free(var);
 	}
 	return (i);
@@ -59,26 +72,13 @@ static void	ft_expand_heredoc(char *command, int fd, t_data *data)
 	ft_putchar_fd('\n', fd);
 }
 
-
-
-static void	execute_here_doc(t_redir *redir, t_data *data)
+static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
+		int file)
 {
 	char	*line;
-	char	*file_path;
-	int		file;
 	int		count;
 
-	file = -1;
 	count = 0;
-	if (!redir && !redir->file_here_doc)
-		return ;
-	file_path = redir->file_here_doc;
-	file = open(file_path, O_TRUNC | O_CREAT | O_WRONLY, 0666);
-	if (file == -1)
-		perror("heredoc");
-	signal(SIGINT, heredoc_sigint_handler);
-	while (*file_path && !ft_is_quote(*file_path))
-		file_path++;
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
@@ -94,12 +94,25 @@ static void	execute_here_doc(t_redir *redir, t_data *data)
 	}
 	if (line)
 		free(line);
-	close(file);
 }
 
 void	ft_process_heredoc(t_redir *redir, t_data *data)
 {
+	char	*file_path;
+	int		file;
+
+	file = -1;
 	create_filename(redir);
-	execute_here_doc(redir, data);
+	if (!redir && !redir->file_here_doc)
+		return ;
+	file_path = redir->file_here_doc;
+	file = open(file_path, O_TRUNC | O_CREAT | O_WRONLY, 0666);
+	if (file == -1)
+		perror("heredoc");
+	signal(SIGINT, heredoc_sigint_handler);
+	while (*file_path && !ft_is_quote(*file_path))
+		file_path++;
+	execute_here_doc(redir, data, file_path, file);
+	close(file);
 	data->isheredoc = true;
 }

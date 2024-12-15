@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_cases.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/12/14 23:55:24 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <unistd.h>
 
@@ -37,8 +49,7 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 			close(data->pipe_fd[1]);
 		}
 		close(data->pipe_fd[0]);
-		ft_read_infile(node, data);
-		ft_read_outfile(node, data);
+		ft_exec_redirs(node, data);
 		close(data->pipe_fd[0]);
 		close(data->pipe_fd[1]);
 		if (is_builtin(node->argv[0]) == true)
@@ -65,7 +76,6 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 	}
 }
 
-
 void	ft_no_pipe(t_shell_list *node, t_data *data)
 {
 	if (!node || !node->argv)
@@ -81,9 +91,7 @@ void	ft_no_pipe(t_shell_list *node, t_data *data)
 			ft_error(data, "Error forking");
 		if (node->pid == 0)
 		{
-			// ft_read_heredoc(node, data);
-			ft_read_infile(node, data);
-			ft_read_outfile(node, data);
+			ft_exec_redirs(node, data);
 			close(data->fd[0]);
 			close(data->fd[1]);
 			exec(data, node->argv);

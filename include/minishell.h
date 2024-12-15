@@ -18,16 +18,13 @@
 /*                            STRUCT		                   */
 ////////////////////////////////////////////////////////////////
 
-typedef enum e_type
+typedef enum e_redir_type
 {
-    TYPE_NONE   = 0,        // 000000
-    COMMAND     = 1 << 0,   // 000001
-    PIPE        = 1 << 1,   // 000010
-    REDIR_IN    = 1 << 2,   // 000100
-    REDIR_OUT   = 1 << 3,   // 001000
-    HERE_DOC    = 1 << 4,   // 010000
-    APPEND_OUT  = 1 << 5    // 100000
-} t_type;
+	IN,
+	OUT,
+	D_APPEND,
+	D_HEREDOC,
+}	t_redir_type;
 
 typedef struct s_redir
 {
@@ -48,14 +45,10 @@ typedef struct s_token
 {
     char            *command;    // Nom de la commande
     char            **args;      // Tableau des arguments
-	char			*here_stop;	 // Nom stop here_doc
     int             fd_in;       // Descripteur pour redirection d'entrée
     int             fd_out;      // Descripteur pour redirection de sortie
     t_redir_manag	redir_in;    // Nom du fichier d'entrée (si redirection)
     t_redir_manag   redir_out;   // Nom du fichier de sortie (si redirection)
-    t_type          types;        // Type de la commande (COMMAND, PIPE, etc.)
-    t_type       	redir_type;  // Type de redirection (REDIR, HERE_DOC, etc.)
-    int             builtin;     // 1 si c'est un builtin, 0 si binaire externe
     int             fd_pipe[2];  // Pipe utilisé pour relier la sortie et l'entrée entre commandes
     struct s_token  *next;       // Pointeur vers le prochain nœud
     struct s_token  *prev;       // Pointeur vers le nœud précédent

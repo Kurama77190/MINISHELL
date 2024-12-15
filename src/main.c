@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/14 21:57:10 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/15 00:00:30 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,16 @@ void	put_tokenizer_data(t_data *data)
 		{
 			printf("redir_out[%s] type[%s]\n", current->redir_out.head->file_name, current->redir_out.head->type);
 			current->redir_out.head = current->redir_out.head->next;
-			printf("%p", current->redir_out.head);
+			printf("%p\n", current->redir_out.head);
 		}
 		printf("commands[%s]\033[0m\n",current->command);
+		// int	j = 0;
+		printf("args[%p] ", current->args);
+		// while(current->args[j])
+		// {
+		// 	j++;
+		// }
+		// printf("]\n");
 		i++;
 		current = current->next;
 	}

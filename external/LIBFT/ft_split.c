@@ -6,13 +6,13 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 04:07:16 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/19 16:13:51 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/15 00:22:30 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_nombremot(char *str, char c)
+int	ft_countwords(char const *str, char c)
 {
 	int	i;
 	int	count;
@@ -21,82 +21,85 @@ static int	ft_nombremot(char *str, char c)
 	count = 0;
 	while (str[i])
 	{
-		while (str[i] == c && str[i])
-			i++;
-		if (str[i])
+		if (str[i] != c)
+		{
 			count++;
-		while (str[i] != c && str[i])
+			while (str[i] && str[i] != c)
+				i++;
+		}
+		else
 			i++;
 	}
 	return (count);
 }
 
-static int	ft_lenmot(char *str, char c)
+char	*ft_strndup_split(const char *s1, int index, int n)
+{
+	int		i;
+	char	*dup;
+
+	dup = malloc(sizeof(char) * (n + 1));
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		dup[i] = s1[index];
+		i++;
+		index++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}
+
+void	ft_free_split(char **res, int index)
+{
+	while (index >= 0)
+	{
+		free(res[index]);
+		index--;
+	}
+	free(res);
+}
+
+static bool	ft_processwords(char const *s, char c, char **res, int words)
 {
 	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	return (i);
-}
-
-static char	**ft_malloc_error(char **tab)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free (tab[i]);
-		i++;
-	}
-	free(tab);
-	return (NULL);
-}
-
-static void	ft_ajoutdesmots(char **tab, char *str, int i, char c)
-{
 	int	j;
-	int	k;
+	int	n;
 
+	i = 0;
 	j = 0;
-	while (str[i])
+	while (j < words)
 	{
-		k = 0;
-		while (str[i] == c)
+		while (s[i] && s[i] == c)
 			i++;
-		if (str[i])
-		{
-			tab[j] = malloc((sizeof(char)) * (ft_lenmot(str + i, c) + 1));
-			if (!tab[j])
-				ft_malloc_error(tab);
-			while (str[i] && str[i] != c)
-			{
-				tab[j][k] = str[i];
-				i++;
-				k++;
-			}
-			tab[j][k] = '\0';
-			j++;
-		}
+		if (!s[i])
+			break ;
+		n = 0;
+		while (s[i + n] && s[i + n] != c)
+			n++;
+		res[j] = ft_strndup_split(s, i, n);
+		if (!res[j])
+			return (ft_free_split(res, j), false);
+		j++;
+		i += n;
 	}
-	tab[j] = (NULL);
+	return (res[j] = NULL, true);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	*str;
-	char	**tab;
-	int		i;
+	int		words;
+	char	**res;
 
-	i = 0;
 	if (!s)
 		return (NULL);
-	str = (char *)s;
-	tab = malloc(sizeof(char *) * (ft_nombremot(str, c) + 1));
-	if (!tab)
+	words = ft_countwords(s, c);
+	res = malloc(sizeof(char *) * (words + 1));
+	if (!res)
 		return (NULL);
-	ft_ajoutdesmots(tab, str, i, c);
-	return (tab);
+	if (ft_processwords(s, c, res, words) == false)
+		return (NULL);
+	return (res);
 }

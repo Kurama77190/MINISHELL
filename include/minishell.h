@@ -118,6 +118,7 @@ int					pars_env(t_data *data, char **envp);
 int					pars_token(t_data *data);
 int					setup_token(t_data *data, char *token);
 int					setup_cmd(char *token, t_token *new);
+int					setup_redir(char *token, t_token *new);
 int					add_back_token(t_data *data, t_token *new);
 int					token_id(t_data *data, char *token, t_token **new);
 int					is_builtin_1(t_data *data, char *token, t_token **new);
@@ -125,10 +126,6 @@ int					is_builtin_2(t_data *data, char *token, t_token **new);
 int					is_builtin_3(t_data *data, char *token, t_token **new);
 int					is_args(t_data *data, char *token, t_token **new);
 int					is_command(t_data *data, char *token, t_token **new);
-
-
-
-
 
 //////////////////////////////////////////////////////////////////
 //                       ENVIRONMENT	                       //
@@ -151,7 +148,6 @@ int					add_tab(t_data *data, char **envp);
 //                          REDIR		                       //
 ////////////////////////////////////////////////////////////////
 
-int					setup_redir(char *token, t_token *new);
 bool				ft_is_operator(char c);
 t_redir				*new_redir_in(char *token);
 t_redir				*new_redir_out(char *token);
@@ -164,6 +160,18 @@ int					add_redir_out(char *token, t_redir_manag *param);
 bool				is_operator_in_quotes(char *token, char operator);
 void				found_index(char *tmp, int *i);
 void				delete_word(char *str, size_t i, unsigned int start);
+int					update_in_quote(char c, int in_quote);
+
+//////////////////////////////////////////////////////////////////
+//                          CMD 		                       //
+////////////////////////////////////////////////////////////////
+
+int					found_cmd_name(char *token, t_token *new);
+int					found_args_cmd(char *token, t_token *new);
+char				**split_with_quotes(char *str);
+int					ft_count_words(char *str);
+char				*extract_word(char *str, int *i);
+char				**free_args(char **args);
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS		                       //

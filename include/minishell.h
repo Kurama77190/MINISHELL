@@ -20,6 +20,7 @@
 
 typedef enum e_redir_type
 {
+	NONE,
 	IN,
 	OUT,
 	D_APPEND,
@@ -28,6 +29,7 @@ typedef enum e_redir_type
 
 typedef struct s_redir
 {
+	t_redir_type	key;
 	char			*type;
 	char			*file_name;
 	struct s_redir	*next;
@@ -50,9 +52,10 @@ typedef struct s_token
     t_redir_manag	redir_in;    // Nom du fichier d'entrée (si redirection)
     t_redir_manag   redir_out;   // Nom du fichier de sortie (si redirection)
     int             fd_pipe[2];  // Pipe utilisé pour relier la sortie et l'entrée entre commandes
+	int				builtin;
     struct s_token  *next;       // Pointeur vers le prochain nœud
     struct s_token  *prev;       // Pointeur vers le nœud précédent
-} 					t_token; 
+} 					t_token;
 
 typedef struct s_token_management
 {
@@ -106,6 +109,7 @@ typedef struct s_data
 
 // int 				main(int argc, char **argv, char **env);int	handle_prompt(t_data *data);
 int					handle_prompt(t_data *data);
+int					check_cmd(t_data *data);
 int					pars_shell(t_data *data, int argc, char **argv);
 int					pars_env(t_data *data, char **envp);
 int					pars_token(t_data *data);
@@ -114,11 +118,12 @@ int					setup_cmd(char *token, t_token *new);
 int					setup_redir(char *token, t_token *new);
 int					add_back_token(t_data *data, t_token *new);
 int					token_id(t_data *data, char *token, t_token **new);
-int					is_builtin_1(t_data *data, char *token, t_token **new);
-int					is_builtin_2(t_data *data, char *token, t_token **new);
-int					is_builtin_3(t_data *data, char *token, t_token **new);
-int					is_args(t_data *data, char *token, t_token **new);
-int					is_command(t_data *data, char *token, t_token **new);
+bool				check_redirection(char *str);
+bool				check_pipe(char *str);
+bool				is_empty_prompt(const char *str);
+bool				is_operator(char c);
+char				**split_pipes_secure(const char *str);
+
 
 //////////////////////////////////////////////////////////////////
 //                       ENVIRONMENT	                       //
@@ -161,10 +166,6 @@ int					update_in_quote(char c, int in_quote);
 
 int					found_cmd_name(char *token, t_token *new);
 int					found_args_cmd(char *token, t_token *new);
-char				**split_with_quotes(char *str);
-int					ft_count_words(char *str);
-char				*extract_word(char *str, int *i);
-char				**free_args(char **args);
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS		                       //

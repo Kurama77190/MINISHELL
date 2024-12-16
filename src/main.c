@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/15 00:00:30 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/16 04:31:41 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,12 @@ int main(int argc, char **argv, char **env)
 		{
 		// exec_command(data);
 		}
-		//free_token_list(data);
+		// free_token_list(data);
 		put_tokenizer_data(&data);
 		free(data.prompt.read_line);
 		ft_memset(&data, 0, sizeof(t_data));
 	}
 	return (0);
 }
+
+// "|     > in1" ceci est une commande!

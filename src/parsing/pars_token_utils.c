@@ -6,106 +6,103 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:01:07 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/13 02:28:42 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/16 05:08:13 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int		count_valid_pipes(const char *str);
+static int		find_next_pipe(const char *str, int start);
+static char		*allocate_section(const char *str, int start, int end);
 
-int	is_builtin_1(t_data *data, char *token, t_token **new)
+
+char	**split_pipes_secure(const char *str)
 {
-	(void)data;
-	if (ft_strncmp(token, "echo", ft_strlen(token)) == 0)
+	char	**result;
+	int		pipe_count;
+	int		start;
+	int		end;
+	int		i;
+
+	pipe_count = count_valid_pipes(str);
+	result = malloc(sizeof(char *) * (pipe_count + 1));
+	if (!result)
+		return (NULL);
+	start = 0;
+	i = 0;
+	end = find_next_pipe(str, start);
+	while (end != -1)
 	{
-		(*new)->command = ft_strdup(token);
-		if (!(*new)->command)
-			return (ERROR);
-		(*new)->builtin = 1;
+		result[i] = allocate_section(str, start, end);
+		if (!result[i++])
+			return (free_split(result), NULL);
+		start = end + 1;
+		end = find_next_pipe(str, start);
 	}
-	if (ft_strncmp(token, "cd", ft_strlen(token)) == 0)
-	{
-		(*new)->command = ft_strdup(token);
-		if (!(*new)->command)
-			return (ERROR);
-		(*new)->builtin = 1;
-	}
-	if (ft_strncmp(token, "pwd", ft_strlen(token)) == 0)
-	{
-		(*new)->command = ft_strdup(token);
-		if (!(*new)->command)
-			return (ERROR);
-		(*new)->builtin = 1;
-	}
-	return (SUCCESS);
+	result[i] = allocate_section(str, start, ft_strlen(str));
+	if (!result[i])
+		return (free_split(result), NULL);
+	return (result[++i] = NULL, result);
 }
 
-int	is_builtin_2(t_data *data, char *token, t_token **new)
+static int	count_valid_pipes(const char *str)
 {
-	(void)data;
-	if (ft_strncmp(token, "export", ft_strlen(token)) == 0)
+	int		i;
+	int		count;
+	char	in_quote;
+
+	i = 0;
+	count = 1;
+	in_quote = 0;
+	while (str[i])
 	{
-		(*new)->command = ft_strdup(token);
-		if (!(*new)->command)
-			return (ERROR);
-		(*new)->builtin = 1;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (in_quote == 0)
+				in_quote = str[i];
+			else if (in_quote == str[i])
+				in_quote = 0;
+		}
+		if (str[i] == '|' && in_quote == 0)
+			count++;
+		i++;
 	}
-	if (ft_strncmp(token, "unset", ft_strlen(token)) == 0)
-	{
-		(*new)->command = ft_strdup(token);
-		if (!(*new)->command)
-			return (ERROR);
-		(*new)->builtin = 1;
-	}
-	if (ft_strncmp(token, "env", ft_strlen(token)) == 0)
-	{
-		(*new)->command = ft_strdup(token);
-		if (!(*new)->command)
-			return (ERROR);
-		(*new)->builtin = 1;
-	}
-	return (SUCCESS);
+	return (count);
 }
 
-int	is_builtin_3(t_data *data, char *token, t_token **new)
+static int	find_next_pipe(const char *str, int start)
 {
-	(void)data;
-	if (ft_strncmp(token, "exit", ft_strlen(token)) == 0)
+	int		i;
+	char	in_quote;
+
+	i = start;
+	in_quote = 0;
+	while (str[i])
 	{
-		(*new)->command = ft_strdup(token);
-		if (!(*new)->command)
-			return (ERROR);
-		(*new)->builtin = 1;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (in_quote == 0)
+				in_quote = str[i];
+			else if (in_quote == str[i])
+				in_quote = 0;
+		}
+		if (str[i] == '|' && in_quote == 0)
+			return (i);
+		i++;
 	}
-	return (SUCCESS);
+	return (-1);
 }
 
-int	is_args(t_data *data, char *token, t_token **new)
+static char	*allocate_section(const char *str, int start, int end)
 {
-	(void)data;
-	char	**tmp;
+	char	*section;
+	int		len;
 
-	if (!(*new)->args)
-	{
-		tmp = ft_split(token, ' ');
-		if (!tmp)
-			return (ERROR);
-		(*new)->args = tmp;
-	}
-	else
-	{
-		tmp = ft_split(token, ' ');
-		if (!tmp)
-			return (ERROR);
-	}
-	return (SUCCESS);
-}
-
-int	is_command(t_data *data, char *token, t_token **new)
-{
-	(void)data;
-	(*new)->command = ft_strdup(token);
-	if (!(*new)->command)
-		return (ERROR);
-	return (SUCCESS);
+	len = end - start;
+	section = ft_calloc(len + 1, sizeof(char));
+	if (!section)
+		return (NULL);
+	ft_strlcpy(section, str + start, len + 1);
+	return (section);
 }

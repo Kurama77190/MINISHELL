@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/14 23:14:09 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/16 05:07:45 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	pars_token(t_data *data)
 	data->token_manag.line = ft_strtrim(data->prompt.read_line, " ");
 	if (!data->token_manag.line)
 		return (ERROR);
-	data->token_manag.readed = ft_split(data->token_manag.line, '|');
+	data->token_manag.readed = split_pipes_secure(data->token_manag.line);
 	if (!data->token_manag.readed)
 		return (ERROR);
 	i = 0;

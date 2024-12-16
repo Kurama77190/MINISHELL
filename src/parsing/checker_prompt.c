@@ -1,33 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_shell.c                                       :+:      :+:    :+:   */
+/*   checker_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 01:43:37 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 03:07:34 by sben-tay         ###   ########.fr       */
+/*   Created: 2024/12/15 18:55:31 by sben-tay          #+#    #+#             */
+/*   Updated: 2024/12/16 04:36:01 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pars_shell(t_data *data, int argc, char **argv)
+static bool	is_valided(char *str);
+
+int	check_cmd(t_data *data)
 {
-	(void)argc;
-	(void)argv;
-	if (!data->envp_manag.sync)
-		uptdate_env(data);
-	if (check_cmd(data) == ERROR)
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = ft_strdup(data->prompt.read_line);
+	if (!str)
+		return (ERROR);
+	if (!is_valided(str))
 	{
-		printf("je rentre ici\n");
+		free(str);
 		return (ERROR);
 	}
-	if (pars_token(data) == ERROR)
-	{
-		ft_putstr_fd("Error in pars_token\n", 2);
-		return (ERROR);
-	}
-	// pars_sig(); // signaux
 	return (SUCCESS);
+}
+
+static bool	is_valided(char *str)
+{
+	if (!check_redirection(str))
+	{
+		printf("redir\n");
+		return (false);
+	}
+	if (!check_pipe(str))
+	{
+		printf("pipe\n");
+		return (false);
+	}
+	if (is_empty_prompt(str))
+	{
+		printf("enter\n");
+		return (false);
+	}
+	return (true);
 }

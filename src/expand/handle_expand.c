@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_operator.c                                   :+:      :+:    :+:   */
+/*   handle_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 22:07:56 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 09:09:06 by sben-tay         ###   ########.fr       */
+/*   Created: 2024/12/16 06:39:08 by sben-tay          #+#    #+#             */
+/*   Updated: 2024/12/16 07:27:29 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-bool	ft_is_operator(char c)
+int	handle_expand(t_token *param)
 {
-	return (c == '<' || c == '>' || c == '&' || c == '|' || c == ';' || c == '&'
-		|| c == '@' || c == '#' || c == '%' || c == '^' || c == '*'
-		|| c == '(' || c == ')' || c == '+' || c == '-' || c == '!');
+	if (expand_redir(param) == ERROR)
+		return (ERROR);
+	if (expand_cmd(param) == ERROR)
+		return (ERROR);
+	if (expand_args(param) == ERROR)
+		return (ERROR);
 }

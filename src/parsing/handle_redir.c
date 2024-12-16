@@ -25,6 +25,7 @@ int	setup_redir(char *token, t_token *new)
 	i = 0;
 	while (token[i])
 	{
+		//   cat     
 		in_quote = update_in_quote(token[i], in_quote);
 		if (!in_quote && token[i] == '<')
 		{

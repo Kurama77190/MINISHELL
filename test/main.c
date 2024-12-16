@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 03:24:39 by samy              #+#    #+#             */
-/*   Updated: 2024/12/15 18:34:07 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/16 08:31:55 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,15 @@
 
 
 
-
 // "<in1"          ___    _________  ls -a ">out1"           ____    __________
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
-	// char	**result;
-	// int		i;
-
 	(void)argc;
-	(void)argv;
-	int i = ft_countwords("<in1\"          ___    _________  ls -a \">out1\"           ____    __________", 95);
-	printf("nombre de mot[%i]\n", i);
-	// result = ft_split_args(argv[1], ' ');
-	// if (!result)
-	// 	return (1);
-	// i = 0;
-	// while (result[i])
-	// {
-	// 	printf("Word[%d]: %s\n", i, result[i]);
-	// 	free(result[i]);
-	// 	i++;
-	// }
-	// free(result);
+	char	**args = ft_split(argv[1], ' ');
+	if (execve(args[0], args, envp) != 0)
+	{
+		printf("ERROR\n");
+	}
 	return (0);
 }

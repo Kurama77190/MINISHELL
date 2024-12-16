@@ -6,14 +6,11 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 03:21:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 06:31:09 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/16 09:03:02 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#include <stdbool.h>
-#include <unistd.h>
 
 bool	validate_pipe_syntax(char *str, int i);
 bool	is_pipe_start_or_end(char *str, int i);
@@ -87,5 +84,29 @@ bool	validate_redirection(char *str, int *i)
 		j++;
 	if (!check_following_chars(str, i, j))
 		return (false);
+	return (true);
+}
+
+
+bool	check_unclosed_quotes(const char *str)
+{
+	char	in_quote;
+	int		i;
+
+	i = 0;
+	in_quote = 0;
+	while (str[i])
+	{
+		if ((str[i] == '\'' || str[i] == '\"') && in_quote == 0)
+			in_quote = str[i];
+		else if (str[i] == in_quote)
+			in_quote = 0;
+		i++;
+	}
+	if (in_quote != 0)
+	{
+		ft_putstr_fd("bash: syntax error: unclosed quote\n", 2);
+		return (false);
+	}
 	return (true);
 }

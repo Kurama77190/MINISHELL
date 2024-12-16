@@ -6,11 +6,32 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:15:22 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/15 02:21:20 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 00:05:35 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	set_type(char	*str, t_redir	**new)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '<')
+	{
+		if (str[i + 1] == '<')
+			(*new)->key = D_HEREDOC;
+		else
+			(*new)->key = IN;
+	}
+	else if (str[i] == '>')
+	{
+		if (str[i + 1] == '>')
+			(*new)->key = D_APPEND;
+		else
+			(*new)->key = OUT;
+	}
+}
 
 t_redir	*new_redir_in(char *token)
 {
@@ -25,6 +46,7 @@ t_redir	*new_redir_in(char *token)
 	new->type = infile_type(token);
 	if (!new->file_name)
 		return (NULL);
+	set_type(new->type, &new);
 	return (new);
 }
 
@@ -41,6 +63,7 @@ t_redir	*new_redir_out(char *token)
 	new->type = outfile_type(token);
 	if (!new->file_name)
 		return (NULL);
+	set_type(new->type, &new);
 	return (new);
 }
 

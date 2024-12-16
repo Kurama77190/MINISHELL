@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:13:26 by samy              #+#    #+#             */
-/*   Updated: 2024/12/15 02:19:19 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:59:23 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*outfile_type(char *token)
 	delete_word(tmp, i, 0);
 	return (result);
 }
+
 
 char	*infile_type(char *token)
 {
@@ -96,6 +97,8 @@ char	*infile_name(char *token)
 		return ("NONE");
 	found_index(tmp, &i);
 	result = ft_substr(tmp, 0, i);
+	// if (ft_strchr(tmp, '$'))
+		// setup_dollars()
 	if (!result)
 		return (NULL);
 	delete_word(tmp, i, 0);

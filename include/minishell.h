@@ -128,6 +128,7 @@ bool				validate_pipe_syntax(char *str, int i);
 bool				is_pipe_start_or_end(char *str, int i);
 bool				check_double_redirection(char *str, int *i);
 bool				check_following_chars(char *str, int *i, int j);
+bool				check_unclosed_quotes(const char *str);
 
 
 //////////////////////////////////////////////////////////////////
@@ -165,12 +166,27 @@ void				found_index(char *tmp, int *i);
 void				delete_word(char *str, size_t i, unsigned int start);
 int					update_in_quote(char c, int in_quote);
 
+
 //////////////////////////////////////////////////////////////////
 //                          CMD 		                       //
 ////////////////////////////////////////////////////////////////
 
 int					found_cmd_name(char *token, t_token *new);
 int					found_args_cmd(char *token, t_token *new);
+
+
+//////////////////////////////////////////////////////////////////
+//                          EXPAND 		                       //
+////////////////////////////////////////////////////////////////
+
+int					handle_expand(t_token *data);
+int					expand_redir(t_token *data);
+int					check_unclosed_quote_in(t_redir_manag	*tmp);
+int					check_unclosed_quote_out(t_redir_manag *tmp);
+
+
+bool				is_closed(char *str);
+
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS		                       //

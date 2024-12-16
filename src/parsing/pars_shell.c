@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:43:37 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 03:07:34 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/16 06:34:25 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	pars_shell(t_data *data, int argc, char **argv)
 		uptdate_env(data);
 	if (check_cmd(data) == ERROR)
 	{
-		printf("je rentre ici\n");
 		return (ERROR);
 	}
 	if (pars_token(data) == ERROR)

@@ -123,6 +123,11 @@ bool				check_pipe(char *str);
 bool				is_empty_prompt(const char *str);
 bool				is_operator(char c);
 char				**split_pipes_secure(const char *str);
+void				update_in_quote_checker(char c, char *in_quote);
+bool				validate_pipe_syntax(char *str, int i);
+bool				is_pipe_start_or_end(char *str, int i);
+bool				check_double_redirection(char *str, int *i);
+bool				check_following_chars(char *str, int *i, int j);
 
 
 //////////////////////////////////////////////////////////////////

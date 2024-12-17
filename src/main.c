@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 08:10:43 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 08:55:07 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int main(int argc, char **argv, char **env)
 		// exec_command(data);
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
-		// put_tokenizer_data(&data);
+		put_tokenizer_data(&data);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}

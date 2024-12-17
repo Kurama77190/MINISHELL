@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:10:24 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 04:22:46 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 09:15:44 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int	pars_expand(t_data *data)
 				return (ERROR);
 			current_out = current_out->next;
 		}
-		// if (ft_expand(current_token->args, data->envp_manag.envp) == ERROR)
-		// 	return (ERROR);
+		if (ft_expand_args(current_token->args, data->envp_manag.envp) == ERROR)
+			return (ERROR);
 		current_token = current_token->next;
 	}
 	return (SUCCESS);
 }
+

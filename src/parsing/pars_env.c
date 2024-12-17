@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:47:08 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/10/29 19:33:07 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/17 08:11:29 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	pars_env(t_data *data, char **envp)
 {
-	if (!data->envp_manag.set)
-		return (SUCCESS);
+	// if (!data->envp_manag.set)
+	// 	return (SUCCESS);
 	if (split_and_add(data, envp) == ERROR)
 	{
-		free_lst_envp(data);
+		free_envp(data);
 		free_split(data->envp_manag.env);
 		ft_putstr_fd("Error: pars_env\n", 2);
 		exit(2);

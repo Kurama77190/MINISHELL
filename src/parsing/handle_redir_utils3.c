@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:15:22 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 00:05:35 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 03:00:33 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ t_redir	*new_redir_in(char *token)
 		return (NULL);
 	new->file_name = infile_name(token);
 	if (!new->file_name)
-		return (NULL);
+		return (free(new), new = NULL, NULL);
 	new->type = infile_type(token);
 	if (!new->file_name)
-		return (NULL);
+		return (free(new), new = NULL, NULL);
 	set_type(new->type, &new);
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 09:01:51 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 08:10:43 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void put_lst_envp(t_envp *envp)
     t_envp *current = envp;
     while (current)
     {
-        printf("%s%s\n", current->name, current->value);
+		printf("%s\n", current->name);
+        // printf("%s%s\n", current->name, current->value);
+		current = current->next;
     }
 }
 
@@ -40,33 +42,45 @@ void put_tab_env(char **env)
 
 void	put_tokenizer_data(t_data *data)
 {
-	t_token	*current = data->token_manag.token;
-	int i = 0;
+	t_token	*current;
+	t_redir *redir;
+	int		j;
+	int		i;
+
+	i = 1;
+	current = data->token_manag.token;
 	while (current)
 	{
-		printf("\033[37mtokenizer\033[33m[%i]\033[0m\n", i);
-		while (current->redir_in.head)
+		printf("\n\033[1;34m[Token Data %i]\033[0m\n", i);
+		printf("\033[1;33mCommand:\033[0m %s\n", current->command);
+		printf("\033[1;33mArguments:\033[0m");
+		if (current->args)
 		{
-			printf("\033[37mredir_in\033[0m\033[33m[%s]\033[0m type\033[33m[%s]\033[0m\n", current->redir_in.head->file_name, current->redir_in.head->type);
-			current->redir_in.head = current->redir_in.head->next;
-			printf("%p", current->redir_in.head);
+			j = 0;
+			while (current->args[j])
+			{
+				printf(" [%s]", current->args[j]);
+				j++;
+			}
 		}
-		while (current->redir_out.head)
+		else
+			printf(" None");
+		printf("\n");
+
+		redir = current->redir_in.head;
+		while (redir)
 		{
-			printf("redir_out[%s] type[%s]\n", current->redir_out.head->file_name, current->redir_out.head->type);
-			current->redir_out.head = current->redir_out.head->next;
-			printf("%p\n", current->redir_out.head);
+			printf("\033[1;32mRedir In:\033[0m File: %s, Type: %s\n", redir->file_name, redir->type);
+			redir = redir->next;
 		}
-		printf("commands[%s]\033[0m\n",current->command);
-		// int	j = 0;
-		printf("args[%p] ", current->args);
-		// while(current->args[j])
-		// {
-		// 	j++;
-		// }
-		// printf("]\n");
-		i++;
+		redir = current->redir_out.head;
+		while (redir)
+		{
+			printf("\033[1;31mRedir Out:\033[0m File: %s, Type: %s\n", redir->file_name, redir->type);
+			redir = redir->next;
+		}
 		current = current->next;
+		i++;
 	}
 }
 
@@ -82,17 +96,16 @@ int main(int argc, char **argv, char **env)
 	pars_env(&data, env);
 	while (1)
 	{
-		if (handle_prompt(&data) == ERROR)
-			return (2);
+		handle_prompt(&data);
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
+		// printf("j execute\n");
 		// exec_command(data);
 		}
-		// free_token_list(data);
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
-		put_tokenizer_data(&data);
-		free(data.prompt.read_line);
-		ft_memset(&data, 0, sizeof(t_data));
+		// put_tokenizer_data(&data);
+		ft_free_all(&data, false);
+		ft_memory(&data);
 	}
 	return (0);
 }

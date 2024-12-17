@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 05:07:45 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 08:30:02 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,15 @@ int	pars_token(t_data *data)
 		return (ERROR);
 	data->token_manag.readed = split_pipes_secure(data->token_manag.line);
 	if (!data->token_manag.readed)
-		return (ERROR);
+		return (ft_free((void**)&data->token_manag.line), ERROR);
 	i = 0;
 	while (data->token_manag.readed[i])
 	{
-		printf("token[%i] = %s\n", i, data->token_manag.readed[i]);
 		if (setup_token(data, data->token_manag.readed[i]) == ERROR)
 			return (free_split(data->token_manag.readed), \
 			ft_free((void **)&data->token_manag.line), ERROR);
 		i++;
 	}
-	printf("PROMPT RESTANT :%s", data->token_manag.readed[0]);
 	ft_free((void **)&data->token_manag.line);
 	free_split(data->token_manag.readed);
 	return (SUCCESS);
@@ -48,13 +46,14 @@ int	setup_token(t_data *data, char *token)
 		return (ERROR);
 	if (setup_redir(token, new) == ERROR)
 	{
-		free(new); // et liberer son contenue aussi stp.
+		free_redir(new);
+		ft_free((void**)&new); // et liberer son contenue aussi stp.
 		return (ERROR);
 	}
 	if (setup_cmd(token, new) == ERROR)
 	{
-		// free(redir);
-		free(new);
+		free_redir(new);
+		ft_free((void**)&new);
 		return (ERROR);
 	}
 	add_back_token(data, new);

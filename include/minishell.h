@@ -108,7 +108,7 @@ typedef struct s_data
 ////////////////////////////////////////////////////////////////
 
 // int 				main(int argc, char **argv, char **env);int	handle_prompt(t_data *data);
-int					handle_prompt(t_data *data);
+void				handle_prompt(t_data *data);
 int					check_cmd(t_data *data);
 int					pars_shell(t_data *data, int argc, char **argv);
 int					pars_env(t_data *data, char **envp);
@@ -138,14 +138,20 @@ bool				check_unclosed_quotes(const char *str);
 t_envp				*lst_new_envp(char **splited);
 int					uptdate_env(t_data *data);
 int					ft_lstsize_envp(t_envp *lst);
-void				free_lst_envp(t_data *data);
 int					split_and_add(t_data *data, char **envp);
 int					add_lst(t_data *data, char **splited);
 int					add_tab(t_data *data, char **envp);
 
 //////////////////////////////////////////////////////////////////
-//                       	TOKEN		                       //
+//                       	EXPAND		                       //
 ////////////////////////////////////////////////////////////////
+
+int					pars_expand(t_data *data);
+int					ft_expand_redir(char **str, t_envp *env_list);
+bool				is_valid_redir(char *str);
+bool				is_ambiguous_redir(char *result, char **str);
+char				*ft_strjoin_free(char *s1, char *s2, int free_flag);
+
 
 
 //////////////////////////////////////////////////////////////////
@@ -176,17 +182,14 @@ int					found_args_cmd(char *token, t_token *new);
 
 
 //////////////////////////////////////////////////////////////////
-//                          EXPAND 		                       //
+//                          MEMORY		                       //
 ////////////////////////////////////////////////////////////////
 
-int					handle_expand(t_token *data);
-int					expand_redir(t_token *data);
-int					check_unclosed_quote_in(t_redir_manag	*tmp);
-int					check_unclosed_quote_out(t_redir_manag *tmp);
-
-
-bool				is_closed(char *str);
-
+void				free_token(t_data *data);
+void				free_envp(t_data *data);
+void				free_redir(t_token *current);
+void				ft_free_all(t_data *data, bool free_env);
+void				ft_memory(t_data *data);
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS		                       //

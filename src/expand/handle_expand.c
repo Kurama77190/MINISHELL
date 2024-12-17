@@ -5,19 +5,41 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 06:39:08 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 07:27:29 by sben-tay         ###   ########.fr       */
+/*   Created: 2024/12/17 03:10:24 by sben-tay          #+#    #+#             */
+/*   Updated: 2024/12/17 04:22:46 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_expand(t_token *param)
+int	pars_expand(t_data *data)
 {
-	if (expand_redir(param) == ERROR)
-		return (ERROR);
-	if (expand_cmd(param) == ERROR)
-		return (ERROR);
-	if (expand_args(param) == ERROR)
-		return (ERROR);
+	t_redir	*current_in;
+	t_redir	*current_out;
+	t_token	*current_token;
+
+	current_token = data->token_manag.token;
+	while (current_token)
+	{
+		current_in = current_token->redir_in.head;
+		current_out = current_token->redir_out.head;
+		while (current_in)
+		{
+			if (ft_expand_redir(&current_in->file_name,
+					data->envp_manag.envp) == ERROR)
+				return (ERROR);
+			current_in = current_in->next;
+		}
+		while (current_out)
+		{
+			if (ft_expand_redir(&current_out->file_name,
+					data->envp_manag.envp) == ERROR)
+				return (ERROR);
+			current_out = current_out->next;
+		}
+		// if (ft_expand(current_token->args, data->envp_manag.envp) == ERROR)
+		// 	return (ERROR);
+		current_token = current_token->next;
+	}
+	return (SUCCESS);
 }

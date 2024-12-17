@@ -61,21 +61,21 @@ int	uptdate_env(t_data *data)
 	t_envp	*tmp;
 
 
-	free_split(data->envp_manag.env);
-	// ft_free((void **)data->envp_manag.env);
-	len = ft_lstsize_envp(data->envp_manag.envp);
-	data->envp_manag.env = ft_calloc((len + 1), sizeof(char *));
-	if (!data->envp_manag.env)
+	free_split(data->e.env);
+	// ft_free((void **)data->e.env);
+	len = ft_lstsize_envp(data->e.envp);
+	data->e.env = ft_calloc((len + 1), sizeof(char *));
+	if (!data->e.env)
 		return (ERROR);
 	i = 0;
-	tmp = data->envp_manag.envp;
+	tmp = data->e.envp;
 	while (tmp)
 	{
-		data->envp_manag.env[i] = ft_strjoin(tmp->name, tmp->value);
+		data->e.env[i] = ft_strjoin(tmp->name, tmp->value);
 		i++;
 		tmp = tmp->next;
 	}
-	data->envp_manag.env[i] = NULL;
-	data->envp_manag.sync = true;
+	data->e.env[i] = NULL;
+	data->e.sync = true;
 	return (SUCCESS);
 }

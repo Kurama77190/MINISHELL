@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/12 13:15:56 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 10:41:07 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_exit(char **argv, t_data *data)
 		{
 			value = ft_atoi(argv[1]);
 			value = ft_value(value);
-			ft_free_all(data);
+			ft_free_all(data, true);
 			exit(value);
 		}
 		else
@@ -61,7 +61,7 @@ void	ft_exit(char **argv, t_data *data)
 	}
 	else
 	{
-		ft_free_all(data);
+		ft_free_all(data, true);
 		exit(0);
 	}
 }

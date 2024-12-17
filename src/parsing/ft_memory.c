@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 07:51:32 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 08:30:57 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:23:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	ft_free_all(t_data *data, bool	free_env)
 		free_envp(data);
 	ft_free((void**)&data->prompt.read_line);
 	free_token(data);
+	// if (data->free_value == 0)
+	// {
+	// 	close(data->fd[0]);
+	// 	close(data->fd[1]);
+	// }
 	// rajouter les free de ralph.
 }
 
@@ -35,7 +40,7 @@ void	free_envp(t_data *data)
 	t_envp	*current;
 	t_envp	*next;
 
-	current = data->envp_manag.envp;
+	current = data->e.envp;
 	if (!current)
 		return ;
 	while (current)
@@ -46,8 +51,8 @@ void	free_envp(t_data *data)
 		ft_free((void **)&current);
 		current = next;
 	}
-	data->envp_manag.envp = NULL;
-	free_split(data->envp_manag.env);
+	data->e.envp = NULL;
+	free_split(data->e.env);
 }
 
 void	free_token(t_data *data)

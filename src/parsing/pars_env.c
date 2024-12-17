@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:47:08 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 08:11:29 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:22:10 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	pars_env(t_data *data, char **envp)
 {
-	// if (!data->envp_manag.set)
+	// if (!data->e.set)
 	// 	return (SUCCESS);
 	if (split_and_add(data, envp) == ERROR)
 	{
 		free_envp(data);
-		free_split(data->envp_manag.env);
+		free_split(data->e.env);
 		ft_putstr_fd("Error: pars_env\n", 2);
 		exit(2);
 	}
-	data->envp_manag.set = false;
-	data->envp_manag.sync = true;
+	data->e.set = false;
+	data->e.sync = true;
 	return (SUCCESS);
 }
 
@@ -57,20 +57,20 @@ int	add_tab(t_data *data, char **envp)
 {
 	size_t	len;
 	int		i;
-	char	**tab;
+	char	**tab_;
 
-	len = (size_t)ft_lstsize_envp(data->envp_manag.envp);
-	data->envp_manag.env = ft_calloc((len + 1), sizeof(char *));
-	if (!data->envp_manag.env)
+	len = (size_t)ft_lstsize_envp(data->e.envp);
+	data->e.env = ft_calloc((len + 1), sizeof(char *));
+	if (!data->e.env)
 		return (ERROR);
-	tab = data->envp_manag.env;
+	tab_ = data->e.env;
 	i = 0;
 	while (envp[i])
 	{
-		tab[i] = ft_strdup(envp[i]);
+		tab_[i] = ft_strdup(envp[i]);
 		i++;
 	}
-	tab[i] = NULL;
+	tab_[i] = NULL;
 	return (SUCCESS);
 }
 
@@ -78,13 +78,13 @@ int	add_lst(t_data *data, char **splited)
 {
 	t_envp	*new;
 	t_envp	*last;
-	last = data->envp_manag.envp;
+	last = data->e.envp;
 	new = lst_new_envp(splited);
 	if (!new)
 		return (ERROR);
-	if (!data->envp_manag.envp)
+	if (!data->e.envp)
 	{
-		data->envp_manag.envp = new;
+		data->e.envp = new;
 		return (SUCCESS);
 	}
 	while (last->next)

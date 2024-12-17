@@ -26,18 +26,18 @@ int	pars_expand(t_data *data)
 		while (current_in)
 		{
 			if (ft_expand_redir(&current_in->file_name,
-					data->envp_manag.envp) == ERROR)
+					data->e.envp) == ERROR)
 				return (ERROR);
 			current_in = current_in->next;
 		}
 		while (current_out)
 		{
 			if (ft_expand_redir(&current_out->file_name,
-					data->envp_manag.envp) == ERROR)
+					data->e.envp) == ERROR)
 				return (ERROR);
 			current_out = current_out->next;
 		}
-		if (ft_expand_args(current_token->args, data->envp_manag.envp) == ERROR)
+		if (ft_expand_args(current_token->args, data->e.envp) == ERROR)
 			return (ERROR);
 		current_token = current_token->next;
 	}

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 08:55:07 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 10:32:40 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int		g_exit_status;
 
 void put_lst_envp(t_envp *envp)
 {
@@ -100,14 +101,15 @@ int main(int argc, char **argv, char **env)
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
 		// printf("j execute\n");
-		// exec_command(data);
+		ft_execution(&data);
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
-		put_tokenizer_data(&data);
+		// put_tokenizer_data(&data);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}
 	return (0);
 }
 
-// "|     > in1" ceci est une commande!
+// "|     > in1" ceci est une commande!ear
+// valgrind --suppressions=ignore.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell

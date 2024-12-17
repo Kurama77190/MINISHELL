@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:42:18 by samy              #+#    #+#             */
-/*   Updated: 2024/12/17 03:20:37 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:23:32 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,19 @@ int	setup_redir(char *token, t_token *new)
 	while (token[i])
 	{
 		in_quote = update_in_quote(token[i], in_quote);
-		if (!in_quote && (token[i] == '<' || token[i] == '>'))
+		if (!in_quote && token[i] == '<')
 		{
 			if (handle_redirection(token, &i, &new->redir_in) == ERROR)
 				return (ERROR);
-		}
 			i++;
+		}
+		if (!in_quote && token[i] == '>')
+		{
+			if (handle_redirection(token, &i, &new->redir_out) == ERROR)
+				return (ERROR);
+			i++;
+		}
+		i++;
 	}
 	return (SUCCESS);
 }
@@ -58,7 +65,7 @@ int	handle_redirection(char *token, int *i, t_redir_manag *redir)
 		if (add_redir_in(token + *i, redir) == ERROR)
 			return (ERROR);
 	}
-	else if (token[*i] == '>')
+	if (token[*i] == '>')
 	{
 		if (add_redir_out(token + *i, redir) == ERROR)
 			return (ERROR);

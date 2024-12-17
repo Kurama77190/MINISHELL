@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir_utils3.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:15:22 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 03:00:33 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:13:59 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	set_type(char	*str, t_redir	**new)
 	if (str[i] == '<')
 	{
 		if (str[i + 1] == '<')
+		{
 			(*new)->key = D_HEREDOC;
+		}
 		else
 			(*new)->key = IN;
 	}
@@ -90,7 +92,7 @@ int	add_redir_in(char *token, t_redir_manag *param)
 		tmp->next = new;
 		new->prev = tmp;
 		new->next = NULL;
-		param->current = new;
+		// param->current = new;
 	}
 	return (SUCCESS);
 }
@@ -112,7 +114,7 @@ int	add_redir_out(char *token, t_redir_manag *param)
 	}
 	else
 	{
-		tmp = param->head;
+		tmp = param->current;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
 		tmp->next = new;

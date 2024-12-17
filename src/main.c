@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 12:37:18 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 16:23:39 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,7 @@ int main(int argc, char **argv, char **env)
 		handle_prompt(&data);
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
-		// printf("j execute\n");
-		ft_execution(&data);
+			ft_execution(&data);
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
 		// put_tokenizer_data(&data);

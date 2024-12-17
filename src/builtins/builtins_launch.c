@@ -2,6 +2,7 @@
 
 bool	ft_detect_builtin(char **argv, t_data *data)
 {
+	
 	if (!ft_strcmp(argv[0], "cd"))
 		ft_cd(argv, data);
 	if (!ft_strcmp(argv[0], "echo"))

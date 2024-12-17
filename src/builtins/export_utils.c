@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:56:36 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 11:37:52 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 15:47:12 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_envp	*new_export_envp(char *str)
 {
 	t_envp *new;
 
-	new = ft_calloc(0, sizeof(t_envp));
+	new = ft_calloc(1, sizeof(t_envp));
 	if (!new)
 		return (NULL);
 	new->name = NULL;

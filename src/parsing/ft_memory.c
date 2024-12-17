@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 07:51:32 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 12:17:28 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 17:31:30 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,22 @@ void	free_redir(t_token *current)
 	{
 		ft_free((void**)&current_in->file_name);
 		ft_free((void**)&current_in->type);
+		ft_free((void**)&current_in->file_here_doc);
 		tmp = current_in->next;
 		ft_free((void**)&current_in);
 		current_in = tmp;
 	}
-	ft_free((void**)&current_out);
+	// ft_free((void**)&current_out);
 	while(current_out)
 	{
 		ft_free((void**)&current_out->file_name);
 		ft_free((void**)&current_out->type);
+		ft_free((void**)&current_out->file_here_doc);
 		tmp = current_out->next;
 		ft_free((void**)&current_out);
 		current_out = tmp;
 	}
-	ft_free((void**)&current_out);
+	// ft_free((void**)&current_out);
 }
 
 //valgrind --suppressions=ignore.txt ./minishell

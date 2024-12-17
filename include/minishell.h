@@ -44,6 +44,7 @@ typedef struct s_redir
 	t_redir_type	key;
 	char			*type;
 	char			*file_name;
+	char			*file_here_doc;
 	struct s_redir	*next;
 	struct s_redir	*prev;
 }					t_redir;
@@ -107,11 +108,20 @@ typedef struct s_sig
 	/* data */
 }					t_sig;
 
+typedef struct s_exec
+{
+
+	/*					*/
+
+}					t_exec;
+
+
 typedef struct s_data
 {
 	int				exit_status;
 	t_token_manag	token_manag;
 	t_env_manag		e;
+	int				wstatus;
 	t_sig			signal;
 	t_prompt		prompt;
 	int				pipe_fd[2];
@@ -208,7 +218,7 @@ void				ft_cd(char **argv, t_data *data);
 int					exec_onecommand(char **cmd, t_data *data);
 void				ft_multi_pipe(t_token *node, t_data *data, int i);
 void				ft_no_pipe(t_token *node, t_data *data);
-void				ft_erase_all_temp_here_doc(t_token *node);
+void				ft_erase_all_temp_here_doc(t_redir *node);
 
 /**
  * @file exec_core.c
@@ -247,9 +257,9 @@ void				ft_process_heredoc(t_redir *redir, t_data *data);
 /**
  * @file exec_redirs_read.c
  */
-int					ft_read_heredoc(t_token *node, t_data *data);
-void				ft_read_infile(t_token *node, t_data *data);
-void				ft_read_outfile(t_token *node, t_data *data);
+int					ft_read_heredoc(t_redir *node, t_data *data);
+void				ft_read_infile(t_redir *node, t_data *data);
+void				ft_read_outfile(t_redir *node, t_data *data);
 void				ft_read_redirs(t_token *node, t_data *data);
 
 /**

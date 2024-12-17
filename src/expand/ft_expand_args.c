@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:09:13 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 12:34:36 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 13:32:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static char	*expand_variable_in_str(char *str, t_envp *envp)
 {
 	char	*result;
 	char	*tmp;
+	char	*tmp2;
 	int		i;
 
 	result = ft_strdup("");
@@ -69,7 +70,11 @@ static char	*expand_variable_in_str(char *str, t_envp *envp)
 			ft_free((void**)&tmp);
 		}
 		else
-			result = ft_strjoin_free(result, ft_substr(str, i++, 1), 1);
+		{
+			tmp2 = ft_substr(str, i++, 1);
+			result = ft_strjoin_free(result,tmp2, 1);
+			ft_free((void**)&tmp2);
+		}
 	}
 	return (result);
 }

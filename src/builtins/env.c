@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 11:52:06 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 17:42:23 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	push_node_to_env(t_data *data, char *env_line)
 
 void	ft_env(char **argv, t_data *data)
 {
-	printf("ft_env\n");
 	t_envp	*current;
 
 	current = data->e.envp;

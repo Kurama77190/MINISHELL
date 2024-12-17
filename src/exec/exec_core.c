@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 13:14:56 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 19:01:36 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ void	exec(t_data *data, char **cmd)
 {
 	char	*path;
 
-	if (!cmd || !cmd[0])
-		ft_close_fd(data, "Error: no command\n");
 	if (!data->e.env)
 		ft_close_fd(data, "Error: no env\n");
 	// if (ft_strncmp(cmd[0], "./minishell", 11) == 0)

@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/12/17 10:58:07 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/12/17 15:19:55 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,25 +30,25 @@ LIBFT = external/LIBFT/
 # CFLAGS += -fsanitize=fork
 
 #=================================================__SRC__OF__PROJECT__=============================================================================
-SRC = src/main.c src/signal/signal.c src/errors.c \
+SRC := src/main.c src/signal/signal.c src/errors.c \
 		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_env_utils.c pars_token_utils.c \
 		handle_prompt.c handle_redir.c handle_cmd.c handle_redir_utils.c handle_redir_utils2.c handle_redir_utils3.c checker_prompt.c \
 		checker_prompt_utils.c checker_prompt_utils2.c checker_prompt_utils3.c ft_memory.c) \
 		$(addprefix $(EXPAND), handle_expand.c ft_expand_redir.c ft_expand_redir_utils.c ft_expand_args.c) \
-		$(addprefix $(EXEC), exec_cases.c exec_core.c utils.c utils_2.c exec_heredoc.c exec_redirs_process.c exec_start.c) \
+		$(addprefix $(EXEC), exec_cases.c exec_core.c utils.c utils_2.c exec_heredoc.c exec_redirs_process.c exec_redirs_read.c exec_start.c) \
 		$(addprefix $(BUILT), cd.c echo.c env.c exit.c export.c pwd.c unset.c builtins_utils.c builtins_launch.c export_utils.c)
 SRC_TEST = test/main.c
 
 $(shell mkdir -p $(BUILD))
 
-OBJ = $(SRC:%.c=$(BUILD)%.o)
+OBJ := $(SRC:%.c=$(BUILD)%.o)
 
-OBJ_TEST = $(SRC_TEST:%.c=$(BUILD)%.o)
+OBJ_TEST := $(SRC_TEST:%.c=$(BUILD)%.o)
 #OBJ_BNS = $(SRC_BNS:%.c=$(BUILD)%.o)
 #==================================================================================================================================================
 
 HEADER = ./include/minishell.h
-DEP = $(OBJ:.o=.d)
+DEP := $(OBJ:.o=.d)
 
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -87,7 +87,7 @@ test: $(OBJ_TEST)
 	@$(CC) $(OBJ_TEST) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -L$(LIBFT) -lft -o $(NAME)
 
 %.o:%.c
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -g3 -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(BUILD)%.o: %.c
 	@mkdir -p $(@D)

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 13:06:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 17:17:21 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static void	create_filename(t_redir *redir)
 	}
 	if (access(temp_file, F_OK) == -1)
 	{
-		redir->file_name = ft_strdup(temp_file);
+		redir->file_here_doc = ft_strdup(temp_file);
 		ft_free((void**)&temp_file);
 		return ;
 	}
-	redir->file_name = ft_strdup(temp_file);
+	redir->file_here_doc = ft_strdup(temp_file);
 	ft_free((void**)&temp_file);
 }
 
@@ -79,7 +79,7 @@ static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
 	int		count;
 
 	count = 0;
-	while (g_exit_status != 130)
+	while (1)
 	{
 		line = readline("> ");
 		if (!line)
@@ -91,9 +91,13 @@ static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
 		else
 			ft_putendl_fd(line, file);
 		count++;
+		if (g_exit_status != 130 && !ft_strcmp(line, redir->file_name))
+		{
+			ft_free((void**)&line);
+			break ;
+		}
 	}
-	if (line)
-		ft_free((void**)&line);
+
 }
 
 void	ft_process_heredoc(t_redir *redir, t_data *data)
@@ -103,10 +107,10 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 
 	file = -1;
 	create_filename(redir);
-	if (!redir && !redir->file_name)
+	if (!redir && !redir->file_here_doc)
 		return ;
-	file_path = redir->file_name;
-	file = open(file_path, O_TRUNC | O_CREAT | O_WRONLY, 0666);
+	file_path = redir->file_here_doc;
+	file = open(file_path, O_TRUNC | O_CREAT | O_RDWR, 0666);
 	if (file == -1)
 		perror("heredoc");
 	signal(SIGINT, heredoc_sigint_handler);

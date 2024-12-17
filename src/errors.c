@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 13:23:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 22:56:23 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_error_child(t_data *data, char *msg)
 void 	ft_error_exit(t_data *data, char *msg)
 {
 	ft_error(data, msg);
-	data->exit_status = 1;
+	data->exit_status = 1;	
 	exit(1);
 }
 

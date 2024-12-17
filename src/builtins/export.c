@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 12:30:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 19:27:34 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ bool	check_double(t_data *data, char *var)
 	{
 		if (!ft_strcmp(tmp->name, name))
 		{
-			ft_free((void**)&tmp->value);
+			ft_free((void **)&tmp->value);
 			tmp->value = put_value(var);
-			return (ft_free((void**)&name), true);
+			return (ft_free((void **)&name), true);
 		}
 		tmp = tmp->next;
 	}
-	return (ft_free((void**)&name), false);
+	return (ft_free((void **)&name), false);
 }
 
 void	ft_exp_env(t_data *data)

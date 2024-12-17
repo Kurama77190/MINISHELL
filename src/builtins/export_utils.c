@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:56:36 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 15:47:12 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 21:23:18 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ int	lstadd_envp(t_data *data, char *str)
 	tmp = data->e.envp;
 	if (!tmp)
 	{
-        tmp = new;
+		tmp = new;
 	}
 	else
 	{
 		while (tmp)
-            tmp = tmp->next;
-        tmp->next = new;
-        new->prev = tmp;
-        new->next = NULL;
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+		new->next = NULL;
 	}
-    return (SUCCESS);
+	return (SUCCESS);
 }
 
 static t_envp	*new_export_envp(char *str)
 {
-	t_envp *new;
+	t_envp	*new;
 
 	new = ft_calloc(1, sizeof(t_envp));
 	if (!new)
@@ -52,13 +52,13 @@ static t_envp	*new_export_envp(char *str)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
-    return (new);
+	return (new);
 }
 
 bool	ft_is_separator(char *s)
 {
-	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t'
-		|| *s == '<' || *s == '>' || *s == '|' || *s == '(' || *s == ')')
+	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t' || *s == '<'
+		|| *s == '>' || *s == '|' || *s == '(' || *s == ')')
 		return (true);
 	return (false);
 }

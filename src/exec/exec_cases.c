@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 17:21:43 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 23:04:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,13 @@ void	ft_multi_pipe_child(t_token *node, t_data *data, int i)
 
 void	ft_multi_pipe(t_token *node, t_data *data, int i)
 {
-	pid_t	pid;
-
 	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
 		ft_error(data, "Error creating pipe");
 	// ft_read_heredoc(node, data);
-	pid = fork();
-	if (pid == -1)
+	node->pid = fork();
+	if (node->pid == -1)
 		ft_error(data, "Error forking");
-	if (pid == 0)
+	if (node->pid == 0)
 		ft_multi_pipe_child(node, data, i);
 	if (i > 0)
 		close(data->fd[0]);
@@ -76,10 +74,11 @@ void	ft_multi_pipe(t_token *node, t_data *data, int i)
 		data->fd[1] = data->pipe_fd[1];
 		close(data->pipe_fd[1]);
 	}
-	if (i == data->nb_levels)
+	//i == data->nb_levels
+	if (1)
 	{
 		close(data->fd[0]);
-		waitpid(pid, NULL, 0);
+		waitpid(node->pid, NULL, 0);
 	}
 	// ft_erase_all_temp_here_doc(node);
 }

@@ -119,7 +119,7 @@ typedef struct s_exec
 typedef struct s_data
 {
 	int				exit_status;
-	t_token_manag	token_manag;
+	t_token_manag	token_manag; //
 	t_env_manag		e;
 	int				wstatus;
 	t_sig			signal;

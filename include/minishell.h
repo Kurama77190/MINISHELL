@@ -79,6 +79,7 @@ typedef struct s_token_management
 
 typedef struct s_envp
 {
+	char			*line;
 	char			*name;
 	char			*value;
 	struct s_envp	*next;
@@ -110,7 +111,7 @@ typedef struct s_data
 	t_env_manag		e;
 	t_sig			signal;
 	t_prompt		prompt;
-	int				fd_pipe[2];
+	int				pipe_fd[2];
 	int				fd[2];
 	int				stdin_backup;
 	int				stdout_backup;

@@ -26,70 +26,70 @@
 // 	}
 // }
 
-// void	ft_multi_pipe_child(t_shell_list *node, t_data *data, int i)
-// {
-// 	if (i > 0)
-// 	{
-// 		dup2(data->fd[0], STDIN_FILENO);
-// 		close(data->fd[0]);
-// 	}
-// 	if (i < data->nb_levels)
-// 	{
-// 		dup2(data->pipe_fd[1], STDOUT_FILENO);
-// 		close(data->pipe_fd[1]);
-// 	}
-// 	close(data->pipe_fd[0]);
-// 	ft_exec_redirs(node, data);
-// 	close(data->pipe_fd[0]);
-// 	close(data->pipe_fd[1]);
-// 	if (node->argv)
-// 	{
-// 		if (is_builtin(node->argv[0]) == true)
-// 		{
-// 			ft_detect_builtin(node->argv, data);
-// 			ft_free_all(data);
-// 		}
-// 		else
-// 			exec(data, node->argv);
-// 	}
-// 	ft_free_all(data);
-// 	exit(1);
-// }
+void	ft_multi_pipe_child(t_token *node, t_data *data, int i)
+{
+	if (i > 0)
+	{
+		dup2(data->fd[0], STDIN_FILENO);
+		close(data->fd[0]);
+	}
+	if (i < data->nb_levels)
+	{
+		dup2(data->pipe_fd[1], STDOUT_FILENO);
+		close(data->pipe_fd[1]);
+	}
+	close(data->pipe_fd[0]);
+	// ft_exec_redirs(node, data);
+	close(data->pipe_fd[0]);
+	close(data->pipe_fd[1]);
+	if (node->args)
+	{
+		if (is_builtin(node->args[0]) == true)
+		{
+			ft_detect_builtin(node->args, data);
+			ft_free_all(data);
+		}
+		else
+			exec(data, node->args);
+	}
+	ft_free_all(data);
+	exit(1);
+}
 
-// void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
-// {
-// 	pid_t	pid;
+void	ft_multi_pipe(t_token *node, t_data *data, int i)
+{
+	pid_t	pid;
 
-// 	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
-// 		ft_error(data, "Error creating pipe");
-// 	ft_read_heredoc(node, data);
-// 	pid = fork();
-// 	if (pid == -1)
-// 		ft_error(data, "Error forking");
-// 	if (pid == 0)
-// 		ft_multi_pipe_child(node, data, i);
-// 	if (i > 0)
-// 		close(data->fd[0]);
-// 	if (i < data->nb_levels)
-// 	{
-// 		data->fd[0] = data->pipe_fd[0];
-// 		data->fd[1] = data->pipe_fd[1];
-// 		close(data->pipe_fd[1]);
-// 	}
-// 	if (i == data->nb_levels)
-// 	{
-// 		close(data->fd[0]);
-// 		waitpid(pid, NULL, 0);
-// 	}
-// 	ft_erase_all_temp_here_doc(node);
-// }
+	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
+		ft_error(data, "Error creating pipe");
+	// ft_read_heredoc(node, data);
+	pid = fork();
+	if (pid == -1)
+		ft_error(data, "Error forking");
+	if (pid == 0)
+		ft_multi_pipe_child(node, data, i);
+	if (i > 0)
+		close(data->fd[0]);
+	if (i < data->nb_levels)
+	{
+		data->fd[0] = data->pipe_fd[0];
+		data->fd[1] = data->pipe_fd[1];
+		close(data->pipe_fd[1]);
+	}
+	if (i == data->nb_levels)
+	{
+		close(data->fd[0]);
+		waitpid(pid, NULL, 0);
+	}
+	// ft_erase_all_temp_here_doc(node);
+}
 
 void	ft_no_pipe(t_token *node, t_data *data)
 {
 	if (!node || !node->args)
 		return ;
-	// if (node && node->args && is_builtin(node->args[0]))
-	// 	ft_detect_builtin(node->args, data);
+	if (node && node->args && is_builtin(node->args[0]))
+		ft_detect_builtin(node->args, data);
 	else
 	{
 		if (pipe(data->fd) == -1)

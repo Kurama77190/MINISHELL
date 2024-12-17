@@ -27,13 +27,13 @@ int	pars_token(t_data *data)
 	i = 0;
 	while (data->token_manag.readed[i])
 	{
-		printf("token[%i] = %s\n", i, data->token_manag.readed[i]);
+		//printf("token[%i] = %s\n", i, data->token_manag.readed[i]);
 		if (setup_token(data, data->token_manag.readed[i]) == ERROR)
 			return (free_split(data->token_manag.readed), \
 			ft_free((void **)&data->token_manag.line), ERROR);
 		i++;
 	}
-	printf("PROMPT RESTANT :%s", data->token_manag.readed[0]);
+	//printf("PROMPT RESTANT :%s", data->token_manag.readed[0]);
 	ft_free((void **)&data->token_manag.line);
 	free_split(data->token_manag.readed);
 	return (SUCCESS);

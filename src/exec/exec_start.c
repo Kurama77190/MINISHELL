@@ -12,20 +12,22 @@
 
 #include "minishell.h"
 
-// void	ft_read_commands(t_token *node, t_data *data)
-// {
-// 	t_token	*current;
-// 	int				i;
+void	ft_read_commands(t_token *node, t_data *data)
+{
+	t_token	*current;
+	int				i;
 
-// 	i = 0;
-// 	current = node;
-// 	while (current)
-// 	{
-// 		ft_multi_pipe(current, data, i);
-// 		current = current->next;
-// 		i++;
-// 	}
-// }
+	i = 0;
+	current = node;
+	while (current)
+	{
+		ft_multi_pipe(current, data, i);
+		current = current->next;
+		i++;
+	}
+}
+
+
 
 void	ft_execution(t_data *data)
 {
@@ -37,7 +39,7 @@ void	ft_execution(t_data *data)
 		//ft_read_heredoc(data->shell_list, data);
 		ft_no_pipe(data->token_manag.token, data);
 	}
-	// else if (data->nb_levels >= 1)
-	// 	ft_read_commands(data->token_manag.token, data);
+	else if (data->nb_levels >= 1)
+		ft_read_commands(data->token_manag.token, data);
 	//ft_erase_all_temp_here_doc(data->shell_list);
 }

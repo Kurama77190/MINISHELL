@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 07:51:32 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 10:23:26 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:17:28 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void	ft_memory(t_data *data)
 	// rajouter les structures de ralph.
 }
 
+void	ft_free_all_child(t_data *data)
+{
+	free_envp(data);
+	ft_free((void**)&data->prompt.read_line);
+	free_token(data);
+}
 
 void	ft_free_all(t_data *data, bool	free_env)
 {
@@ -47,6 +53,7 @@ void	free_envp(t_data *data)
 	{
 		ft_free((void **)&current->name);
 		ft_free((void **)&current->value);
+		ft_free((void**)&current->line);
 		next = current->next;
 		ft_free((void **)&current);
 		current = next;

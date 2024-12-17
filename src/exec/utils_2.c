@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 01:15:22 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 23:27:56 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:34:01 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	search_index(t_data *data, int *i, char *path)
 // 	{
 // 		if (ft_strncmp(tmp->line, "SHLVL=", 6) == 0)
 // 		{
-// 			free(tmp->value);
+// 			ft_free((void**)&tmp->value);
 // 			tmp->value = ft_strdup(shlvl);
-// 			free(tmp->line);
+// 			ft_free((void**)&tmp->line);
 // 			tmp->line = ft_strjoin("SHLVL=", shlvl);
-// 			free(shlvl);
+// 			ft_free((void**)&shlvl);
 // 			break ;
 // 		}
 // 		tmp = tmp->next;
@@ -63,7 +63,7 @@ void	search_index(t_data *data, int *i, char *path)
 // 		{
 // 			shlvl = ft_substr(tmp->line, 6, ft_strlen(tmp->line) - 6);
 // 			lvl_int = ft_atoi(shlvl);
-// 			free(shlvl);
+// 			ft_free((void**)&shlvl);
 // 			break ;
 // 		}
 // 		tmp = tmp->next;

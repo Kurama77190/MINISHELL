@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 10:39:57 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:21:51 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	ft_multi_pipe_child(t_token *node, t_data *data, int i)
 		if (is_builtin(node->args[0]) == true)
 		{
 			ft_detect_builtin(node->args, data);
-			ft_free_all(data, false);
+			ft_free_all(data, true);
 		}
 		else
 			exec(data, node->args);
 	}
-	ft_free_all(data, false);
+	ft_free_all(data, true);
 	exit(1);
 }
 

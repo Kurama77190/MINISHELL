@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 21:02:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:31:17 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_pwd(t_data *data)
 	{
 		ft_putstr_fd(pwd, 1);
 		ft_putstr_fd("\n", 1);
-		free(pwd);
+		ft_free((void**)&pwd);
 	}
 	data->exit_status = 0;
 }

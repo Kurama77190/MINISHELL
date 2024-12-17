@@ -82,6 +82,7 @@ typedef struct s_envp
 {
 	char			*name;
 	char			*value;
+	char			*line;
 	struct s_envp	*next;
 	struct s_envp	*prev;
 }					t_envp;
@@ -159,6 +160,10 @@ bool				check_double(t_data *data, char *line);
 void				ft_exp_env(t_data *data);
 bool				check_change_value(t_data *data);
 void				ft_export(char **argv, t_data *data);
+int					lstadd_envp(t_data *data, char *str);
+bool				ft_is_separator(char *s);
+
+
 
 /**
  * @file echo.c
@@ -359,6 +364,9 @@ void				put_lst_envp(t_envp *envp);
 void				ft_close_fd(t_data *data, char *msg);
 void				ft_error(t_data *data, char *str);
 void				ft_error_exit(t_data *data, char *str);
+void				ft_free_all_child(t_data *data);
+void				ft_error_child(t_data *data, char *msg);
+
 
 
 /* 

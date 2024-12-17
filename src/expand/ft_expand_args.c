@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:09:13 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 09:09:37 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:34:36 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_expand_args(char **args, t_envp *envp)
 		expanded = expand_variable_in_str(args[i], envp);
 		if (!expanded)
 			return (ERROR); // Erreur d'allocation mémoire
-		free(args[i]); // Libère l'ancienne valeur
+		ft_free((void**)&args[i]); // Libère l'ancienne valeur
 		args[i] = expanded;
 		remove_quotes(args[i]);
 		if (!args[i][0]) // Argument vide après expansion
@@ -64,9 +64,9 @@ static char	*expand_variable_in_str(char *str, t_envp *envp)
 				i++;
 			tmp = ft_substr(str, start, i - start);
 			if (!tmp)
-				return (free(result), NULL);
+				return (ft_free((void**)&result), NULL);
 			result = ft_strjoin_free(result, get_env_value(tmp, envp), 1);
-			free(tmp);
+			ft_free((void**)&tmp);
 		}
 		else
 			result = ft_strjoin_free(result, ft_substr(str, i++, 1), 1);

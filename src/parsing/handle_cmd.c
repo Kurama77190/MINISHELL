@@ -57,13 +57,5 @@ int	found_args_cmd(char *token, t_token *new)
 	if (!new->args)
 		return (ERROR);
 
-	int i = 0;
-	printf("[");
-	while (new->args[i])
-	{
-		//printf("word[%i]%s ",i, new->args[i]);
-		i++;
-	}
-	printf("]\n");
 	return (SUCCESS);
 }

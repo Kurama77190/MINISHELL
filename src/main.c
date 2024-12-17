@@ -93,7 +93,6 @@ int main(int argc, char **argv, char **env)
 		//free_token_list(data);
 		//put_tokenizer_data(&data);
 		free(data.prompt.read_line);
-		ft_memset(&data, 0, sizeof(t_data));
 	}
 	return (0);
 }

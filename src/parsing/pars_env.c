@@ -14,8 +14,6 @@
 
 int	pars_env(t_data *data, char **envp)
 {
-	if (!data->e.set)
-		return (SUCCESS);
 	if (split_and_add(data, envp) == ERROR)
 	{
 		free_lst_envp(data);

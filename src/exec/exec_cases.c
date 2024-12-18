@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/18 03:39:34 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 23:28:35 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	ft_erase_all_temp_here_doc(t_redir *node)
 	while (current)
 	{
 		if (current->key == D_HEREDOC && current->file_here_doc != NULL)
+		{
 			unlink(current->file_here_doc);
+		}
 		current = current->next;
 	}
 }
@@ -108,5 +110,4 @@ void	ft_no_pipe(t_token *node, t_data *data)
 		close(data->fd[0]);
 		close(data->fd[1]);
 	}
-	ft_erase_all_temp_here_doc(node->redir_in.head);
 }

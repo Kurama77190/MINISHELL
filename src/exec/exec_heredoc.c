@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/18 04:20:06 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 22:28:42 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 	if (!redir && !redir->file_here_doc)
 		return ;
 	file_path = redir->file_here_doc;
-	file = open(file_path, O_TRUNC | O_CREAT | O_RDWR, 0666);
+	file = open(file_path, O_TRUNC | O_CREAT | O_RDWR, 0777);
 	if (file == -1)
 		perror("heredoc");
 	signal(SIGINT, heredoc_sigint_handler);

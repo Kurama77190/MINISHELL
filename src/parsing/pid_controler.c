@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 03:19:48 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 03:35:11 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/19 00:19:07 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	handle_pid(t_token *current, int *exit_status)
 				ft_putendl_fd("\nQuit (core dumped)", 1);
 			*exit_status = 128 + WTERMSIG(status);
 		}
-		current->pid = -1; // Marquer comme terminé
+		current->pid = -1;
 	}
-	return (1); // Processus terminé
+	return (1);
 }
 
 static int	process_tokens(t_data *data, int *all_terminated)
@@ -67,5 +67,6 @@ int	pid_controller(t_data *data)
 			break ;
 		usleep(1000);
 	}
+	ft_erase_all_temp_here_doc(data->token_manag.token->redir_in.head);
 	return (SUCCESS);
 }

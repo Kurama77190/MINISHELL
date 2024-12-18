@@ -15,7 +15,7 @@
 void	ft_read_commands(t_token *node, t_data *data)
 {
 	t_token	*current;
-	int				i;
+	int		i;
 
 	i = 0;
 	current = node;
@@ -26,8 +26,6 @@ void	ft_read_commands(t_token *node, t_data *data)
 		i++;
 	}
 }
-
-
 
 void	ft_execution(t_data *data)
 {
@@ -41,5 +39,4 @@ void	ft_execution(t_data *data)
 	}
 	else if (data->nb_levels >= 1)
 		ft_read_commands(data->token_manag.token, data);
-	//ft_erase_all_temp_here_doc(data->shell_list);
 }

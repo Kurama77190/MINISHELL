@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 17:17:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 03:04:45 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,62 +19,28 @@ static void	create_filename(t_redir *redir)
 
 	temp_num = ft_itoa(getpid() + 1);
 	temp_file = ft_strjoin("./minishell_heredoc_", temp_num);
-	ft_free((void**)&temp_num);
+	ft_free((void **)&temp_num);
 	if (!temp_file)
 	{
 		perror("ft_strjoin");
-		ft_free((void**)&temp_file);
+		ft_free((void **)&temp_file);
 		return ;
 	}
 	if (access(temp_file, F_OK) == -1)
 	{
 		redir->file_here_doc = ft_strdup(temp_file);
-		ft_free((void**)&temp_file);
+		ft_free((void **)&temp_file);
 		return ;
 	}
 	redir->file_here_doc = ft_strdup(temp_file);
-	ft_free((void**)&temp_file);
-}
-
-static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
-{
-	size_t	start;
-	char	*var;
-
-	start = i++;
-	if (str[i] == '?')
-		return (ft_putnbr_fd(data->exit_status, fd), 2);
-	while (str[i] && str[i] != ' ' && str[i] != '$')
-		i++;
-	if (i != start)
-	{
-		var = ft_substr(str, start, i);
-		//var = ft_get_env_value(var, data);
-		if (!var)
-			ft_putstr_fd("", fd);
-		ft_free((void**)&var);
-	}
-	return (i);
-}
-
-static void	ft_expand_heredoc(char *command, int fd, t_data *data)
-{
-	size_t	i;
-
-	i = 0;
-	while (command[i])
-	{
-		if (command[i] == '$')
-			i += ft_env_var_heredoc(command, i, fd, data);
-		else
-			ft_putchar_fd(command[i++], fd);
-	}
-	ft_putchar_fd('\n', fd);
+	ft_free((void **)&temp_file);
 }
 
 static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
 		int file)
 {
+	(void)data;
+	(void)file_path;
 	char	*line;
 	int		count;
 
@@ -86,18 +52,15 @@ static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
 			break ;
 		if (ft_is_delimiter(redir->file_name, line))
 			break ;
-		if (!*file_path)
-			ft_expand_heredoc(line, file, data);
 		else
 			ft_putendl_fd(line, file);
 		count++;
 		if (g_exit_status != 130 && !ft_strcmp(line, redir->file_name))
 		{
-			ft_free((void**)&line);
+			ft_free((void **)&line);
 			break ;
 		}
 	}
-
 }
 
 void	ft_process_heredoc(t_redir *redir, t_data *data)

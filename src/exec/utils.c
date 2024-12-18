@@ -82,8 +82,6 @@ bool	is_builtin(char *command)
 void	close_hd(t_redir *redir, t_data *data)
 {
 	(void)redir;
-	// if (redir && redir->hd_fd != -1)
-	// 	close(redir->hd_fd);
 	close(STDIN_FILENO);
 	if (data && data->fd[0] != -1)
 		close(data->fd[0]);

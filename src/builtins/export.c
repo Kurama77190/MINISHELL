@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 12:30:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/17 19:27:34 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ bool	check_double(t_data *data, char *var)
 	{
 		if (!ft_strcmp(tmp->name, name))
 		{
-			ft_free((void**)&tmp->value);
+			ft_free((void **)&tmp->value);
 			tmp->value = put_value(var);
-			return (ft_free((void**)&name), true);
+			return (ft_free((void **)&name), true);
 		}
 		tmp = tmp->next;
 	}
-	return (ft_free((void**)&name), false);
+	return (ft_free((void **)&name), false);
 }
 
 void	ft_exp_env(t_data *data)
@@ -86,16 +86,12 @@ void	ft_export(char **argv, t_data *data)
 		while (argv[i])
 		{
 			if (check_ifvalue(argv[i]) == false)
-			{
-				data->exit_status = 0;
-				return ;
-			}
+				return (data->exit_status = 0, (void) NULL);
 			if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0])
 				|| ft_is_separator(argv[i]) || argv[i][0] == '=')
 			{
 				ft_putstr_fd("export: not a valid identifier\n", 2);
-				data->exit_status = 1;
-				return ;
+				return (data->exit_status = 1, (void) NULL);
 			}
 			if (check_double(data, argv[i]) == false)
 				push_node_to_env(data, argv[i]);

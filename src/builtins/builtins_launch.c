@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_launch.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 19:31:17 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/12/17 19:31:20 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 bool	ft_detect_builtin(char **argv, t_data *data)
 {
-	
 	if (!ft_strcmp(argv[0], "cd"))
 		ft_cd(argv, data);
 	if (!ft_strcmp(argv[0], "echo"))

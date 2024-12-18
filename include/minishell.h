@@ -131,8 +131,9 @@ typedef struct s_data
 	struct termios	terminal;
 	int				nb_levels;
 	int				last_pid;
+	int				stdin_backup;
+	int				stdout_backup;
 	int 			free_value;
-	// exec;
 }					t_data;
 
 extern int			g_exit_status;
@@ -319,7 +320,12 @@ char				*ft_strjoin_free(char *s1, char *s2, int free_flag);
 char				*get_env_value(const char *key, t_envp *envp);
 char				*handle_expand_char(char *result, char c);
 char				*handle_expand_variable(char *result, char *str, int *i, t_envp *envp);
-int					ft_expand_args(t_data *data, char **args, t_envp *envp);
+int					ft_expand_args(char **args, t_envp *envp, int exit_status);
+char				*expand_variable_in_str(char *str, t_envp *envp, int exit_status);
+char				*expand_dollar(char *str, int *i, t_envp *envp, int exit_status);
+char				*join_char_to_str(char *result, char c);
+void				remove_quotes(char *str);
+void				free_and_shift(char **args, int index);
 
 
 //////////////////////////////////////////////////////////////////

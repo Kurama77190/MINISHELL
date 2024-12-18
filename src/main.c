@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 01:40:00 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:39:46 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,16 @@ int	pid_controller(t_data *data)
 
 		while (current)
 		{
-			fprintf(stderr, "PID = -> %d\n", current->pid);
-			if (current->pid > 0) // Vérifie que le pid est valide
+			if (current->pid > 0)
 			{
 				pid = waitpid(current->pid, &status, WNOHANG);
-				printf("PID[%i]\n", pid);
 				if (pid == 0)
-					all_terminated = 0; // Processus non terminé
-				else if (pid > 0) // Processus terminé
+					all_terminated = 0;
+				else if (pid > 0)
 				{
 					if (WIFEXITED(status))
 					{
 						data->exit_status = WEXITSTATUS(status);
-						fprintf(stderr, "EXIT_CODE = -> %d\n", data->exit_status);
-
 					}
 					else if (WIFSIGNALED(status))
 					{
@@ -120,13 +116,13 @@ int	pid_controller(t_data *data)
 							ft_putendl_fd("\nQuit (core dumped)", 1);
 						data->exit_status = 128 + WTERMSIG(status);
 					}
-					current->pid = -1; // Marque le pid comme "récolté"
+					current->pid = -1;
 				}
 			}
 			current = current->next;
 		}
 		if (all_terminated)
-			break; // Tous les processus ont été gérés
+			break;
 		usleep(1000);
 	}
 	return (SUCCESS);
@@ -151,7 +147,6 @@ int main(int argc, char **argv, char **env)
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
 		// put_tokenizer_data(&data);
-		printf(" CODE ERREUR = %d\n", data.exit_status);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}

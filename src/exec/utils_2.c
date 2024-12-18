@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 01:15:22 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 12:34:01 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 03:07:56 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,52 +26,52 @@ void	search_index(t_data *data, int *i, char *path)
 		(*i)++;
 }
 
-// void	increment_shlvl(t_data *data, int lvl_int)
-// {
-// 	t_env	*tmp;
-// 	char	*shlvl;
+void	increment_shlvl(t_data *data, int lvl_int)
+{
+	t_envp	*tmp;
+	char	*shlvl;
 
-// 	lvl_int++;
-// 	shlvl = ft_itoa(lvl_int);
-// 	tmp = data->env;
-// 	while (tmp)
-// 	{
-// 		if (ft_strncmp(tmp->line, "SHLVL=", 6) == 0)
-// 		{
-// 			ft_free((void**)&tmp->value);
-// 			tmp->value = ft_strdup(shlvl);
-// 			ft_free((void**)&tmp->line);
-// 			tmp->line = ft_strjoin("SHLVL=", shlvl);
-// 			ft_free((void**)&shlvl);
-// 			break ;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
+	lvl_int++;
+	shlvl = ft_itoa(lvl_int);
+	tmp = data->e.envp;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->line, "SHLVL=", 6) == 0)
+		{
+			ft_free((void**)&tmp->value);
+			tmp->value = ft_strdup(shlvl);
+			ft_free((void**)&tmp->line);
+			tmp->line = ft_strjoin("SHLVL=", shlvl);
+			ft_free((void**)&shlvl);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+}
 
-// void	change_shlvl(t_data *data)
-// {
-// 	t_env	*tmp;
-// 	char	*shlvl;
-// 	int		lvl_int;
+void	change_shlvl(t_data *data)
+{
+	t_envp	*tmp;
+	char	*shlvl;
+	int		lvl_int;
 
-// 	lvl_int = 0;
-// 	tmp = data->env;
-// 	while (tmp)
-// 	{
-// 		if (ft_strncmp(tmp->line, "SHLVL=", 6) == 0)
-// 		{
-// 			shlvl = ft_substr(tmp->line, 6, ft_strlen(tmp->line) - 6);
-// 			lvl_int = ft_atoi(shlvl);
-// 			ft_free((void**)&shlvl);
-// 			break ;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	if (lvl_int == 0)
-// 	{
-// 		push_node_to_env(data, "SHLVL=1");
-// 		return ;
-// 	}
-// 	increment_shlvl(data, lvl_int);
-// }
+	lvl_int = 0;
+	tmp = data->e.envp;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->line, "SHLVL=", 6) == 0)
+		{
+			shlvl = ft_substr(tmp->line, 6, ft_strlen(tmp->line) - 6);
+			lvl_int = ft_atoi(shlvl);
+			ft_free((void**)&shlvl);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (lvl_int == 0)
+	{
+		push_node_to_env(data, "SHLVL=1");
+		return ;
+	}
+	increment_shlvl(data, lvl_int);
+}

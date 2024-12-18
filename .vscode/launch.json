@@ -8,7 +8,7 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/sgoinfre/goinfre/Perso/rbalazs/MINISHELL/minishell",
+			"program": "/mnt/nfs/homes/sben-tay/REPO_GITHUB/MINISHELL/minishell",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",

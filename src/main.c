@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 03:20:06 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 04:19:42 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int main(int argc, char **argv, char **env)
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
 			ft_execution(&data);
-			pid_controller(&data);
+			// pid_controller(&data);
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
 		// put_tokenizer_data(&data);

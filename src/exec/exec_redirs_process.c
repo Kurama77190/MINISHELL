@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirs_process.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:26 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 17:23:57 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 04:04:25 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_process_heredoc_file(t_redir *current, t_data *data)
 		return ;
 	}
 	fd_in = open(current->file_here_doc, O_RDONLY);
+	fprintf(stderr, "INFILE HERE DOC = %s\n", current->file_here_doc);
 	if (fd_in == -1)
 	{
 		ft_error(data, "Error opening heredoc file\n");

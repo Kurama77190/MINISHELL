@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 07:51:32 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 02:10:33 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:54:30 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ void	ft_free_all(t_data *data, bool free_env)
 		free_envp(data);
 	ft_free((void **)&data->prompt.read_line);
 	free_token(data);
-	if (data->free_value == 0)
-	{
-		close(data->fd[0]);
-		close(data->fd[1]);
-	}
 }
 
 void	free_envp(t_data *data)

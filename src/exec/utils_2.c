@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 01:15:22 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/18 03:07:56 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:45:45 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	increment_shlvl(t_data *data, int lvl_int)
 	{
 		if (ft_strncmp(tmp->line, "SHLVL=", 6) == 0)
 		{
-			ft_free((void**)&tmp->value);
+			ft_free((void **)&tmp->value);
 			tmp->value = ft_strdup(shlvl);
-			ft_free((void**)&tmp->line);
+			ft_free((void **)&tmp->line);
 			tmp->line = ft_strjoin("SHLVL=", shlvl);
-			ft_free((void**)&shlvl);
+			ft_free((void **)&shlvl);
 			break ;
 		}
 		tmp = tmp->next;
@@ -63,7 +63,7 @@ void	change_shlvl(t_data *data)
 		{
 			shlvl = ft_substr(tmp->line, 6, ft_strlen(tmp->line) - 6);
 			lvl_int = ft_atoi(shlvl);
-			ft_free((void**)&shlvl);
+			ft_free((void **)&shlvl);
 			break ;
 		}
 		tmp = tmp->next;

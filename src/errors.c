@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 13:23:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 04:00:18 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_error(t_data *data, char *msg)
 {
 	if (data->token_manag.token->pid == 0)
 	{
-		ft_free_all(data, true);
+		ft_free_all(data, false);
 	}
 	else
 		ft_free_all(data, false);

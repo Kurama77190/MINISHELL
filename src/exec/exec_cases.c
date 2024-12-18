@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cases.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 17:21:43 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 01:53:48 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	ft_multi_pipe(t_token *node, t_data *data, int i)
 	if (i == data->nb_levels)
 	{
 		close(data->fd[0]);
-		waitpid(pid, NULL, 0);
 	}
 	// ft_erase_all_temp_here_doc(node);
 }
@@ -95,10 +94,10 @@ void	ft_no_pipe(t_token *node, t_data *data)
 	else
 	{
 		if (pipe(data->fd) == -1)
-			ft_error(data, "Error creating pipe");
+			ft_error(data, "Error creating pipe\n");
 		node->pid = fork();
 		if (node->pid == -1)
-			ft_error(data, "Error forking");
+			ft_error(data, "Error forking\n");
 		if (node->pid == 0)
 		{
 			ft_exec_redirs(node, data);
@@ -108,7 +107,6 @@ void	ft_no_pipe(t_token *node, t_data *data)
 			ft_free_all(data, true);
 			exit(1);
 		}
-		waitpid(node->pid, NULL, 0);
 		close(data->fd[0]);
 		close(data->fd[1]);
 	}

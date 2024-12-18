@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 16:23:39 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 01:40:00 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,52 @@ void	put_tokenizer_data(t_data *data)
 	}
 }
 
+int	pid_controller(t_data *data)
+{
+	t_token	*current;
+	int		status;
+	pid_t	pid;
+	int		all_terminated;
+
+	while (1)
+	{
+		all_terminated = 1;
+		current = data->token_manag.token;
+
+		while (current)
+		{
+			fprintf(stderr, "PID = -> %d\n", current->pid);
+			if (current->pid > 0) // Vérifie que le pid est valide
+			{
+				pid = waitpid(current->pid, &status, WNOHANG);
+				printf("PID[%i]\n", pid);
+				if (pid == 0)
+					all_terminated = 0; // Processus non terminé
+				else if (pid > 0) // Processus terminé
+				{
+					if (WIFEXITED(status))
+					{
+						data->exit_status = WEXITSTATUS(status);
+						fprintf(stderr, "EXIT_CODE = -> %d\n", data->exit_status);
+
+					}
+					else if (WIFSIGNALED(status))
+					{
+						if (WTERMSIG(status) == SIGQUIT)
+							ft_putendl_fd("\nQuit (core dumped)", 1);
+						data->exit_status = 128 + WTERMSIG(status);
+					}
+					current->pid = -1; // Marque le pid comme "récolté"
+				}
+			}
+			current = current->next;
+		}
+		if (all_terminated)
+			break; // Tous les processus ont été gérés
+		usleep(1000);
+	}
+	return (SUCCESS);
+}
 
 int main(int argc, char **argv, char **env)
 {
@@ -101,9 +147,11 @@ int main(int argc, char **argv, char **env)
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
 			ft_execution(&data);
+			pid_controller(&data);
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
 		// put_tokenizer_data(&data);
+		printf(" CODE ERREUR = %d\n", data.exit_status);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}

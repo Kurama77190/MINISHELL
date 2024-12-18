@@ -6,12 +6,11 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 02:26:22 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 08:25:12 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:11:12 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	setup_cmd(char *token, t_token *new)
 {
@@ -19,7 +18,7 @@ int	setup_cmd(char *token, t_token *new)
 		return (ERROR);
 	if (found_args_cmd(token, new) == ERROR)
 	{
-		ft_free((void**)&new->command);
+		ft_free((void **)&new->command);
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -31,8 +30,7 @@ int	found_cmd_name(char *token, t_token *new)
 	int	cote;
 
 	cote = 0;
-	while (*token && ft_isspace(*token) && (*token != '\"' \
-			|| *token != '\''))
+	while (*token && ft_isspace(*token) && (*token != '\"' || *token != '\''))
 		token++;
 	if (!(*token))
 		return (SUCCESS);

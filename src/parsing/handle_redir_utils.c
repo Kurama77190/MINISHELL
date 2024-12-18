@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 05:04:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/15 01:56:30 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:11:45 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	delete_word(char *str, size_t i, unsigned int start)
 		i--;
 	}
 }
+
 void	found_index(char *tmp, int *i)
 {
 	int	in_quote;
@@ -38,7 +39,7 @@ void	found_index(char *tmp, int *i)
 				in_quote = 0;
 		}
 		else if (!in_quote && (ft_isspace(tmp[*i]) || ft_is_operator(tmp[*i])))
-			break;
+			break ;
 		(*i)++;
 	}
 }
@@ -52,7 +53,7 @@ bool	is_operator_in_quotes(char *token, char operator)
 	i = 0;
 	s_quote = false;
 	d_quote = false;
-	while(token[i] && token[i] != operator)
+	while (token[i] && token[i] != operator)
 	{
 		if (token[i] == '\"')
 			d_quote = !d_quote;

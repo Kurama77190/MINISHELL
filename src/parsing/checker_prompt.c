@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:55:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 09:04:43 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:10:54 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	check_cmd(t_data *data)
 		free(str);
 		return (ERROR);
 	}
-	ft_free((void**)&str);
+	ft_free((void **)&str);
 	return (SUCCESS);
 }
 
-static bool	is_valided(char *str, int	*exit_status)
+static bool	is_valided(char *str, int *exit_status)
 {
 	if (!check_redirection(str))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:47:08 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 10:22:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 02:12:49 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	pars_env(t_data *data, char **envp)
 {
-	// if (!data->e.set)
-	// 	return (SUCCESS);
 	if (split_and_add(data, envp) == ERROR)
 	{
 		free_envp(data);
@@ -47,7 +45,6 @@ int	split_and_add(t_data *data, char **envp)
 		free_split(split);
 		i++;
 	}
-
 	if (add_tab(data, envp) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
@@ -78,6 +75,7 @@ int	add_lst(t_data *data, char **splited)
 {
 	t_envp	*new;
 	t_envp	*last;
+
 	last = data->e.envp;
 	new = lst_new_envp(splited);
 	if (!new)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:56:36 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 13:09:17 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 02:04:38 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ t_envp	*lst_new_envp(char **splited)
 	}
 	new->line = ft_strjoin(new->name, new->value);
 	if (!new->line)
-		return (ft_free((void**)&new->name), \
-		ft_free((void**)&new->value), NULL);
+		return (ft_free((void **)&new->name), ft_free((void **)&new->value),
+			NULL);
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
@@ -63,7 +63,6 @@ int	uptdate_env(t_data *data)
 	size_t	len;
 	size_t	i;
 	t_envp	*tmp;
-
 
 	free_split(data->e.env);
 	len = ft_lstsize_envp(data->e.envp);

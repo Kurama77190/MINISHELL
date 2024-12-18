@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:43:37 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 07:07:34 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:06:28 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ int	pars_shell(t_data *data, int argc, char **argv)
 	{
 		return (ERROR);
 	}
-	// pars_sig(); // signaux
 	return (SUCCESS);
 }

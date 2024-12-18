@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:00:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 15:47:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 02:12:36 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	pars_token(t_data *data)
 		return (ERROR);
 	data->token_manag.readed = split_pipes_secure(data->token_manag.line);
 	if (!data->token_manag.readed)
-		return (ft_free((void**)&data->token_manag.line), ERROR);
+		return (ft_free((void **)&data->token_manag.line), ERROR);
 	i = 0;
 	while (data->token_manag.readed[i])
 	{
 		if (setup_token(data, data->token_manag.readed[i]) == ERROR)
-			return (free_split(data->token_manag.readed), \
-			ft_free((void **)&data->token_manag.line), ERROR);
+			return (free_split(data->token_manag.readed),
+				ft_free((void **)&data->token_manag.line), ERROR);
 		i++;
 	}
 	ft_free((void **)&data->token_manag.line);
@@ -47,13 +47,13 @@ int	setup_token(t_data *data, char *token)
 	if (setup_redir(token, new) == ERROR)
 	{
 		free_redir(new);
-		ft_free((void**)&new); // et liberer son contenue aussi stp.
+		ft_free((void **)&new);
 		return (ERROR);
 	}
 	if (setup_cmd(token, new) == ERROR)
 	{
 		free_redir(new);
-		ft_free((void**)&new);
+		ft_free((void **)&new);
 		return (ERROR);
 	}
 	add_back_token(data, new);
@@ -76,10 +76,3 @@ int	add_back_token(t_data *data, t_token *new)
 	new->prev = current;
 	return (SUCCESS);
 }
-
-// ordre d execution absolu, peut importe l ordre et les commands donner a UNIX, celui ci l interpretre dans un ordre bien specifique,
-// regarder les redir in and out et les set
-// par la suite il regarde la commande et c arguments
-// apres cela il pourra commencer le input, la commandes avec c arguments et son output !
-// grace a ca nous pourrons peut importe ou se trouve la redirection sur la commande avoir exactement le meme comportement que minishell.
-// ENJOY SBEN TAY! =D

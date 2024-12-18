@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 03:21:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 09:03:02 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:06:14 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ bool	validate_redirection(char *str, int *i)
 		return (false);
 	return (true);
 }
-
 
 bool	check_unclosed_quotes(const char *str)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir_utils2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:13:26 by samy              #+#    #+#             */
-/*   Updated: 2024/12/17 17:28:26 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 02:07:37 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*outfile_type(char *token)
 	delete_word(tmp, i, 0);
 	return (result);
 }
-
 
 char	*infile_type(char *token)
 {
@@ -81,9 +80,9 @@ char	*outfile_name(char *token)
 
 char	*infile_name(char *token)
 {
-	char *tmp;
-	char *result;
-	int i;
+	char	*tmp;
+	char	*result;
+	int		i;
 
 	i = 0;
 	tmp = ft_strchr(token, '<');

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir_utils3.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:15:22 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 17:13:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 02:12:07 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_type(char	*str, t_redir	**new)
+void	set_type(char *str, t_redir **new)
 {
 	int	i;
 
@@ -92,7 +92,6 @@ int	add_redir_in(char *token, t_redir_manag *param)
 		tmp->next = new;
 		new->prev = tmp;
 		new->next = NULL;
-		// param->current = new;
 	}
 	return (SUCCESS);
 }

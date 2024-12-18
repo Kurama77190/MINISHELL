@@ -283,7 +283,6 @@ int					setup_token(t_data *data, char *token);
 int					setup_cmd(char *token, t_token *new);
 int					setup_redir(char *token, t_token *new);
 int					add_back_token(t_data *data, t_token *new);
-int					token_id(t_data *data, char *token, t_token **new);
 bool				check_redirection(char *str);
 bool				check_pipe(char *str);
 bool				is_empty_prompt(const char *str);
@@ -320,7 +319,7 @@ char				*ft_strjoin_free(char *s1, char *s2, int free_flag);
 char				*get_env_value(const char *key, t_envp *envp);
 char				*handle_expand_char(char *result, char c);
 char				*handle_expand_variable(char *result, char *str, int *i, t_envp *envp);
-int					ft_expand_args(char **args, t_envp *envp);
+int					ft_expand_args(t_data *data, char **args, t_envp *envp);
 
 
 //////////////////////////////////////////////////////////////////

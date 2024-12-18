@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 09:09:13 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 13:32:24 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 02:25:46 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 #include "libft.h"
 #include "minishell.h"
 
-static char	*expand_variable_in_str(char *str, t_envp *envp);
-static void	remove_quotes(char *str);
-static void	free_and_shift(char **args, int index);
+static char	*expand_variable_in_str(char *str, t_envp *envp, int exit_status);
 
-int	ft_expand_args(char **args, t_envp *envp)
+int	ft_expand_args(char **args, t_envp *envp, int exit_status)
 {
 	int		i;
 	char	*expanded;
@@ -29,13 +27,13 @@ int	ft_expand_args(char **args, t_envp *envp)
 	i = 0;
 	while (args[i])
 	{
-		expanded = expand_variable_in_str(args[i], envp);
+		expanded = expand_variable_in_str(args[i], envp, exit_status);
 		if (!expanded)
 			return (ERROR); // Erreur d'allocation mémoire
 		ft_free((void**)&args[i]); // Libère l'ancienne valeur
 		args[i] = expanded;
 		remove_quotes(args[i]);
-		if (!args[i][0]) // Argument vide après expansion
+		if (!args[i][0]) // Si argument vide après expansion
 		{
 			free_and_shift(args, i);
 			continue; // Passe directement à l'index actuel (déjà shifté)
@@ -45,11 +43,9 @@ int	ft_expand_args(char **args, t_envp *envp)
 	return (SUCCESS);
 }
 
-static char	*expand_variable_in_str(char *str, t_envp *envp)
+static char	*expand_variable_in_str(char *str, t_envp *envp, int exit_status)
 {
 	char	*result;
-	char	*tmp;
-	char	*tmp2;
 	int		i;
 
 	result = ft_strdup("");
@@ -58,25 +54,106 @@ static char	*expand_variable_in_str(char *str, t_envp *envp)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '\0')
+		if (str[i] == '$' && str[i + 1])
 		{
-			int start = ++i;
-			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-				i++;
-			tmp = ft_substr(str, start, i - start);
-			if (!tmp)
-				return (ft_free((void**)&result), NULL);
-			result = ft_strjoin_free(result, get_env_value(tmp, envp), 1);
-			ft_free((void**)&tmp);
+			if (handle_dollar_case(&result, str, &i, envp, exit_status) == ERROR)
+				return (ft_free((void **)&result), NULL);
 		}
 		else
 		{
-			tmp2 = ft_substr(str, i++, 1);
-			result = ft_strjoin_free(result,tmp2, 1);
-			ft_free((void**)&tmp2);
+			if (append_char_to_result(&result, str[i++]) == ERROR)
+				return (NULL);
 		}
 	}
 	return (result);
+}
+
+static int	handle_dollar_case(char **result, char *str, int *i,
+								t_envp *envp, int exit_status)
+{
+	char	*expanded_value;
+
+	if (str[*i + 1] == '?')
+		expanded_value = handle_exit_status(i, exit_status);
+	else
+		expanded_value = extract_env_var(str, i, envp);
+	if (!expanded_value)
+		return (ERROR);
+	if (append_value_to_result(result, expanded_value) == ERROR)
+		return (ft_free((void **)&expanded_value), ERROR);
+	ft_free((void **)&expanded_value);
+	return (SUCCESS);
+}
+
+static char	*handle_exit_status(int *i, int exit_status)
+{
+	char	*status_str;
+
+	(*i) += 2; // Skip $?
+	status_str = ft_itoa(exit_status);
+	return (status_str);
+}
+
+static char	*extract_env_var(char *str, int *i, t_envp *envp)
+{
+	char	*key;
+	char	*value;
+	int		start;
+	int		len;
+
+	start = ++(*i);
+	len = 0;
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	{
+		len++;
+		(*i)++;
+	}
+	key = ft_substr(str, start, len);
+	if (!key)
+		return (NULL);
+	value = get_env_value(key, envp);
+	ft_free((void **)&key);
+	if (!value)
+		return (ft_strdup(""));
+	return (ft_strdup(value));
+}
+
+static int	handle_dollar_case(char **result, char *str, int *i, t_envp *envp)
+{
+	char	*expanded_value;
+
+	if (str[*i + 1] == '?')
+		expanded_value = handle_exit_status(i);
+	else
+		expanded_value = extract_env_var(str, i, envp);
+	if (!expanded_value)
+		return (ERROR);
+	if (append_value_to_result(result, expanded_value) == ERROR)
+		return (ft_free((void **)&expanded_value), ERROR);
+	ft_free((void **)&expanded_value);
+	return (SUCCESS);
+}
+
+static char	*handle_exit_status(int *i)
+{
+	extern int	g_exit_status;
+	char		*status_str;
+
+	(*i) += 2; // Skip $?
+	status_str = ft_itoa(g_exit_status);
+	return (status_str);
+}
+
+static int	append_value_to_result(char **result, char *value)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(*result, value);
+	if (!tmp)
+		return (ERROR);
+	ft_free((void **)result);
+	*result = tmp;
+	return (SUCCESS);
 }
 
 static void	free_and_shift(char **args, int index)

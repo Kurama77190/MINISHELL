@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 00:42:18 by samy              #+#    #+#             */
-/*   Updated: 2024/12/17 16:23:32 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/18 02:11:03 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	replace_redir_with_spaces(char *token, int *i, char redir);
-int	handle_redirection(char *token, int *i, t_redir_manag *redir);
-int	update_in_quote(char c, int in_quote);
+int		handle_redirection(char *token, int *i, t_redir_manag *redir);
+int		update_in_quote(char c, int in_quote);
 
 int	setup_redir(char *token, t_token *new)
 {
-	int				in_quote;
-	int				i;
+	int	in_quote;
+	int	i;
 
 	in_quote = 0;
 	i = 0;
@@ -50,8 +50,8 @@ void	replace_redir_with_spaces(char *token, int *i, char redir)
 		token[*i] = ' ';
 		(*i)++;
 	}
-	while (token[*i] && !ft_isspace(token[*i])
-		&& token[*i] != '<' && token[*i] != '>')
+	while (token[*i] && !ft_isspace(token[*i]) && token[*i] != '<'
+		&& token[*i] != '>')
 	{
 		token[*i] = ' ';
 		(*i)++;

@@ -6,12 +6,11 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 06:24:52 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 06:31:21 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:07:28 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 bool	validate_pipe_syntax(char *str, int i)
 {
@@ -45,7 +44,8 @@ bool	is_pipe_start_or_end(char *str, int i)
 
 bool	check_double_redirection(char *str, int *i)
 {
-	if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>'))
+	if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i \
+		+ 1] == '>'))
 		(*i)++;
 	return (false);
 }

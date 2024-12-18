@@ -6,16 +6,15 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:01:07 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/16 05:08:13 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:11:25 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		count_valid_pipes(const char *str);
-static int		find_next_pipe(const char *str, int start);
-static char		*allocate_section(const char *str, int start, int end);
-
+static int	count_valid_pipes(const char *str);
+static int	find_next_pipe(const char *str, int start);
+static char	*allocate_section(const char *str, int start, int end);
 
 char	**split_pipes_secure(const char *str)
 {

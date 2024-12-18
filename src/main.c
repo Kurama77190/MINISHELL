@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 02:39:46 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:20:06 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,49 +83,6 @@ void	put_tokenizer_data(t_data *data)
 		current = current->next;
 		i++;
 	}
-}
-
-int	pid_controller(t_data *data)
-{
-	t_token	*current;
-	int		status;
-	pid_t	pid;
-	int		all_terminated;
-
-	while (1)
-	{
-		all_terminated = 1;
-		current = data->token_manag.token;
-
-		while (current)
-		{
-			if (current->pid > 0)
-			{
-				pid = waitpid(current->pid, &status, WNOHANG);
-				if (pid == 0)
-					all_terminated = 0;
-				else if (pid > 0)
-				{
-					if (WIFEXITED(status))
-					{
-						data->exit_status = WEXITSTATUS(status);
-					}
-					else if (WIFSIGNALED(status))
-					{
-						if (WTERMSIG(status) == SIGQUIT)
-							ft_putendl_fd("\nQuit (core dumped)", 1);
-						data->exit_status = 128 + WTERMSIG(status);
-					}
-					current->pid = -1;
-				}
-			}
-			current = current->next;
-		}
-		if (all_terminated)
-			break;
-		usleep(1000);
-	}
-	return (SUCCESS);
 }
 
 int main(int argc, char **argv, char **env)

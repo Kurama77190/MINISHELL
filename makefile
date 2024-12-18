@@ -6,7 +6,7 @@
 #    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/12/18 02:34:37 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/12/18 03:25:32 by sben-tay         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ LIBFT = external/LIBFT/
 SRC := src/main.c src/signal/signal.c src/errors.c \
 		$(addprefix $(PARS), pars_shell.c pars_env.c pars_token.c pars_env_utils.c pars_token_utils.c \
 		handle_prompt.c ft_memory_utils.c handle_redir.c handle_cmd.c handle_redir_utils.c handle_redir_utils2.c handle_redir_utils3.c checker_prompt.c \
-		checker_prompt_utils.c checker_prompt_utils2.c checker_prompt_utils3.c ft_memory.c) \
+		checker_prompt_utils.c checker_prompt_utils2.c checker_prompt_utils3.c ft_memory.c pid_controler.c) \
 		$(addprefix $(EXPAND), handle_expand.c ft_expand_redir.c ft_expand_redir_utils.c ft_expand_args.c ft_expand_args_utils.c) \
 		$(addprefix $(EXEC), exec_cases.c exec_core.c utils.c utils_2.c exec_heredoc.c exec_redirs_process.c exec_redirs_read.c exec_start.c) \
 		$(addprefix $(BUILT), cd.c echo.c env.c exit.c export.c pwd.c unset.c builtins_utils.c builtins_launch.c export_utils.c)

@@ -131,8 +131,6 @@ typedef struct s_data
 	struct termios	terminal;
 	int				nb_levels;
 	int				last_pid;
-	int				stdin_backup;
-	int				stdout_backup;
 	int 			free_value;
 }					t_data;
 
@@ -295,6 +293,8 @@ bool				is_pipe_start_or_end(char *str, int i);
 bool				check_double_redirection(char *str, int *i);
 bool				check_following_chars(char *str, int *i, int j);
 bool				check_unclosed_quotes(const char *str);
+int					pid_controller(t_data *data);
+
 
 
 //////////////////////////////////////////////////////////////////

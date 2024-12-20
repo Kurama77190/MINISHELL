@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 23:22:50 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/19 09:50:53 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,19 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 
 	t_data data;
-	int	i = 0;
 	ft_memset(&data, 0, sizeof(t_data));
 	pars_env(&data, env);
 	while (1)
 	{
-		printf("%i\n" , i);
-		i++;
 		handle_prompt(&data);
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
 			ft_execution(&data);
-			pid_controller(&data);
+			// pid_controller(&data);
+			printf("=======================\n");
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
-		// put_tokenizer_data(&data);
+		put_tokenizer_data(&data);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}

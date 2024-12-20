@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/18 22:28:42 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:58:32 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
 	while (1)
 	{
 		line = readline("> ");
-		if (!line)
-			break ;
-		if (ft_is_delimiter(redir->file_name, line))
+		printf("line: %s\nvalue: %s\n", line, redir->file_name);
+		if (!line || !ft_strcmp(redir->file_name, line))
 			break ;
 		else
 			ft_putendl_fd(line, file);

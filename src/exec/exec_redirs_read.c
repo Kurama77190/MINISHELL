@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirs_read.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:29:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 16:51:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/19 17:42:15 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,13 @@ void	ft_read_outfile(t_redir *node, t_data *data)
 				ft_close_fd(data, "Error opening fd_out");
 			if (dup2(fd_o, STDOUT_FILENO) == -1)
 				ft_close_fd(data, "Error redirecting stdout");
-			close(data->fd[0]);
-			close(data->fd[1]);
 			close(fd_o);
 		}
 		c = c->next;
 	}
 }
 
-void	ft_read_infile(t_redir *node, t_data *data)
+int	ft_read_infile(t_redir *node, t_data *data)
 {
 	t_redir	*current;
 
@@ -67,7 +65,11 @@ void	ft_read_infile(t_redir *node, t_data *data)
 	while (current)
 	{
 		if (current->key == IN)
-			ft_process_infile(current, data);
+		{
+			if (ft_process_infile(current, data) == ERROR)
+				return (ERROR);
+			
+		}
 		if (current->key == D_HEREDOC)
 			ft_process_heredoc_file(current, data);
 		current = current->next;

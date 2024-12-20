@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/18 23:28:35 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/19 11:58:24 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	ft_multi_pipe(t_token *node, t_data *data, int i)
 	{
 		close(data->fd[0]);
 	}
-	ft_erase_all_temp_here_doc(node->redir_in.head);
 }
 
 void	ft_no_pipe(t_token *node, t_data *data)
@@ -93,21 +92,15 @@ void	ft_no_pipe(t_token *node, t_data *data)
 	}
 	else
 	{
-		if (pipe(data->fd) == -1)
-			ft_error(data, "Error creating pipe\n");
 		node->pid = fork();
 		if (node->pid == -1)
 			ft_error(data, "Error forking\n");
 		if (node->pid == 0)
 		{
 			ft_exec_redirs(node, data);
-			close(data->fd[0]);
-			close(data->fd[1]);
 			exec(data, node->args);
 			ft_free_all(data, true);
 			exit(1);
 		}
-		close(data->fd[0]);
-		close(data->fd[1]);
 	}
 }

@@ -67,6 +67,7 @@ typedef struct s_token
     int             fd_pipe[2];  // Pipe utilisé pour relier la sortie et l'entrée entre commandes
 	int				builtin;
 	pid_t			pid;
+	int				status;
     struct s_token  *next;       // Pointeur vers le prochain nœud
     struct s_token  *prev;       // Pointeur vers le nœud précédent
 } 					t_token;
@@ -103,35 +104,15 @@ typedef struct s_prompt
 	char			*read_line;
 }					t_prompt;
 
-typedef struct s_sig
-{
-	/* data */
-}					t_sig;
-
-typedef struct s_exec
-{
-
-	/*					*/
-
-}					t_exec;
-
 
 typedef struct s_data
 {
 	int				exit_status;
 	t_token_manag	token_manag;
 	t_env_manag		e;
-	int				wstatus;
-	t_sig			signal;
 	t_prompt		prompt;
-	int				pipe_fd[2];
-	int				fd[2];
 	int				stdin_backup;
 	int				stdout_backup;
-	struct termios	terminal;
-	int				nb_levels;
-	int				last_pid;
-	int 			free_value;
 }					t_data;
 
 extern int			g_exit_status;
@@ -148,10 +129,10 @@ bool				ft_detect_builtin(char **argv, t_data *data);
 /**
  * @file builtins_utils.c
  */
-void				copy_env(char **envp, t_data *data);
-void				copy_env_char(t_data *data);
-void				ft_sort_env(t_envp *env);
-void				ft_swap_env_lines(t_envp *a, t_envp *b);
+int				copy_env(char **envp, t_data *data);
+int				copy_env_char(t_data *data);
+int				ft_sort_env(t_envp *env);
+int				ft_swap_env_lines(t_envp *a, t_envp *b);
 
 /**
  * @file env.c
@@ -159,16 +140,16 @@ void				ft_swap_env_lines(t_envp *a, t_envp *b);
 char				*put_name(char *line);
 char				*put_value(char *line);
 t_envp				*new_node_env(char *line, t_data *data);
-void				push_node_to_env(t_data *data, char *line);
-void				ft_env(char **argv, t_data *data);
+int				push_node_to_env(t_data *data, char *line);
+int				ft_env(char **argv, t_data *data);
 
 /**
  * @file export.c
  */
 bool				check_double(t_data *data, char *line);
-void				ft_exp_env(t_data *data);
+int				ft_exp_env(t_data *data);
 bool				check_change_value(t_data *data);
-void				ft_export(char **argv, t_data *data);
+int				ft_export(char **argv, t_data *data);
 int					lstadd_envp(t_data *data, char *str);
 bool				ft_is_separator(char *s);
 
@@ -177,18 +158,18 @@ bool				ft_is_separator(char *s);
 /**
  * @file echo.c
  */
-void				ft_echo(char **argv, t_data *data);
+int				ft_echo(char **argv, t_data *data);
 
 /**
  * @file pwd.c
  */
-void				ft_pwd(t_data *data);
+int				ft_pwd(t_data *data);
 
 /**
  * @file unset.c
  */
-void				search_in_env(t_data *data, char *var);
-void				ft_unset(char **argv, t_data *data);
+int				search_in_env(t_data *data, char *var);
+int				ft_unset(char **argv, t_data *data);
 char				*ft_strndup(const char *s, size_t n);
 
 /**
@@ -196,16 +177,16 @@ char				*ft_strndup(const char *s, size_t n);
  */
 bool				ft_is_number(char *str);
 int					ft_value(int value);
-void				ft_exit(char **argv, t_data *data);
+int				ft_exit(char **argv, t_data *data);
 
 /**
  * @file cd.c
  */
-void				set_env_oldpwd(char *old_pwd, t_data *data);
-void				set_env_pwd(char *new_pwd, t_data *data);
-void				ft_move_directory(char *path, t_data *data);
-void				set_home(t_data *data);
-void				ft_cd(char **argv, t_data *data);
+int				set_env_oldpwd(char *old_pwd, t_data *data);
+int				set_env_pwd(char *new_pwd, t_data *data);
+int				ft_move_directory(char *path, t_data *data);
+int				set_home(t_data *data);
+int				ft_cd(char **argv, t_data *data);
 
 //////////////////////////////////////////////////////////////////
 //                          EXEC			                    //
@@ -215,58 +196,58 @@ void				ft_cd(char **argv, t_data *data);
  * @file exec_cases.c
  */
 int					exec_onecommand(char **cmd, t_data *data);
-void				ft_multi_pipe(t_token *node, t_data *data, int i);
-void				ft_no_pipe(t_token *node, t_data *data);
-void				ft_erase_all_temp_here_doc(t_redir *node);
+int				ft_multi_pipe(t_token *node, t_data *data, int i);
+int				ft_no_pipe(t_token *node, t_data *data);
+int				ft_erase_all_temp_here_doc(t_redir *node);
 
 /**
  * @file exec_core.c
  */
 char				*ft_path(char *cmd, t_data *data);
-void				exec(t_data *data, char **cmd);
+int				exec(t_data *data, char **cmd);
 
 /**
  * @file exec_read.c
  */
-void				ft_execution(t_data *data);
-void				ft_count_levels(t_token *node, int level, t_data *data);
+int				ft_execution(t_data *data);
+int				ft_count_levels(t_token *node, int level, t_data *data);
 
 /**
  * @file exec_utils.c
  */
 bool				ft_is_delimiter(char *delimiter, char *str);
-void				ft_fds_dup2(t_data *data);
+int				ft_fds_dup2(t_data *data);
 bool				is_builtin(char *command);
-void				wait_commands(t_data *data);
-void				close_hd(t_redir *redir, t_data *data);
+int				wait_commands(t_data *data);
+int				close_hd(t_redir *redir, t_data *data);
 
 /**
  * @file exec_utils_2.c
  */
 char				*find_path_to_find(t_data *data);
-void				search_index(t_data *data, int *i, char *path);
-void				increment_shlvl(t_data *data, int lvl_int);
-void				change_shlvl(t_data *data);
+int				search_index(t_data *data, int *i, char *path);
+int				increment_shlvl(t_data *data, int lvl_int);
+int				change_shlvl(t_data *data);
 
 /**
  * @file exec_heredoc.c
  */
-void				ft_process_heredoc(t_redir *redir, t_data *data);
+int				ft_process_heredoc(t_redir *redir, t_data *data);
 
 /**
  * @file exec_redirs_read.c
  */
 int					ft_read_heredoc(t_redir *node, t_data *data);
-void				ft_read_infile(t_redir *node, t_data *data);
-void				ft_read_outfile(t_redir *node, t_data *data);
-void				ft_read_redirs(t_token *node, t_data *data);
+int				ft_read_infile(t_redir *node, t_data *data);
+int				ft_read_outfile(t_redir *node, t_data *data);
+int				ft_read_redirs(t_token *node, t_data *data);
 
 /**
  * @file exec_redirs.c
  */
-void				ft_process_infile(t_redir *current, t_data *data);
-void				ft_process_heredoc_file(t_redir *current, t_data *data);
-void				ft_exec_redirs(t_token *node, t_data *data);
+int				ft_process_infile(t_redir *current, t_data *data);
+int				ft_process_heredoc_file(t_redir *current, t_data *data);
+int				ft_exec_redirs(t_token *node, t_data *data);
 
 //////////////////////////////////////////////////////////////////
 //                          PARSING		                       //

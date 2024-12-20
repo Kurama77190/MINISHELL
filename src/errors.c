@@ -6,32 +6,18 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/18 04:00:18 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/19 11:59:28 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_close_fd(t_data *data, char *msg)
-{
-	if (data->fd[0] != -1)
-		close(data->fd[0]);
-	if (data->fd[1] != -1)
-		close(data->fd[1]);
-	ft_error_exit(data, msg);
-	data->exit_status = 1;
-}
 
 void	ft_error(t_data *data, char *msg)
 {
-	if (data->token_manag.token->pid == 0)
-	{
-		ft_free_all(data, false);
-	}
-	else
-		ft_free_all(data, false);
+	ft_free_all(data, false);
 	ft_putstr_fd(msg, STDERR_FILENO);
-	data->exit_status = 1;
+	exit(1);
 }
 
 void	ft_error_child(t_data *data, char *msg)

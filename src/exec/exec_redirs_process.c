@@ -66,8 +66,8 @@ int	ft_exec_redirs(t_token *node, t_data *data)
 {
 	if (node->next)
 	{
-		close(node->fd_pipe[0]); // fermer la sortie du pipe
-		dup2(node->fd_pipe[1], STDOUT_FILENO); // on ferme le stdin et on le remplace par lentrer du pipe
+		close(node->fd_pipe[0]);
+		dup2(node->fd_pipe[1], STDOUT_FILENO);
 		close(node->fd_pipe[1]);
 	}
 	if (node->prev)

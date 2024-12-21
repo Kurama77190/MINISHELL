@@ -14,37 +14,43 @@
 
 int		g_exit_status;
 
-void put_lst_envp(t_envp *envp)
+void	put_lst_envp(t_envp *envp)
 {
-    t_envp *current = envp;
-    while (current)
-    {
+	t_envp	*current;
+
+	current = envp;
+	while (current)
+	{
 		printf("%s\n", current->name);
-        // printf("%s%s\n", current->name, current->value);
+		// printf("%s%s\n", current->name, current->value);
 		current = current->next;
-    }
+	}
 }
 
-void put_tab_env(char **env)
+void	put_tab_env(char **env)
 {
-    int i = 0;
-    while (env[i])
-    {
-        printf("%s\n", env[i]);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
 }
 
-	// put_lst_envp(data.envp.envp);
-	// put_tab_env(data.envp.env);
+// put_lst_envp(data.envp.envp);
+// put_tab_env(data.envp.env);
 
-	// printf("intfile[%s] type[%s]\n", new->redir_in->head->file_name, new->redir_in->head->type);
-	// printf("outfile[%s] type[%s]\n", new->redir_out->head->file_name, new->redir_out->head->type);
+// printf("intfile[%s] type[%s]\n", new->redir_in->head->file_name,
+	//new->redir_in->head->type);
+// printf("outfile[%s] type[%s]\n", new->redir_out->head->file_name,
+	//new->redir_out->head->type);
 
 void	put_tokenizer_data(t_data *data)
 {
 	t_token	*current;
-	t_redir *redir;
+	t_redir	*redir;
 	int		j;
 	int		i;
 
@@ -67,17 +73,18 @@ void	put_tokenizer_data(t_data *data)
 		else
 			printf(" None");
 		printf("\n");
-
 		redir = current->redir_in.head;
 		while (redir)
 		{
-			printf("\033[1;32mRedir In:\033[0m File: %s, Type: %s\n", redir->file_name, redir->type);
+			printf("\033[1;32mRedir In:\033[0m File: %s, Type: %s\n",
+				redir->file_name, redir->type);
 			redir = redir->next;
 		}
 		redir = current->redir_out.head;
 		while (redir)
 		{
-			printf("\033[1;31mRedir Out:\033[0m File: %s, Type: %s\n", redir->file_name, redir->type);
+			printf("\033[1;31mRedir Out:\033[0m File: %s, Type: %s\n",
+				redir->file_name, redir->type);
 			redir = redir->next;
 		}
 		current = current->next;
@@ -85,12 +92,12 @@ void	put_tokenizer_data(t_data *data)
 	}
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
+	t_data	data;
+
 	(void)argc;
 	(void)argv;
-
-	t_data data;
 	ft_memset(&data, 0, sizeof(t_data));
 	pars_env(&data, env);
 	signals();

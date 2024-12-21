@@ -73,9 +73,10 @@ bool	check_ifvalue(char *str)
 	}
 	return (false);
 }
-bool   check_valid_identifier(char *str)
+
+bool	check_valid_identifier(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(str[0]) || ft_is_operator(str[0]) || ft_is_separator(str))
@@ -106,7 +107,6 @@ void	ft_export(char **argv, t_data *data)
 	{
 		while (argv[i])
 		{
-			printf("argv[%d] = %s\n", i, argv[i]);
 			if (check_ifvalue(argv[i]) == false)
 				return (data->exit_status = 0, (void) NULL);
 			if (check_valid_identifier(argv[i]) == false)

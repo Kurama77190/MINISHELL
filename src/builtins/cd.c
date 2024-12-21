@@ -115,11 +115,5 @@ void	ft_cd(char **argv, t_data *data)
 			return ;
 		}
 	}
-	// else
-	// {
-	// 	ft_putstr_fd("cd: too many arguments\n", 2);
-	// 	data->exit_status = 1;
-	// 	return ;
-	// }
 	data->exit_status = 0;
 }

@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	ft_error(t_data *data, char *msg)
 {
 	ft_free_all(data, false);
@@ -27,7 +26,7 @@ void	ft_error_child(t_data *data, char *msg)
 	data->exit_status = 1;
 }
 
-void 	ft_error_exit(t_data *data, char *msg)
+void	ft_error_exit(t_data *data, char *msg)
 {
 	ft_error(data, msg);
 	data->exit_status = 1;

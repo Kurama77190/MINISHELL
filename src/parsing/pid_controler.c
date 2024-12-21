@@ -19,7 +19,7 @@ static int	handle_pid(t_token *current, int *exit_status)
 
 	pid = waitpid(current->pid, &status, WNOHANG);
 	if (pid == 0)
-		return (0); // Processus en cours d'exécution
+		return (0);
 	else if (pid > 0)
 	{
 		if (WIFEXITED(status))
@@ -146,4 +146,3 @@ int	pid_controller(t_data *data)
 // 		current = current->next;
 // 	}
 // }
-

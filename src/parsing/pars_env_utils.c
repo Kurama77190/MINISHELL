@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:56:36 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 02:04:38 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 08:21:07 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ int	uptdate_env(t_data *data)
 	while (tmp)
 	{
 		data->e.env[i] = ft_strjoin(tmp->name, tmp->value);
-		i++;
 		tmp = tmp->next;
 	}
 	data->e.env[i] = NULL;
-	data->e.sync = true;
 	return (SUCCESS);
 }

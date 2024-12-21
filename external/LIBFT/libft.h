@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 04:09:01 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/17 10:19:16 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/21 05:40:51 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+
+char			**ft_split_envp(char const *s, char c);
 
 int				ft_strcmp(const char *s1, const char *s2);
 

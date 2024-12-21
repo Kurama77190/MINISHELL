@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 10:29:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/21 05:00:59 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-void	signals(t_data *data)
-{
-	struct termios	terminal;
+// void	signals(t_data *data)
+// {
+// 	struct termios	terminal;
 
-	terminal = data->terminal;
-	// terminal.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-}
+// 	// terminal = data->terminal;
+// 	// terminal.c_lflag &= ~ECHOCTL;
+// 	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
+// 	signal(SIGINT, sigint_handler);
+// 	signal(SIGQUIT, SIG_IGN);
+// 	signal(SIGTERM, SIG_IGN);
+// 	signal(SIGTSTP, SIG_IGN);
+// }

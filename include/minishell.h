@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "ft_printf.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -113,9 +114,32 @@ typedef struct s_data
 	t_prompt		prompt;
 	int				stdin_backup;
 	int				stdout_backup;
+	char			**path_env; //free
 }					t_data;
 
 extern int			g_exit_status;
+
+
+//////////////////////////////////////////////////////////////////
+//                          PIPEX				               //
+////////////////////////////////////////////////////////////////
+
+int					ft_exec_cmd(t_data *data, t_token *token);
+int					ft_exec_absolut_path_cmd(t_data *data, t_token *token);
+int					ft_search_path_cmd(t_data *data, t_token *token);
+int					ft_check_access_absolut_path_cmd(char **cmd_path);
+char				*get_cmd(t_data *data, t_token *token);
+char				**get_path(t_data *data);
+int					ft_exec_without_envp_set(t_data *data, t_token *token);
+int					ft_check_access_without_envp(t_data *data, char **cmd_path);
+int					ft_check_access_without_envp(t_data *data, char **cmd_path);
+
+char				**set_env_bin(t_data *data);
+int					ft_error_msg(char *msg_error);
+void				ft_error_cmd(char *cmd);
+void				ft_error_permission(char *cmd);
+void				ft_error_file_directory(char *cmd);
+
 
 //////////////////////////////////////////////////////////////////
 //                          BUILTINS			                //
@@ -129,10 +153,10 @@ bool				ft_detect_builtin(char **argv, t_data *data);
 /**
  * @file builtins_utils.c
  */
-int				copy_env(char **envp, t_data *data);
-int				copy_env_char(t_data *data);
-int				ft_sort_env(t_envp *env);
-int				ft_swap_env_lines(t_envp *a, t_envp *b);
+void				copy_env(char **envp, t_data *data);
+void				copy_env_char(t_data *data);
+void				ft_sort_env(t_envp *env);
+void				ft_swap_env_lines(t_envp *a, t_envp *b);
 
 /**
  * @file env.c
@@ -140,16 +164,16 @@ int				ft_swap_env_lines(t_envp *a, t_envp *b);
 char				*put_name(char *line);
 char				*put_value(char *line);
 t_envp				*new_node_env(char *line, t_data *data);
-int				push_node_to_env(t_data *data, char *line);
-int				ft_env(char **argv, t_data *data);
+void				push_node_to_env(t_data *data, char *line);
+void				ft_env(char **argv, t_data *data);
 
 /**
  * @file export.c
  */
 bool				check_double(t_data *data, char *line);
-int				ft_exp_env(t_data *data);
+void				ft_exp_env(t_data *data);
 bool				check_change_value(t_data *data);
-int				ft_export(char **argv, t_data *data);
+void				ft_export(char **argv, t_data *data);
 int					lstadd_envp(t_data *data, char *str);
 bool				ft_is_separator(char *s);
 
@@ -158,18 +182,18 @@ bool				ft_is_separator(char *s);
 /**
  * @file echo.c
  */
-int				ft_echo(char **argv, t_data *data);
+void				ft_echo(char **argv, t_data *data);
 
 /**
  * @file pwd.c
  */
-int				ft_pwd(t_data *data);
+void				ft_pwd(t_data *data);
 
 /**
  * @file unset.c
  */
-int				search_in_env(t_data *data, char *var);
-int				ft_unset(char **argv, t_data *data);
+void				search_in_env(t_data *data, char *var);
+void				ft_unset(char **argv, t_data *data);
 char				*ft_strndup(const char *s, size_t n);
 
 /**
@@ -177,16 +201,16 @@ char				*ft_strndup(const char *s, size_t n);
  */
 bool				ft_is_number(char *str);
 int					ft_value(int value);
-int				ft_exit(char **argv, t_data *data);
+void				ft_exit(char **argv, t_data *data);
 
 /**
  * @file cd.c
  */
-int				set_env_oldpwd(char *old_pwd, t_data *data);
-int				set_env_pwd(char *new_pwd, t_data *data);
-int				ft_move_directory(char *path, t_data *data);
-int				set_home(t_data *data);
-int				ft_cd(char **argv, t_data *data);
+void				set_env_oldpwd(char *old_pwd, t_data *data);
+void				set_env_pwd(char *new_pwd, t_data *data);
+void				ft_move_directory(char *path, t_data *data);
+void				set_home(t_data *data);
+void				ft_cd(char **argv, t_data *data);
 
 //////////////////////////////////////////////////////////////////
 //                          EXEC			                    //
@@ -196,9 +220,9 @@ int				ft_cd(char **argv, t_data *data);
  * @file exec_cases.c
  */
 int					exec_onecommand(char **cmd, t_data *data);
-int				ft_multi_pipe(t_token *node, t_data *data, int i);
-int				ft_no_pipe(t_token *node, t_data *data);
-int				ft_erase_all_temp_here_doc(t_redir *node);
+int					ft_multi_pipe(t_token *node, t_data *data);
+int					ft_no_pipe(t_token *node, t_data *data);
+int					ft_erase_all_temp_here_doc(t_redir *node);
 
 /**
  * @file exec_core.c
@@ -238,8 +262,8 @@ int				ft_process_heredoc(t_redir *redir, t_data *data);
  * @file exec_redirs_read.c
  */
 int					ft_read_heredoc(t_redir *node, t_data *data);
-int				ft_read_infile(t_redir *node, t_data *data);
-int				ft_read_outfile(t_redir *node, t_data *data);
+int				ft_read_infile(t_token *node, t_data *data);
+int				ft_read_outfile(t_token *node, t_data *data);
 int				ft_read_redirs(t_token *node, t_data *data);
 
 /**
@@ -357,7 +381,7 @@ void				sigquit_handler(int sig);
 void				sigint_handler(int sig);
 void				signals(t_data *data);
 void				put_lst_envp(t_envp *envp);
-void				ft_close_fd(t_data *data, char *msg);
+void				ft_close_fd(t_data *data, t_token *token, char *msg);
 void				ft_error(t_data *data, char *str);
 void				ft_error_exit(t_data *data, char *str);
 void				ft_free_all_child(t_data *data);

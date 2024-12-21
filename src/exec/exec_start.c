@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/19 18:06:44 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 07:30:28 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void	ft_read_commands(t_token *node, t_data *data)
 	current = node;
 	while (current)
 	{
-		ft_multi_pipe(current, data, i);
+		ft_multi_pipe(current, data);
 		current = current->next;
 		i++;
 	}
 }
 
-void	ft_execution(t_data *data)
+int	ft_execution(t_data *data)
 {
 	
 	if (!data->token_manag.token || !data->token_manag.token->args)
-		return ;
+		return (ERROR);
 	data->stdin_backup = dup(STDIN_FILENO);
 	data->stdout_backup = dup(STDOUT_FILENO);
 	if (data->token_manag.token->next == NULL)
@@ -41,12 +41,9 @@ void	ft_execution(t_data *data)
 	}
 	else
 		ft_read_commands(data->token_manag.token, data);
-	if (data->stdin_backup > 0 && data->stdout_backup > 0)
-	{
-		dup2(data->stdin_backup, STDIN_FILENO);
-		close(data->stdin_backup);
-		dup2(data->stdout_backup, STDOUT_FILENO);
-		close(data->stdout_backup);
-	}
-	
+	dup2(data->stdin_backup, STDIN_FILENO);
+	close(data->stdin_backup);
+	dup2(data->stdout_backup, STDOUT_FILENO);
+	close(data->stdout_backup);
+	return (SUCCESS);
 }

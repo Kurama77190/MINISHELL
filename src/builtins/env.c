@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 17:42:23 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/21 08:25:51 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ void	ft_env(char **argv, t_data *data)
 	current = data->e.envp;
 	if (argv[1] && ft_strcmp(argv[1], "env"))
 	{
-		ft_putstr_fd("env: ", 1);
-		ft_putstr_fd(argv[1], 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
+		ft_putstr_fd("env: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		data->exit_status = 127;
 		return ;
 	}

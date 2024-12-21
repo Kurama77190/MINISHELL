@@ -8,7 +8,8 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/mnt/nfs/homes/sben-tay/REPO_GITHUB/MINISHELL/minishell",
+			// "program": "/mnt/nfs/homes/sben-tay/REPO_GITHUB/MINISHELL/minishell",
+			"program": "/home/samy/42/MINISHELL/minishell",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",
@@ -25,7 +26,23 @@
 					"description": "Set Disassembly Flavor to Intel",
 					"text": "-gdb-set disassembly-flavor intel",
 					"ignoreFailures": true
-				}
+				},
+				{
+					"description": "Ignore SIGCHLD",
+					"text": "handle SIGCHLD nostop noprint",
+					"ignoreFailures": true
+				},
+				{
+					"description": "Set follow fork mode to child",
+                    "text": "-gdb-set follow-fork-mode child",
+                    "ignoreFailures": true
+                },
+				// {
+				// 	"description": "Set follow fork mode to parent",
+				// 	"text": "-gdb-set follow-fork-mode parent",
+				// 	"ignoreFailures": true
+				// },
+
 			]
 		}
 

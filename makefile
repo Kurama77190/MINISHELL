@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+         #
+#    By: samy <samy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/16 19:10:47 by sben-tay          #+#    #+#              #
-#    Updated: 2024/12/19 18:13:02 by sben-tay         ###   ########.fr        #
+#    Updated: 2024/12/21 08:37:51 by samy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,15 +17,17 @@ MAKEFLAGS += --no-print-directory
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-CPPFLAGS = -I./include -I./external/LIBFT/
-LDFLAGS = -L$(LIBFT) -lft -lreadline -lhistory
+CPPFLAGS = -I./include -I./external/LIBFT/ -I./external/DPRINTF
+LDFLAGS = -L$(LIBFT) -lft -L$(DPRINTF) -lftprintf -lreadline -lhistory
 PARS  = src/parsing/
 EXEC  = src/exec/
 BUILT = src/builtins/
 BUILD = builder/
 EXPAND = src/expand/
+PIPEX = src/exec/pipex_samy/
+
 LIBFT = external/LIBFT/
-PIPEX = src/exec/pipex_samy
+DPRINTF = external/DPRINTF/
 # GNL = 
 # CFLAGS += -fsanitize=address
 # CFLAGS += -fsanitize=fork
@@ -38,7 +40,7 @@ SRC := src/main.c src/signal/signal.c src/errors.c \
 		$(addprefix $(EXPAND), handle_expand.c ft_expand_redir.c ft_expand_redir_utils.c ft_expand_args.c ft_expand_args_utils.c) \
 		$(addprefix $(EXEC), exec_cases.c exec_core.c utils.c utils_2.c exec_heredoc.c exec_redirs_process.c exec_redirs_read.c exec_start.c) \
 		$(addprefix $(BUILT), cd.c echo.c env.c exit.c export.c pwd.c unset.c builtins_utils.c builtins_launch.c export_utils.c) \
-		$(addprefix $(PIPEX) exec_cmd.c exec_utils.c exec_without_env.c )
+		$(addprefix $(PIPEX), env.bin.c exec_cmd.c exec_without_env.c get_cmd.c msg_error_without_env.c msg_error.c)
 SRC_TEST = test/main.c
 
 $(shell mkdir -p $(BUILD))
@@ -77,9 +79,10 @@ $(NAME): $(OBJ)
 	@echo "] 100 %"
 	@echo "Starting external projects $(MAGENTA)LIBFT$(CYAN) and $(MAGENTA)GNL$(CYAN) compilations..."
 	@$(MAKE) $(MAKEFLAGS) -C $(LIBFT) bonus
+	@$(MAKE) $(MAKEFLAGS) -C $(DPRINTF)
 	@echo "$(CYAN)Starting $(MAGENTA)MINISHELL$(CYAN) compilations..."
 	@sleep 1
-	@$(CC) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -L$(LIBFT) -lft -o $(NAME)
+	@$(CC) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $(NAME)
 	@echo "Done !$(BLANC)"
 
 #=============================================================================================
@@ -91,7 +94,7 @@ test: $(OBJ_TEST)
 %.o:%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(BUILD)%.o: %.c
+$(BUILD)%.o: %.c $(HEADER)
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ -MMD -MP
 
@@ -107,12 +110,15 @@ clean: # Règles pour nettoyer les fichiers objets
 	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of minishell.\n"
 	@$(MAKE) $(MAKEFLAGS) -C $(LIBFT) clean
 	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of libft.\n"
+	@$(MAKE) $(MAKEFLAGS) -C $(DPRINTF) clean
+	@printf "$(CYAN)configure$(NC) [$(GREEN)info$(NC)] : Execute make clean from Projet of dprintf.\n"
 	@rm -rf $(BUILD)
 
 fclean: clean # Règles pour nettoyer les fichiers objets et l'exécutable
 
 	@rm -f $(NAME)
 	@rm -f $(LIBFT)libft.a
+	@rm -f $(DPRINTF)libftprintf.a
 #	@rm -f $(NAME_BNS)
 
 

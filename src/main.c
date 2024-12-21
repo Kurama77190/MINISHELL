@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/19 09:50:53 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 08:16:59 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,24 @@ int main(int argc, char **argv, char **env)
 
 	t_data data;
 	ft_memset(&data, 0, sizeof(t_data));
+	// int i = 0;
 	pars_env(&data, env);
+	// while (data.e.env[i])
+	// {
+	// 	printf("%s\n", data.e.env[i]);
+	// 	i++;
+	// }
 	while (1)
 	{
 		handle_prompt(&data);
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
 			ft_execution(&data);
-			// pid_controller(&data);
+			pid_controller(&data);
 			printf("=======================\n");
 		}
 		// printf("ERROR EXPAND ?" , handle_expand(&data));
-		put_tokenizer_data(&data);
+		// put_tokenizer_data(&data);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}

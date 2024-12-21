@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:55:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 02:10:54 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 05:01:14 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ static bool	is_valided(char *str, int *exit_status);
 
 int	check_cmd(t_data *data)
 {
-	int		i;
 	char	*str;
 
-	i = 0;
 	str = ft_strdup(data->prompt.read_line);
 	if (!str)
 		return (ERROR);

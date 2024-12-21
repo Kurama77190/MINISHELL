@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/19 18:58:32 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 05:09:22 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
 	}
 }
 
-void	ft_process_heredoc(t_redir *redir, t_data *data)
+int	ft_process_heredoc(t_redir *redir, t_data *data)
 {
 	char	*file_path;
 	int		file;
@@ -70,7 +70,7 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 	file = -1;
 	create_filename(redir);
 	if (!redir && !redir->file_here_doc)
-		return ;
+		return (ERROR);
 	file_path = redir->file_here_doc;
 	file = open(file_path, O_TRUNC | O_CREAT | O_RDWR, 0777);
 	if (file == -1)
@@ -80,4 +80,5 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 		file_path++;
 	execute_here_doc(redir, data, file_path, file);
 	close(file);
+	return (SUCCESS);
 }

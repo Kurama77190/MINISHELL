@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cases.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/19 11:58:24 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 05:06:46 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
 
-void	ft_erase_all_temp_here_doc(t_redir *node)
+int	ft_erase_all_temp_here_doc(t_redir *node)
 {
 	t_redir	*current;
 
@@ -26,64 +26,46 @@ void	ft_erase_all_temp_here_doc(t_redir *node)
 		}
 		current = current->next;
 	}
+	return (SUCCESS);
 }
 
-void	ft_multi_pipe_child(t_token *node, t_data *data, int i)
+int	ft_multi_pipe_child(t_token *node, t_data *data)
 {
-	if (i > 0)
-	{
-		dup2(data->fd[0], STDIN_FILENO);
-		close(data->fd[0]);
-	}
-	if (i < data->nb_levels)
-	{
-		dup2(data->pipe_fd[1], STDOUT_FILENO);
-		close(data->pipe_fd[1]);
-	}
-	close(data->pipe_fd[0]);
 	ft_exec_redirs(node, data);
-	close(data->pipe_fd[0]);
-	close(data->pipe_fd[1]);
 	if (node->args)
 	{
-		if (is_builtin(node->args[0]) == true)
+		if (is_builtin(node->args[0]))
 		{
 			ft_detect_builtin(node->args, data);
 			ft_free_all(data, true);
 		}
 		else
-			exec(data, node->args);
+		{
+			if (ft_exec_cmd(data, node) == ERROR)
+			{
+				ft_free_all(data, true);
+				exit(1);
+			}
+		}
 	}
-	return (ft_free_all(data, true), exit(1), (void)0);
+	return (SUCCESS);
 }
 
-void	ft_multi_pipe(t_token *node, t_data *data, int i)
+int	ft_multi_pipe(t_token *node, t_data *data)
 {
 	pid_t	pid;
 
-	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
-		ft_error(data, "Error creating pipe");
 	ft_read_heredoc(node->redir_in.head, data);
 	pid = fork();
 	if (pid == -1)
 		ft_error(data, "Error forking");
+	node->pid = pid;
 	if (pid == 0)
-		ft_multi_pipe_child(node, data, i);
-	if (i > 0)
-		close(data->fd[0]);
-	if (i < data->nb_levels)
-	{
-		data->fd[0] = data->pipe_fd[0];
-		data->fd[1] = data->pipe_fd[1];
-		close(data->pipe_fd[1]);
-	}
-	if (i == data->nb_levels)
-	{
-		close(data->fd[0]);
-	}
+		ft_multi_pipe_child(node, data);
+	return (SUCCESS);
 }
 
-void	ft_no_pipe(t_token *node, t_data *data)
+int	ft_no_pipe(t_token *node, t_data *data)
 {
 	if (node && node->args && is_builtin(node->args[0]))
 	{
@@ -98,9 +80,12 @@ void	ft_no_pipe(t_token *node, t_data *data)
 		if (node->pid == 0)
 		{
 			ft_exec_redirs(node, data);
-			exec(data, node->args);
-			ft_free_all(data, true);
-			exit(1);
+			if (ft_exec_cmd(data, node) == ERROR)
+			{
+				ft_free_all(data, true);
+				exit(1);
+			}
 		}
 	}
-}
+	return (SUCCESS);
+} 

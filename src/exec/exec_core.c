@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_core.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/19 19:01:37 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 05:07:00 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@
 // 	}
 // }
 
-void	exec(t_data *data, char **cmd)
-{
+// void	exec(t_data *data, char **cmd)
+// {
 		
-	if (execve(path, cmd, data->e.env) == -1)
-	{
-		ft_free_all_child(data);
-		ft_close_fd(data, "execve fail\n");
-	}
-}
+// 	if (execve(path, cmd, data->e.env) == -1)
+// 	{
+// 		ft_free_all_child(data);
+// 		ft_close_fd(data, "execve fail\n");
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 05:13:54 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 13:41:52 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,21 @@ void	set_env_pwd(char *new_pwd, t_data *data)
 	}
 }
 
-void	ft_move_directory(char *path, t_data *data)
+int	ft_move_directory(char *path, t_data *data)
 {
 	char	*new_pwd;
 
 	if (!path)
-		return ;
-	if (chdir(path) != 0)
+		return (false);
+	if (chdir(path) != 0 && ft_strncmp(path, "-", 1) != 0)
+	{
 		ft_putstr_fd("cd: no such file or directory: \n", 2);
+		return (false);
+	}
 	new_pwd = getcwd(NULL, 0);
 	set_env_pwd(new_pwd, data);
 	ft_free((void **)&new_pwd);
+	return (true);
 }
 
 void	ft_cd(char **argv, t_data *data)
@@ -101,12 +105,21 @@ void	ft_cd(char **argv, t_data *data)
 	}
 	if (argv[1] == NULL)
 		set_home(data);
-	else if (argv[1] != NULL && argv[2] == NULL)
-		ft_move_directory(argv[1], data);
-	else
+	else if (argv[1] != NULL)
 	{
-		ft_putstr_fd("cd: too many arguments\n", 1);
-		data->exit_status = 1;
+		if (ft_strncmp(argv[1], "-", 1) == 0)
+			ft_move_directory(get_env_value("OLDPWD", data->e.envp), data);
+		if (ft_move_directory(argv[1], data) == false)
+		{
+			data->exit_status = 127;
+			return ;
+		}
 	}
+	// else
+	// {
+	// 	ft_putstr_fd("cd: too many arguments\n", 2);
+	// 	data->exit_status = 1;
+	// 	return ;
+	// }
 	data->exit_status = 0;
 }

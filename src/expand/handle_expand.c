@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:10:24 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 10:12:01 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 15:12:28 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@
 				current_out = current_out->next;
 			}
 			if (ft_expand_args(current_token->args, data->e.envp, data->exit_status) == ERROR)
+			{
+				data->exit_status = 127;
 				return (ERROR);
+			}
 			current_token = current_token->next;
 		}
 		return (SUCCESS);

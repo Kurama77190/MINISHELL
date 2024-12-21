@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 11:59:35 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 12:20:29 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int main(int argc, char **argv, char **env)
 		{
 			ft_execution(&data);
 			pid_controller(&data);
-			printf("=======================\n");
+			// printf("=======================\n");
 		}
 		// put_tokenizer_data(&data);
 		ft_free_all(&data, false);

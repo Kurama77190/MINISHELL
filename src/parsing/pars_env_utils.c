@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:56:36 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 09:08:27 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 12:30:54 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_envp	*lst_new_envp(char **splited)
 	new = ft_calloc(1, sizeof(t_envp));
 	if (!new)
 		return (NULL);
-	new->name = ft_strjoin(splited[0], "=");
+	new->name = ft_strdup(splited[0]);
 	if (!new->name)
 	{
 		ft_free((void **)&new);

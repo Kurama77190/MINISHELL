@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/17 19:27:34 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/21 14:33:33 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,27 @@ bool	check_ifvalue(char *str)
 	}
 	return (false);
 }
+bool   check_valid_identifier(char *str)
+{
+	int i;
+
+	i = 0;
+	if (ft_isdigit(str[0]) || ft_is_operator(str[0]) || ft_is_separator(str))
+		return (false);
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+			if (i == 0)
+				return (false);
+			if (ft_isdigit(str[i - 1]) || ft_is_operator(str[i - 1]))
+				return (false);
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
 
 void	ft_export(char **argv, t_data *data)
 {
@@ -85,10 +106,10 @@ void	ft_export(char **argv, t_data *data)
 	{
 		while (argv[i])
 		{
+			printf("argv[%d] = %s\n", i, argv[i]);
 			if (check_ifvalue(argv[i]) == false)
 				return (data->exit_status = 0, (void) NULL);
-			if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0])
-				|| ft_is_separator(argv[i]) || argv[i][0] == '=')
+			if (check_valid_identifier(argv[i]) == false)
 			{
 				ft_putstr_fd("export: not a valid identifier\n", 2);
 				return (data->exit_status = 1, (void) NULL);

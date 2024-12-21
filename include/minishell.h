@@ -210,7 +210,7 @@ void				ft_exit(char **argv, t_data *data);
  */
 void				set_env_oldpwd(char *old_pwd, t_data *data);
 void				set_env_pwd(char *new_pwd, t_data *data);
-void				ft_move_directory(char *path, t_data *data);
+int					ft_move_directory(char *path, t_data *data);
 void				set_home(t_data *data);
 void				ft_cd(char **argv, t_data *data);
 

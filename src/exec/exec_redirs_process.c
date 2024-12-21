@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:26 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 07:10:27 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 08:44:31 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	ft_process_heredoc_file(t_redir *current, t_data *data)
 
 int	ft_exec_redirs(t_token *node, t_data *data)
 {
-	if (!node->redir_in.head || !node->redir_out.head)
-		return (ERROR);
 	if (node->next)
 	{
 		close(node->fd_pipe[0]);
@@ -78,15 +76,9 @@ int	ft_exec_redirs(t_token *node, t_data *data)
 		dup2(node->fd_pipe[0], STDOUT_FILENO);
 		close(node->fd_pipe[0]);
 	}
-	if (node->redir_in.head)
-	{
-		if (ft_read_infile(node, data) == ERROR)
+	if (ft_read_infile(node, data) == ERROR)
 			return (ERROR);
-	}
-	if (node->redir_out.head)
-	{
-		if (ft_read_outfile(node, data) == ERROR)
+	if (ft_read_outfile(node, data) == ERROR)
 			return (ERROR);
-	}
 	return (SUCCESS);
 }

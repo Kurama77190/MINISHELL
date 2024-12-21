@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 05:06:46 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 08:45:27 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	ft_multi_pipe(t_token *node, t_data *data)
 
 int	ft_no_pipe(t_token *node, t_data *data)
 {
+	ft_exec_redirs(node, data);
 	if (node && node->args && is_builtin(node->args[0]))
 	{
 		ft_exec_redirs(node, data);
@@ -79,7 +80,6 @@ int	ft_no_pipe(t_token *node, t_data *data)
 			ft_error(data, "Error forking\n");
 		if (node->pid == 0)
 		{
-			ft_exec_redirs(node, data);
 			if (ft_exec_cmd(data, node) == ERROR)
 			{
 				ft_free_all(data, true);

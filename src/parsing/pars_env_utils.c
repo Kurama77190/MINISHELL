@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:56:36 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 08:21:07 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 09:08:27 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	uptdate_env(t_data *data)
 	{
 		data->e.env[i] = ft_strjoin(tmp->name, tmp->value);
 		tmp = tmp->next;
+		i++;
 	}
 	data->e.env[i] = NULL;
 	return (SUCCESS);

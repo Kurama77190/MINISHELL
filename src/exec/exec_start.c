@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 07:30:28 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 09:51:28 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_read_commands(t_token *node, t_data *data)
 
 int	ft_execution(t_data *data)
 {
-	
 	if (!data->token_manag.token || !data->token_manag.token->args)
 		return (ERROR);
 	data->stdin_backup = dup(STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:26 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 08:44:31 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 12:17:03 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,19 @@ int	ft_exec_redirs(t_token *node, t_data *data)
 {
 	if (node->next)
 	{
-		close(node->fd_pipe[0]);
-		dup2(node->fd_pipe[1], STDIN_FILENO);
+		close(node->fd_pipe[0]); // fermer la sortie du pipe
+		dup2(node->fd_pipe[1], STDOUT_FILENO); // on ferme le stdin et on le remplace par lentrer du pipe
 		close(node->fd_pipe[1]);
 	}
 	if (node->prev)
 	{
-		close(node->fd_pipe[1]);
-		dup2(node->fd_pipe[0], STDOUT_FILENO);
-		close(node->fd_pipe[0]);
+		close(node->prev->fd_pipe[1]);
+		dup2(node->prev->fd_pipe[0], STDIN_FILENO);
+		close(node->prev->fd_pipe[0]);
 	}
 	if (ft_read_infile(node, data) == ERROR)
-			return (ERROR);
+		return (ERROR);
 	if (ft_read_outfile(node, data) == ERROR)
-			return (ERROR);
+		return (ERROR);
 	return (SUCCESS);
 }

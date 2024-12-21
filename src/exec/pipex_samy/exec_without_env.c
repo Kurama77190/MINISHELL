@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:46:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 08:03:10 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 10:07:44 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	ft_exec_in_bin(t_data *data, t_token *token);
 int	ft_exec_absolut_path_cmd_without_envp(t_data *data, t_token *token);
 int	ft_check_access_without_envp(t_data *data, char **cmd_path);
-int	ft_check_access_bin_without_envp(t_data *data, char	*tmp_cmd, t_token *token);
+int	ft_check_access_bin_without_envp(t_data *data, char	*tmp_cmd, \
+	t_token *token);
 
 /* ************************** */
 /*  🌟 EXEC_WITHOUT_ENVP 🌟  */
@@ -44,6 +45,7 @@ int	ft_exec_in_bin(t_data *data, t_token *token)
 {
 	char	*cmd_tmp;
 	char	**env_tmp;
+
 	cmd_tmp = ft_strjoin("/bin/", token->args[0]);
 	if (!cmd_tmp)
 		return (ERROR);
@@ -76,7 +78,7 @@ int	ft_exec_absolut_path_cmd_without_envp(t_data *data, t_token *token)
 		if (execve(token->args[0], token->args, data->e.env) == ERROR)
 		{
 			ft_error_msg("execve");
-			//free_all
+			ft_free_all(data, true);
 			return (ERROR);
 		}
 	}
@@ -108,7 +110,8 @@ int	ft_check_access_without_envp(t_data *data, char **cmd_path)
 		return (SUCCESS);
 }
 
-int	ft_check_access_bin_without_envp(t_data *data, char	*tmp_cmd, t_token *token)
+int	ft_check_access_bin_without_envp(t_data *data, char	*tmp_cmd, \
+									t_token *token)
 {
 	if (access(tmp_cmd, F_OK) == -1)
 	{

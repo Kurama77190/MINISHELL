@@ -6,12 +6,11 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 05:07:00 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 09:53:45 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
 
 // void	exec_minishell(t_data *data, char **cmd)
 // {
@@ -32,7 +31,6 @@
 
 // void	exec(t_data *data, char **cmd)
 // {
-		
 // 	if (execve(path, cmd, data->e.env) == -1)
 // 	{
 // 		ft_free_all_child(data);

@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:29:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 07:10:47 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 09:52:42 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	ft_read_infile(t_token *node, t_data *data)
 		{
 			if (ft_process_infile(current, data) == ERROR)
 				return (ERROR);
-			
 		}
 		if (current->key == D_HEREDOC)
 			ft_process_heredoc_file(current, data);

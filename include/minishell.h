@@ -115,6 +115,8 @@ typedef struct s_data
 	int				stdin_backup;
 	int				stdout_backup;
 	char			**path_env; //free
+	int				fd[2];
+	struct termios	terminal;
 }					t_data;
 
 extern int			g_exit_status;
@@ -379,7 +381,6 @@ void put_lst_envp(t_envp *envp);
 void				heredoc_sigint_handler(int sig);
 void				sigquit_handler(int sig);
 void				sigint_handler(int sig);
-void				signals(t_data *data);
 void				put_lst_envp(t_envp *envp);
 void				ft_close_fd(t_data *data, t_token *token, char *msg);
 void				ft_error(t_data *data, char *str);
@@ -388,6 +389,14 @@ void				ft_free_all_child(t_data *data);
 void				ft_error_child(t_data *data, char *msg);
 
 
+//////////////////////////////////////////////////////////////////
+//                          SIGNALS		                       //
+////////////////////////////////////////////////////////////////
+
+void				sigint_handler(int sig);
+void				sigquit_handler(int sig);
+void				heredoc_sigint_handler(int sig);
+void				signals(void);
 
 /* 
 								NOTE SAMY AND RALPH

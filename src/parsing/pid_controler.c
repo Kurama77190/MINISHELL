@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid_controler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 03:19:48 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/19 04:51:07 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/21 10:11:09 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@
 // 	return (SUCCESS);
 // }
 
-
-
 // static bool checking_process_bis(t_data *data, t_token *current, bool crashed)
 // {
 // 	if (WTERMSIG(current->status) == 3)
@@ -83,7 +81,6 @@
 // 	data->exit_status = 128 + WTERMSIG(current->status);
 // 	return (true);
 // }
-
 
 // int	pid_controller(t_data *data)
 // {
@@ -108,7 +105,6 @@
 // 		current = current->next;
 // 	}
 // }
-
 
 static void	ft_return_last_ifexited(t_data *data);
 
@@ -150,3 +146,4 @@ static void	ft_return_last_ifexited(t_data *data)
 		current = current->next;
 	}
 }
+

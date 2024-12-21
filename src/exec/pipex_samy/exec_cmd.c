@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:13:44 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 08:52:00 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 09:55:51 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ int	ft_check_access_absolut_path_cmd(char **cmd_path)
 	{
 		ft_error_file_directory(cmd_path[0]);
 		free_split(cmd_path);
-		return(ERROR);
+		return (ERROR);
 	}
 	if (access(cmd_path[0], X_OK) == -1)
 	{
 		ft_error_permission(cmd_path[0]);
 		free_split(cmd_path);
-		return(ERROR);
+		return (ERROR);
 	}
 	else
 		return (SUCCESS);

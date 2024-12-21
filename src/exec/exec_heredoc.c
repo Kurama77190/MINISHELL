@@ -6,7 +6,7 @@
 /*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 05:09:22 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/21 10:05:46 by samy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,18 @@ static void	create_filename(t_redir *redir)
 	ft_free((void **)&temp_file);
 }
 
-static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path,
+static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path, \
 		int file)
 {
-	(void)data;
-	(void)file_path;
 	char	*line;
 	int		count;
 
+	(void)file_path;
+	(void)data;
 	count = 0;
 	while (1)
 	{
 		line = readline("> ");
-		printf("line: %s\nvalue: %s\n", line, redir->file_name);
 		if (!line || !ft_strcmp(redir->file_name, line))
 			break ;
 		else

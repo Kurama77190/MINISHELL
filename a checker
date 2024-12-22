@@ -8,3 +8,14 @@ sd | > ds
 ls | cat 
 
 echo -n = segfault.
+export X="     salut c aaaa vaa      " <- devrait marcher
+echo "  $USER  salut"'cava' <- garde les singles quotes apres
+
+n1 = "  "
+n2 = "sben-tay"
+n3 = "  salut
+
+node_string = "  sben-tay  salut"
+node_string2 = 'cava'
+
+clear le history a la fin, ou enfant

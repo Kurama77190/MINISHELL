@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:15:05 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 15:44:08 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:47:25 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_expand_redir(char **str, t_envp *envp)
 		ft_putstr_fd("bash: ambiguous redirect\n", 2);
 		return (ERROR);
 	}
-	free(*str);
+	ft_free((void **)str);
 	*str = expanded_value;
 	return (SUCCESS);
 }
@@ -102,7 +102,6 @@ char	*get_env_value(const char *key, t_envp *envp)
 	current = envp;
 	while (current)
 	{
-		//JAI MODIFIE ICI BROOOOO
 		//if (!ft_strncmp(current->name, key, ft_strlen(key) - 1))
 		if (!ft_strcmp(current->name, key))
 			return (current->value);
@@ -110,3 +109,4 @@ char	*get_env_value(const char *key, t_envp *envp)
 	}
 	return ("");
 }
+// yes ??

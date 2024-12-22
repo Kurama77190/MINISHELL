@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 08:25:51 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 12:27:26 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,29 +101,24 @@ void	push_node_to_env(t_data *data, char *env_line)
 	}
 }
 
-void	ft_env(char **argv, t_data *data)
+int	ft_env(char **argv, t_data *data)
 {
-	t_envp	*current;
+	char	**current;
+	int		i;
 
-	current = data->e.envp;
-	if (argv[1] && ft_strcmp(argv[1], "env"))
+	// if (!data->e.env[0])
+	// {
+	// 	ft_error_file_directory("env");
+	// 	data->exit_status = 127;
+	// 	return ;
+	// }
+	current = data->e.env;
+	i = 0;
+	(void)argv;
+	while (current[i])
 	{
-		ft_putstr_fd("env: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		data->exit_status = 127;
-		return ;
+		printf("%s\n", current[i]);
+		i++;
 	}
-	while (current != NULL)
-	{
-		if (current->value)
-		{
-			ft_putstr_fd(current->name, 1);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd(current->value, 1);
-			ft_putstr_fd("\n", 1);
-		}
-		current = current->next;
-	}
-	data->exit_status = 0;
+	return (0);
 }

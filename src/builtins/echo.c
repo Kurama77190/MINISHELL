@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:10 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 21:01:34 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/22 12:27:11 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ bool	verif_flag(char *str)
 	int	i;
 
 	i = 1;
+	if (!str)
+		return (false);
 	if (str[0] != '-')
 		return (false);
 	while (str[i])
@@ -28,8 +30,9 @@ bool	verif_flag(char *str)
 	return (true);
 }
 
-void	ft_echo(char **argv, t_data *data)
+int	ft_echo(char **argv, t_data *data)
 {
+	(void)data;
 	bool	n_flag;
 	int		i;
 
@@ -38,9 +41,9 @@ void	ft_echo(char **argv, t_data *data)
 	if (argv[i] == NULL)
 	{
 		ft_putstr_fd("\n", 1);
-		return ;
+		return (0);
 	}
-	if (verif_flag(argv[i]) == true)
+	while (verif_flag(argv[i]) == true)
 	{
 		n_flag = true;
 		i++;
@@ -54,5 +57,5 @@ void	ft_echo(char **argv, t_data *data)
 	}
 	if (n_flag == false)
 		ft_putstr_fd("\n", 1);
-	data->exit_status = 0;
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 13:41:52 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 12:26:53 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int	ft_move_directory(char *path, t_data *data)
 	return (true);
 }
 
-void	ft_cd(char **argv, t_data *data)
+int	ft_cd(char **argv, t_data *data)
 {
 	if (!data->e.envp)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
 		data->exit_status = 1;
-		return ;
+		return (1);
 	}
 	if (argv[1] == NULL)
 		set_home(data);
@@ -111,9 +111,8 @@ void	ft_cd(char **argv, t_data *data)
 			ft_move_directory(get_env_value("OLDPWD", data->e.envp), data);
 		if (ft_move_directory(argv[1], data) == false)
 		{
-			data->exit_status = 127;
-			return ;
+			return (127);
 		}
 	}
-	data->exit_status = 0;
+	return (0);
 }

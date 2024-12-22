@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:55:41 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 10:02:49 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 01:32:11 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,7 @@ char	*get_cmd(t_data *data, t_token *token)
 	}
 	ft_error_cmd(token->args[0]);
 	ft_free((void **)&cmd_path);
+	ft_free_all(data, true);
+	exit(127);
 	return (NULL);
 }

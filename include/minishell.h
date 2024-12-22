@@ -123,7 +123,7 @@ extern int			g_exit_status;
 int					ft_exec_cmd(t_data *data, t_token *token);
 int					ft_exec_absolut_path_cmd(t_data *data, t_token *token);
 int					ft_search_path_cmd(t_data *data, t_token *token);
-int					ft_check_access_absolut_path_cmd(char **cmd_path);
+int					ft_check_access_absolut_path_cmd(t_data *data, char **cmd_path);
 char				*get_cmd(t_data *data, t_token *token);
 char				**get_path(t_data *data);
 int					ft_exec_without_envp_set(t_data *data, t_token *token);
@@ -143,7 +143,7 @@ void				ft_error_file_directory(char *cmd);
 /**
  * @file builtins_launch.c
  */
-bool				ft_detect_builtin(char **argv, t_data *data);
+int					ft_detect_builtin(char **argv, t_data *data);
 
 /**
  * @file builtins_utils.c
@@ -160,7 +160,7 @@ char				*put_name(char *line);
 char				*put_value(char *line);
 t_envp				*new_node_env(char *line, t_data *data);
 void				push_node_to_env(t_data *data, char *line);
-void				ft_env(char **argv, t_data *data);
+int				ft_env(char **argv, t_data *data);
 
 /**
  * @file export.c
@@ -168,25 +168,25 @@ void				ft_env(char **argv, t_data *data);
 bool				check_double(t_data *data, char *line);
 void				ft_exp_env(t_data *data);
 bool				check_change_value(t_data *data);
-void				ft_export(char **argv, t_data *data);
+int					ft_export(char **argv, t_data *data);
 int					lstadd_envp(t_data *data, char *str);
 bool				ft_is_separator(char *s);
 
 /**
  * @file echo.c
  */
-void				ft_echo(char **argv, t_data *data);
+int					ft_echo(char **argv, t_data *data);
 
 /**
  * @file pwd.c
  */
-void				ft_pwd(t_data *data);
+int					ft_pwd(t_data *data);
 
 /**
  * @file unset.c
  */
 void				search_in_env(t_data *data, char *var);
-void				ft_unset(char **argv, t_data *data);
+int					ft_unset(char **argv, t_data *data);
 char				*ft_strndup(const char *s, size_t n);
 
 /**
@@ -203,7 +203,7 @@ void				set_env_oldpwd(char *old_pwd, t_data *data);
 void				set_env_pwd(char *new_pwd, t_data *data);
 int					ft_move_directory(char *path, t_data *data);
 void				set_home(t_data *data);
-void				ft_cd(char **argv, t_data *data);
+int					ft_cd(char **argv, t_data *data);
 
 //////////////////////////////////////////////////////////////////
 //                          EXEC							        //

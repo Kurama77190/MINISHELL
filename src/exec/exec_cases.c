@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cases.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 12:15:39 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 10:07:20 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,15 @@ int	ft_multi_pipe_child(t_token *node, t_data *data)
 
 int	ft_multi_pipe(t_token *node, t_data *data)
 {
-	pid_t	pid;
 
 	ft_read_heredoc(node->redir_in.head, data);
 	pipe(node->fd_pipe);
-	ft_exec_redirs(node, data);
-	pid = fork();
-	if (pid == -1)
+	node->pid = fork();
+	if (node->pid == -1)
 		ft_error(data, "Error forking");
-	node->pid = pid;
-	if (pid == 0)
+	if (node->pid == 0)
 	{
+		ft_exec_redirs(node, data);
 		ft_multi_pipe_child(node, data);
 	}
 	return (SUCCESS);
@@ -71,11 +69,17 @@ int	ft_multi_pipe(t_token *node, t_data *data)
 
 int	ft_no_pipe(t_token *node, t_data *data)
 {
-	ft_exec_redirs(node, data);
 	if (node && node->args && is_builtin(node->args[0]))
 	{
+		data->stdin_backup = dup(STDIN_FILENO);
+		data->stdout_backup = dup(STDOUT_FILENO);
 		ft_exec_redirs(node, data);
 		ft_detect_builtin(node->args, data);
+		dup2(data->stdin_backup, STDIN_FILENO);
+		close(data->stdin_backup);
+		dup2(data->stdout_backup, STDOUT_FILENO);
+		close(data->stdout_backup);
+		// node->builtin = true;
 	}
 	else
 	{
@@ -84,10 +88,14 @@ int	ft_no_pipe(t_token *node, t_data *data)
 			ft_error(data, "Error forking\n");
 		if (node->pid == 0)
 		{
+			if (ft_exec_redirs(node, data) == ERROR)
+			{
+				return (ft_free_all(data, true), exit(1), ERROR);
+			}
 			if (ft_exec_cmd(data, node) == ERROR)
 			{
 				ft_free_all(data, true);
-				exit(1);
+				return (ft_free_all(data, true), exit(1), ERROR);
 			}
 		}
 	}

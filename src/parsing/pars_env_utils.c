@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:56:36 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 12:30:54 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 00:32:38 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	uptdate_env(t_data *data)
 	size_t	len;
 	size_t	i;
 	t_envp	*tmp;
+	char	*tmp2;
 
 	free_split(data->e.env);
 	len = ft_lstsize_envp(data->e.envp);
@@ -73,8 +74,10 @@ int	uptdate_env(t_data *data)
 	tmp = data->e.envp;
 	while (tmp)
 	{
-		data->e.env[i] = ft_strjoin(tmp->name, tmp->value);
+		tmp2 = ft_strjoin(tmp->name, "=");
+		data->e.env[i] = ft_strjoin(tmp2, tmp->value);
 		tmp = tmp->next;
+		ft_free((void **)&tmp2);
 		i++;
 	}
 	data->e.env[i] = NULL;

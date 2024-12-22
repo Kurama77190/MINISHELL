@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 03:24:39 by samy              #+#    #+#             */
-/*   Updated: 2024/12/16 08:31:55 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 01:54:33 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+// echo -n -n -n -n ne marche pas.
+// export TEST=123 les variables ne update plus.
+//

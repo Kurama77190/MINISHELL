@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:09 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 07:07:47 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 12:02:04 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ bool	ft_is_delimiter(char *delimiter, char *str)
 
 bool	is_builtin(char *command)
 {
-	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "cd")
-		|| !ft_strcmp(command, "pwd") || !ft_strcmp(command, "export")
-		|| !ft_strcmp(command, "unset") || !ft_strcmp(command, "env")
+	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "cd") \
+		|| !ft_strcmp(command, "pwd") || !ft_strcmp(command, "export") \
+		|| !ft_strcmp(command, "unset") || !ft_strcmp(command, "env") \
 		|| !ft_strcmp(command, "exit"))
 		return (true);
 	return (false);

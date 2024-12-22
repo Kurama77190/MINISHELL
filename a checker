@@ -1,0 +1,10 @@
+echo coucou > test
+echo '$USER'
+unset la premiere variable de l'env
+echo dans le /dev/full (check les leaks pour plus tard)
+a retester 
+
+sd | > ds
+ls | cat 
+
+echo -n = segfault.

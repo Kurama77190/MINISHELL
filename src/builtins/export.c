@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 14:33:33 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 12:22:27 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,13 @@ bool	check_valid_identifier(char *str)
 	int	i;
 
 	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		if (str[i] == '-')
+			return (false);
+		i++;
+	}
+	i = 0;
 	if (ft_isdigit(str[0]) || ft_is_operator(str[0]) || ft_is_separator(str))
 		return (false);
 	while (str[i])
@@ -93,10 +100,10 @@ bool	check_valid_identifier(char *str)
 		}
 		i++;
 	}
-	return (false);
+	return (true);
 }
 
-void	ft_export(char **argv, t_data *data)
+int	ft_export(char **argv, t_data *data)
 {
 	int	i;
 
@@ -107,17 +114,17 @@ void	ft_export(char **argv, t_data *data)
 	{
 		while (argv[i])
 		{
-			if (check_ifvalue(argv[i]) == false)
-				return (data->exit_status = 0, (void) NULL);
 			if (check_valid_identifier(argv[i]) == false)
 			{
 				ft_putstr_fd("export: not a valid identifier\n", 2);
-				return (data->exit_status = 1, (void) NULL);
+				return (1);
 			}
+			if (check_ifvalue(argv[i]) == false)
+				return (0);
 			if (check_double(data, argv[i]) == false)
 				push_node_to_env(data, argv[i]);
 			i++;
 		}
 	}
-	data->exit_status = 0;
+	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 12:55:41 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:16:16 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,13 @@ int	ft_cd(char **argv, t_data *data)
 		if (ft_strncmp(argv[1], "-", 1) == 0)
 			ft_move_directory(get_env_value("OLDPWD", data->e.envp), data);
 		if (ft_move_directory(argv[1], data) == false)
-		{
-			return (127);
-		}
+			return (1);
+	}
+	if (argv[2] != NULL)
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		data->exit_status = 1;
+		return (1);
 	}
 	return (0);
 }

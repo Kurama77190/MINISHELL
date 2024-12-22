@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 13:12:51 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:19:54 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ bool	check_valid_identifier(char *str)
 	{
 		if (str[i] == '-')
 			return (false);
+		if (str[i] == '=')
+			break;
 		i++;
 	}
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 14:16:16 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 15:42:56 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_env_oldpwd(char *old_pwd, t_data *data)
 			if (current->line)
 				ft_free((void **)&current->line);
 			if (current->value)
-				ft_free((void **)&current->value);
+				ft_free((void **)&current->value);	
 			if (old_pwd)
 				new_line = ft_strjoin("OLDPWD=", old_pwd);
 			current->line = new_line;
@@ -86,7 +86,7 @@ int	ft_move_directory(char *path, t_data *data)
 		return (false);
 	if (chdir(path) != 0 && ft_strncmp(path, "-", 1) != 0)
 	{
-		ft_putstr_fd("cd: no such file or directory: \n", 2);
+		ft_error_file_directory(path);
 		return (false);
 	}
 	new_pwd = getcwd(NULL, 0);

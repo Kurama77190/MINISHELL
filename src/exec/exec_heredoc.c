@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 10:05:46 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 15:37:06 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path, \
 		else
 			ft_putendl_fd(line, file);
 		count++;
-		if (g_exit_status != 130 && !ft_strcmp(line, redir->file_name))
+		if (g_exit_status != SIGINT && !ft_strcmp(line, redir->file_name))
 		{
 			ft_free((void **)&line);
 			break ;

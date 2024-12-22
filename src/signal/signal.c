@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/21 11:55:06 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/22 15:38:32 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	heredoc_sigint_handler(int sig)
 {
 	(void)sig;
-	g_exit_status = 130;
+	g_exit_status = SIGINT;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	close(STDIN_FILENO);
 }
@@ -23,14 +23,17 @@ void	heredoc_sigint_handler(int sig)
 void	sigquit_handler(int sig)
 {
 	(void)sig;
-	g_exit_status = 131;
+	g_exit_status = SIGQUIT;
 	ft_putstr_fd("Quit: 3\n", 1);
 }
 
+// attention a seulement utiliser la globale pour des signaux
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	g_exit_status = 130;
+	g_exit_status = SIGINT;
+	// if g_exit_status = SIGINT;
+	//		data->status = 130; 
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_replace_line("", STDIN_FILENO);
 	rl_on_new_line();
@@ -41,10 +44,13 @@ void	signals(void)
 {
 	struct termios	terminal;
 
-	tcgetattr(STDIN_FILENO, &terminal);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
-	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
+	if (isatty(STDIN_FILENO))
+	{
+		tcgetattr(STDIN_FILENO, &terminal);
+		tcsetattr(STDIN_FILENO, TCSANOW, &terminal);		
+	}
 }

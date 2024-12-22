@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 10:07:20 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:43:24 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	ft_multi_pipe_child(t_token *node, t_data *data)
 
 int	ft_multi_pipe(t_token *node, t_data *data)
 {
-
 	ft_read_heredoc(node->redir_in.head, data);
 	pipe(node->fd_pipe);
 	node->pid = fork();

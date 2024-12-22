@@ -6,13 +6,13 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 12:23:24 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:18:25 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void delete_env(t_envp *tmp_env, t_envp *to_delete, t_data *data)
+void	delete_env(t_envp *tmp_env, t_envp *to_delete, t_data *data)
 {
 	if (tmp_env->prev)
 		tmp_env->prev->next = tmp_env->next;

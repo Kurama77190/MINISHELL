@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:10 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 12:27:11 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:17:04 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ bool	verif_flag(char *str)
 	return (true);
 }
 
-int	ft_echo(char **argv, t_data *data)
+int	ft_echo(char **argv)
 {
-	(void)data;
 	bool	n_flag;
 	int		i;
 

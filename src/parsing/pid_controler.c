@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 03:19:48 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 12:41:36 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:44:21 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	pid_controller(t_data *data)
 	t_token	*tmp;
 
 	tmp = data->token_manag.token;
-	if (!tmp->next && !tmp->prev && tmp->builtin)
-		return (ERROR);
+	// if (!tmp->next && !tmp->prev && tmp->builtin)
+		// return (ERROR);
 	while(tmp)
 	{
 		waitpid(tmp->pid, &data->exit_status, 0);

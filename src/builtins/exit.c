@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 09:32:37 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:30:15 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ int	ft_value(int value)
 	return (value);
 }
 
+void	ft_exit_one_argument(t_data *data, char **argv)
+{
+	if (ft_is_number(argv[1]))
+	{
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		ft_free_all(data, true);
+		exit(ft_atoi(argv[1]));
+	}
+	else
+	{
+		ft_putstr_fd("exit: ", STDERR_FILENO);
+		ft_putstr_fd(argv[1], STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		ft_free_all(data, true);
+		exit(2);
+	}
+}
+
 void	ft_exit(char **argv, t_data *data)
 {
 	int		value;
@@ -50,7 +68,6 @@ void	ft_exit(char **argv, t_data *data)
 		ft_free_all(data, true);
 		exit(2);
 	}
-		
 	if (argv[1] && argv[2])
 	{
 		ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
@@ -58,17 +75,7 @@ void	ft_exit(char **argv, t_data *data)
 		return ;
 	}
 	if (argv[1])
-	{
-		if (ft_is_number(argv[1]))
-		{
-			value = ft_atoi(argv[1]);
-			value = ft_value(value);
-			ft_free_all(data, true);
-			exit(value);
-		}
-		else
-			ft_error(data, "exit: numeric argument required\n");
-	}
+		ft_exit_one_argument(data, argv);
 	else
 	{
 		ft_free_all(data, true);

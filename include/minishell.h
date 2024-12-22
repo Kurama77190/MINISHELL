@@ -175,7 +175,7 @@ bool				ft_is_separator(char *s);
 /**
  * @file echo.c
  */
-int					ft_echo(char **argv, t_data *data);
+int					ft_echo(char **argv);
 
 /**
  * @file pwd.c
@@ -265,6 +265,14 @@ int					ft_read_redirs(t_token *node, t_data *data);
 int					ft_process_infile(t_redir *current, t_data *data);
 int					ft_process_heredoc_file(t_redir *current, t_data *data);
 int					ft_exec_redirs(t_token *node, t_data *data);
+
+/**
+ * @file exec_start.c
+ */
+
+ int 				ft_execution(t_data *data);
+ int 				exec_command(t_data *data, t_token *current);
+ int 				exec_builtins(t_data *data, t_token *current);
 
 //////////////////////////////////////////////////////////////////
 //                          PARSING						           //

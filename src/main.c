@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 12:35:23 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:43:40 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,5 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 
-// valgrind --suppressions=ignore.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
+// valgrind --suppressions=ignore.txt --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./minishell
+

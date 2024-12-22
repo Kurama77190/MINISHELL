@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:13:44 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 11:37:41 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:43:02 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	ft_exec_absolut_path_cmd(t_data *data, t_token *token)
 int	ft_search_path_cmd(t_data *data, t_token *token)
 {
 	token->command = get_cmd(data, token);
-	
 	if (token->command != NULL)
 	{
 		if (execve(token->command, token->args, data->e.env) == ERROR)

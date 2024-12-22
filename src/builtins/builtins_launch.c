@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:31:17 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 12:34:35 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:17:16 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_detect_builtin(char **argv, t_data *data)
 	if (!ft_strcmp(argv[0], "cd"))
 		exit_code = ft_cd(argv, data);
 	else if (!ft_strcmp(argv[0], "echo"))
-		exit_code = ft_echo(argv, data);
+		exit_code = ft_echo(argv);
 	else if (!ft_strcmp(argv[0], "pwd"))
 		exit_code = ft_pwd(data);
 	else if (!ft_strcmp(argv[0], "export"))

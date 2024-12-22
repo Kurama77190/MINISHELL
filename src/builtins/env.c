@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 12:27:26 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/22 13:17:39 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,6 @@ int	ft_env(char **argv, t_data *data)
 	char	**current;
 	int		i;
 
-	// if (!data->e.env[0])
-	// {
-	// 	ft_error_file_directory("env");
-	// 	data->exit_status = 127;
-	// 	return ;
-	// }
 	current = data->e.env;
 	i = 0;
 	(void)argv;

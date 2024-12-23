@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 20:18:09 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:27:16 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	ft_memset(&data, 0, sizeof(t_data));
 	pars_env(&data, env);
-	signals();
 	while (1)
 	{
+		signals();
 		handle_prompt(&data);
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{

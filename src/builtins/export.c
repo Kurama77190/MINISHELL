@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 19:43:04 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:22:20 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,7 @@ int	ft_export(char **argv, t_data *data)
 				ft_putstr_fd("export: not a valid identifier\n", 2);
 				return (1);
 			}
-			if (check_ifvalue(argv[i]) == false)
-				return (0);
-			if (check_double(data, argv[i]) == false)
+			if (check_ifvalue(argv[i]) == true && check_double(data, argv[i]) == false)
 				push_node_to_env(data, argv[i]);
 			i++;
 		}

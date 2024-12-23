@@ -402,5 +402,7 @@ void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
 void				heredoc_sigint_handler(int sig);
 void				signals(void);
+void				restaure_SIGINT(int sig);
+void				restaure_SIGQUIT(int sig);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 23:00:05 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:27:16 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	exec_command1(t_data *data, t_token *current)
 {
 	int	exit_code;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (ft_exec_redirs(current, data) == ERROR)
 		return (ft_free_all(data, true), exit(1), ERROR);
 	if (is_builtin(current->args[0]))

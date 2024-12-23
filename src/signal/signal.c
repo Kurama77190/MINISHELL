@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 20:01:35 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:27:16 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 int	rl_event_dummy(void)
 {
 	return (0);
+}
+
+void	restaure_SIGINT(int sig)
+{
+	(void)sig;
+	signal(SIGINT, SIG_DFL);
+	ft_putstr_fd("\n", 2);
+}
+
+void	restaure_SIGQUIT(int sig)
+{
+	(void)sig;
+	signal(SIGQUIT, SIG_DFL);
+	ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
 void	heredoc_sigint_handler(__attribute__((unused)) int sig)
@@ -27,7 +41,7 @@ void	sigquit_handler(int sig)
 {
 	(void)sig;
 	g_exit_status = SIGQUIT;
-	ft_putstr_fd("Quit: 3\n", 1);
+	
 }
 
 void	sigint_handler(int sig)

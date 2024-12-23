@@ -19,3 +19,6 @@ node_string = "  sben-tay  salut"
 node_string2 = 'cava'
 
 clear le history a la fin, ou enfant
+
+printenv OLDPWD | cd
+

@@ -6,18 +6,22 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 15:38:32 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:15:00 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_sigint_handler(int sig)
+int rl_event_dummy(void)
 {
-	(void)sig;
+	 return 0; 
+}
+
+void	heredoc_sigint_handler(__attribute__((unused)) int sig)
+{
 	g_exit_status = SIGINT;
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	close(STDIN_FILENO);
+	rl_done = 1;
+	// ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
 void	sigquit_handler(int sig)

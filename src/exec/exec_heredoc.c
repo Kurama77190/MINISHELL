@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 15:37:06 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:40:24 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,19 @@ static void	create_filename(t_redir *redir)
 	ft_free((void **)&temp_file);
 }
 
-static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path, \
+int rl_event_dummy(void);
+
+static int	execute_here_doc(t_redir *redir, t_data *data, char *file_path, \
 		int file)
 {
 	char	*line;
 	int		count;
 
 	(void)file_path;
-	(void)data;
 	count = 0;
+	signal(SIGINT, heredoc_sigint_handler);
+	data->exit_status = 0;
+	rl_event_hook = rl_event_dummy;
 	while (1)
 	{
 		line = readline("> ");
@@ -53,12 +57,15 @@ static void	execute_here_doc(t_redir *redir, t_data *data, char *file_path, \
 		else
 			ft_putendl_fd(line, file);
 		count++;
-		if (g_exit_status != SIGINT && !ft_strcmp(line, redir->file_name))
+		if (g_exit_status == SIGINT || !ft_strcmp(line, redir->file_name))
 		{
 			ft_free((void **)&line);
+			if (g_exit_status == SIGINT)
+				return (close(file),data->exit_status = 128 + SIGINT, ERROR);
 			break ;
 		}
 	}
+	return (SUCCESS);
 }
 
 int	ft_process_heredoc(t_redir *redir, t_data *data)
@@ -74,10 +81,10 @@ int	ft_process_heredoc(t_redir *redir, t_data *data)
 	file = open(file_path, O_TRUNC | O_CREAT | O_RDWR, 0777);
 	if (file == -1)
 		perror("heredoc");
-	signal(SIGINT, heredoc_sigint_handler);
 	while (*file_path)
 		file_path++;
-	execute_here_doc(redir, data, file_path, file);
+	if (execute_here_doc(redir, data, file_path, file) == ERROR)
+		return (ERROR);
 	close(file);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 13:51:22 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:19:49 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	exec_command(t_data *data, t_token *current)
 
 	while (current)
 	{
-		ft_read_heredoc(current->redir_in.head, data);
 		if (current->next)
 			pipe(current->fd_pipe);
 		current->pid = fork();
@@ -65,10 +64,9 @@ int	exec_command(t_data *data, t_token *current)
 
 int	exec_builtins(t_data *data, t_token *current)
 {
-	ft_read_heredoc(current->redir_in.head, data);
-	current->builtin = true;
 	data->stdin_backup = dup(STDIN_FILENO);
-	data->stdout_backup = dup(STDOUT_FILENO); 
+	data->stdout_backup = dup(STDOUT_FILENO);
+	current->builtin = true;
 	ft_exec_redirs(current, data);
 	data->exit_status = ft_detect_builtin(current->args, data);
 	dup2(data->stdin_backup, STDIN_FILENO);

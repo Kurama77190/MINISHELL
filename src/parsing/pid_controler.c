@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 03:19:48 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 13:56:07 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:36:16 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	pid_controller(t_data *data)
 			data->exit_status = WEXITSTATUS(data->exit_status);
 		else if (WIFSIGNALED(data->exit_status))
 			data->exit_status = WTERMSIG(data->exit_status) + 128;
+		ft_erase_all_temp_here_doc(tmp->redir_in.head);
 		tmp = tmp->next;
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:29:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 10:59:38 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 09:58:21 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int	ft_read_heredoc(t_redir *node, t_data *data)
 	{
 		if (current->key == D_HEREDOC)
 		{
-			ft_process_heredoc(current, data);
+			if (ft_process_heredoc(current, data) == ERROR)
+				return (ERROR);
 			in_here_doc = true;
 		}
 		current = current->next;
 	}
-	return (in_here_doc);
+	return (SUCCESS);
 }
 
 int	ft_read_outfile(t_token *node, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 07:51:32 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 21:37:19 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:46:01 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_envp(t_data *data)
 	free_split(data->e.env);
 }
 
-void ft_free_children(t_data *data, int	erro)
+void	ft_free_children(t_data *data, int erro)
 {
 	ft_free_all(data, true);
 	exit(erro);

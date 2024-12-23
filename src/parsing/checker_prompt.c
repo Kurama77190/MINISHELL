@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:55:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 21:37:19 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 22:29:06 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static bool	is_valided(char *str, int *exit_status)
 	}
 	if (is_empty_prompt(str))
 	{
-		return (*exit_status = 0, false);
+		return (false);
 	}
 	return (true);
 }

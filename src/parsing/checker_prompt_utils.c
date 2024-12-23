@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 03:21:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 21:37:19 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 22:29:06 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	check_pipe(char *str)
 
 bool	validate_redirection(char *str, int *i)
 {
-	int j;
+	int	j;
 
 	if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>'))
 		(*i)++;

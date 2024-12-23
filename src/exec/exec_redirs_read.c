@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:29:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 19:57:41 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 22:29:06 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ft_read_outfile(t_token *node, t_data *data)
 	t_redir	*c;
 	int		fd_o;
 
+	(void)data;
 	c = node->redir_out.head;
 	while (c)
 	{
@@ -49,9 +50,12 @@ int	ft_read_outfile(t_token *node, t_data *data)
 			if (c->key == OUT)
 				fd_o = open(c->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd_o == -1)
-				ft_close_fd(data, node, "Error opening fd_out");
+			{
+				perror("bash: open_out_file");
+				return (ERROR);
+			}
 			if (dup2(fd_o, STDOUT_FILENO) == -1)
-				ft_close_fd(data, node, "Error redirecting stdout");
+				return (ERROR);
 			close(fd_o);
 		}
 		c = c->next;

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:09 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 12:02:04 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 22:29:06 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ void	ft_close_fd(t_data *data, t_token *token, char *msg)
 		close(token->fd_out);
 	data->exit_status = 1;
 	perror(msg);
-	ft_free_all(data, false);
+	ft_free_all(data, true);
 }

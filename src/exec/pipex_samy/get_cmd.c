@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:55:41 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 19:15:17 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:43:33 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ static void	ft_check_cmd_infile(t_data *data, t_token *token)
 	{
 		ft_error_file_directory(token->args[0]);
 		ft_free((void **)&tmp);
-		free_split(token->args);
+		ft_free_all(data, true);
 		exit(127);
 	}
 	if (access(tmp, X_OK) == -1)
 	{
 		ft_error_permission(token->args[0]);
 		ft_free((void **)&tmp);
-		free_split(token->args);
+		ft_free_all(data, true);
 		exit(126);
 	}
 	else

@@ -212,6 +212,7 @@ int					ft_cd(char **argv, t_data *data);
 /**
  * @file exec_cases.c
  */
+int 				exec_command1(t_data *data, t_token *current);
 int					exec_onecommand(char **cmd, t_data *data);
 int					ft_multi_pipe(t_token *node, t_data *data);
 int					ft_no_pipe(t_token *node, t_data *data);

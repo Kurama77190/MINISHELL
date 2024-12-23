@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:55:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 22:29:06 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 22:40:46 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ bool	is_solo_duo_point(char *str)
 		while (str[i] && isspace(str[i]))
 			i++;
 		if (str[i] == '.' && (!str[i + 1] || isspace(str[i + 1]) || str[i
-				+ 1] == '/'))
+					+ 1] == '/'))
 		{
 			ft_putendl_fd("bash: .: filename argument required", 2);
 			return (true);
 		}
 		if (str[i] == '.' && str[i + 1] == '.' && (!str[i + 2] || isspace(str[i
-					+ 2]) || str[i + 2] == '/'))
+						+ 2]) || str[i + 2] == '/'))
 			return (ft_putendl_fd("bash: .: filename argument required", 2),
 				true);
 		while (str[i] && !isspace(str[i]))

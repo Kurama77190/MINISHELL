@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 21:41:49 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:00:05 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	ft_execution(t_data *data)
 
 int	exec_command(t_data *data, t_token *current)
 {
-	int	exit_code;
-
 	while (current)
 	{
 		if (current->next)
@@ -37,16 +35,8 @@ int	exec_command(t_data *data, t_token *current)
 			ft_error(data, "Error forking\n");
 		if (current->pid == 0)
 		{
-			if (ft_exec_redirs(current, data) == ERROR)
-				return (ft_free_all(data, true), exit(1), ERROR);
-			if (is_builtin(current->args[0]))
-			{
-				exit_code = ft_detect_builtin(current->args, data);
-				ft_free_all(data, true);
-				exit(exit_code);
-			}
-			if (ft_exec_cmd(data, current) == ERROR)
-				ft_free_all(data, 1);
+			if (exec_command1(data, current) == ERROR)
+				return (ERROR);
 		}
 		if (current->pid > 0)
 		{
@@ -58,6 +48,23 @@ int	exec_command(t_data *data, t_token *current)
 		}
 		current = current->next;
 	}
+	return (SUCCESS);
+}
+
+int	exec_command1(t_data *data, t_token *current)
+{
+	int	exit_code;
+
+	if (ft_exec_redirs(current, data) == ERROR)
+		return (ft_free_all(data, true), exit(1), ERROR);
+	if (is_builtin(current->args[0]))
+	{
+		exit_code = ft_detect_builtin(current->args, data);
+		ft_free_all(data, true);
+		exit(exit_code);
+	}
+	if (ft_exec_cmd(data, current) == ERROR)
+		ft_free_all(data, 1);
 	return (SUCCESS);
 }
 

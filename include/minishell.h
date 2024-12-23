@@ -361,6 +361,7 @@ int					update_in_quote(char c, int in_quote);
 
 int					found_cmd_name(char *token, t_token *new);
 int					found_args_cmd(char *token, t_token *new);
+bool				is_solo_duo_point(char *str);
 
 //////////////////////////////////////////////////////////////////
 //                          MEMORY
@@ -372,6 +373,8 @@ void				free_envp(t_data *data);
 void				free_redir(t_token *current);
 void				ft_free_all(t_data *data, bool free_env);
 void				ft_memory(t_data *data);
+void				ft_free_children(t_data *data, int	erro);
+
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS

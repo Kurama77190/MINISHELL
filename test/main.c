@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 03:24:39 by samy              #+#    #+#             */
-/*   Updated: 2024/12/22 01:54:33 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:17:31 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+// valgrind --suppressions=ignore.txt --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./minishell
 
 
 // "<in1"          ___    _________  ls -a ">out1"           ____    __________

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 12:19:49 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:37:19 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,16 @@ int	exec_command(t_data *data, t_token *current)
 				exit(exit_code);
 			}
 			if (ft_exec_cmd(data, current) == ERROR)
-			{
-				ft_free_all(data, true);
-				return (ft_free_all(data, true), exit(1), ERROR);
-			}
+				ft_free_all(data, 1);
 		}
 		if (current->pid > 0)
+		{
 			if (current->prev)
 			{
 				close(current->prev->fd_pipe[0]);
 				close(current->prev->fd_pipe[1]);
 			}
+		}
 		current = current->next;
 	}
 	return (SUCCESS);
@@ -75,4 +74,3 @@ int	exec_builtins(t_data *data, t_token *current)
 	close(data->stdout_backup);
 	return (SUCCESS);
 }
-

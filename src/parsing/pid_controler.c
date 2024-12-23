@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 03:19:48 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 09:36:16 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:01:58 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	pid_controller(t_data *data)
 	tmp = data->token_manag.token;
 	if (!tmp->next && !tmp->prev && tmp->builtin)
 		return (ERROR);
-	while(tmp)
+	while (tmp)
 	{
 		waitpid(tmp->pid, &data->exit_status, 0);
 		if (WIFEXITED(data->exit_status))

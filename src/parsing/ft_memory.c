@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 07:51:32 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 16:17:46 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:37:19 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ void	ft_memory(t_data *data)
 {
 	memset(&data->prompt, 0, sizeof(t_prompt));
 	memset(&data->token_manag, 0, sizeof(t_token_manag));
+	data->path_env = NULL;
 }
 
 void	ft_free_all_child(t_data *data)
 {
 	free_envp(data);
 	ft_free((void **)&data->prompt.read_line);
+	free_split(data->path_env);
 	free_token(data);
 }
 
@@ -56,4 +58,10 @@ void	free_envp(t_data *data)
 	}
 	data->e.envp = NULL;
 	free_split(data->e.env);
+}
+
+void ft_free_children(t_data *data, int	erro)
+{
+	ft_free_all(data, true);
+	exit(erro);
 }

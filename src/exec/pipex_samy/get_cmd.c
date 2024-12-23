@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:55:41 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 01:32:11 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:15:17 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	checker_access(t_data *data, char *cmd_path, t_token *token, \
 			ft_free_all(data, true);
 			exit(126);
 		}
-		free_split(path_env);
 		return (SUCCESS);
 	}
 	else

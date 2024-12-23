@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 13:17:39 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:18:31 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_envp	*new_node_env(char *line, t_data *data)
 	new_node->line = ft_strdup(line);
 	if (!new_node->line)
 	{
-		free(new_node);
+		ft_free((void **)&new_node);
 		ft_error(data, "Malloc failed\n");
 		return (NULL);
 	}

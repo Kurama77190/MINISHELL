@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msg_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:45:06 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 04:50:54 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/23 18:19:23 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	ft_error_cmd(char *cmd)
 	msg = ft_strjoin(tmp, ": command not found\n");
 	if (!msg)
 	{
-		free(tmp);
+		ft_free((void **)&tmp);
 		return ;
 	}
 	ft_putstr_fd(msg, 2);
-	free(tmp);
-	free(msg);
+	ft_free((void **)&tmp);
+	ft_free((void **)&msg);
 }
 
 void	ft_error_permission(char *cmd)
@@ -67,10 +67,10 @@ void	ft_error_file_directory(char *cmd)
 	msg = ft_strjoin(tmp, ": No such file or directory\n");
 	if (!msg)
 	{
-		free(tmp);
+		ft_free((void **)&tmp);
 		return ;
 	}
 	ft_putstr_fd(msg, 2);
-	free(tmp);
-	free(msg);
+	ft_free((void **)&tmp);
+	ft_free((void **)&msg);
 }

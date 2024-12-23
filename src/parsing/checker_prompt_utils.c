@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 03:21:51 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/18 02:06:14 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:37:19 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,20 @@ bool	check_pipe(char *str)
 
 bool	validate_redirection(char *str, int *i)
 {
-	int	j;
+	int j;
 
-	if (check_double_redirection(str, i))
-		return (false);
+	if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>'))
+		(*i)++;
 	j = *i + 1;
 	while (str[j] && str[j] == ' ')
 		j++;
-	if (!check_following_chars(str, i, j))
+	if (str[j] == '\0' || str[j] == '<' || str[j] == '>')
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `", 2);
+		ft_putchar_fd(str[*i], 2);
+		ft_putstr_fd("'\n", 2);
 		return (false);
+	}
 	return (true);
 }
 

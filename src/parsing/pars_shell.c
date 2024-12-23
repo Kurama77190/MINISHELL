@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:43:37 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 12:19:35 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:03:37 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ int	pars_shell(t_data *data, int argc, char **argv)
 
 static int	pars_here_doc(t_data *data)
 {
-	t_token *current;
-	
+	t_token	*current;
+
 	current = data->token_manag.token;
 	while (current)
 	{
 		if (ft_read_heredoc(current->redir_in.head, data) == ERROR)
-		return (ERROR);
-
+			return (ERROR);
 		current = current->next;
 	}
 	return (SUCCESS);

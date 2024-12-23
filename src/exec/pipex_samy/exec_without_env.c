@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_without_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 17:46:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 10:07:44 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/23 18:18:51 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_exec_in_bin(t_data *data, t_token *token)
 	env_tmp = set_env_bin(data);
 	if (!env_tmp)
 	{
-		free(cmd_tmp);
+		ft_free((void **)&cmd_tmp);
 		return (ERROR);
 	}
 	if (ft_check_access_bin_without_envp(data, cmd_tmp, token) == SUCCESS)

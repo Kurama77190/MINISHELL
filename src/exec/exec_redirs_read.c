@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:29:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 09:58:21 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:57:41 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_read_outfile(t_token *node, t_data *data)
 	return (SUCCESS);
 }
 
-int	 	ft_read_infile(t_token *node, t_data *data)
+int	ft_read_infile(t_token *node, t_data *data)
 {
 	t_redir	*current;
 

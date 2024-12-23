@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 22:37:26 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 10:40:11 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:57:11 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,3 @@ int	ft_exec_redirs(t_token *node, t_data *data)
 		return (ERROR);
 	return (SUCCESS);
 }
-	

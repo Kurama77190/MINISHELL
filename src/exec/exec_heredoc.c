@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 23:12:35 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 12:40:24 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:58:28 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	create_filename(t_redir *redir)
 	ft_free((void **)&temp_file);
 }
 
-int rl_event_dummy(void);
+int	rl_event_dummy(void);
 
 static int	execute_here_doc(t_redir *redir, t_data *data, char *file_path, \
 		int file)
@@ -61,7 +61,7 @@ static int	execute_here_doc(t_redir *redir, t_data *data, char *file_path, \
 		{
 			ft_free((void **)&line);
 			if (g_exit_status == SIGINT)
-				return (close(file),data->exit_status = 128 + SIGINT, ERROR);
+				return (close(file), data->exit_status = 128 + SIGINT, ERROR);
 			break ;
 		}
 	}

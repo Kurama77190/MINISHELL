@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 02:15:05 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/22 16:47:25 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:16:07 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,9 @@ char	*get_env_value(const char *key, t_envp *envp)
 	current = envp;
 	while (current)
 	{
-		//if (!ft_strncmp(current->name, key, ft_strlen(key) - 1))
 		if (!ft_strcmp(current->name, key))
 			return (current->value);
 		current = current->next;
 	}
 	return ("");
 }
-// yes ??

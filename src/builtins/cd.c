@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 15:42:56 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:06:56 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_env_oldpwd(char *old_pwd, t_data *data)
 			if (current->line)
 				ft_free((void **)&current->line);
 			if (current->value)
-				ft_free((void **)&current->value);	
+				ft_free((void **)&current->value);
 			if (old_pwd)
 				new_line = ft_strjoin("OLDPWD=", old_pwd);
 			current->line = new_line;
@@ -104,7 +104,10 @@ int	ft_cd(char **argv, t_data *data)
 		return (1);
 	}
 	if (argv[1] == NULL)
+	{
 		set_home(data);
+		return (0);
+	}
 	else if (argv[1] != NULL)
 	{
 		if (ft_strncmp(argv[1], "-", 1) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samy <samy@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:55:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/21 05:01:14 by samy             ###   ########.fr       */
+/*   Updated: 2024/12/23 21:37:19 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	check_cmd(t_data *data)
 	return (SUCCESS);
 }
 
+bool		is_solo_duo_point(char *str);
+
 static bool	is_valided(char *str, int *exit_status)
 {
 	if (!check_redirection(str))
@@ -49,8 +51,34 @@ static bool	is_valided(char *str, int *exit_status)
 	}
 	if (is_empty_prompt(str))
 	{
-		*exit_status = 0;
-		return (false);
+		return (*exit_status = 0, false);
 	}
 	return (true);
+}
+
+bool	is_solo_duo_point(char *str)
+{
+	int	i;
+
+	if (!str || !*str)
+		return (false);
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] && isspace(str[i]))
+			i++;
+		if (str[i] == '.' && (!str[i + 1] || isspace(str[i + 1]) || str[i
+				+ 1] == '/'))
+		{
+			ft_putendl_fd("bash: .: filename argument required", 2);
+			return (true);
+		}
+		if (str[i] == '.' && str[i + 1] == '.' && (!str[i + 2] || isspace(str[i
+					+ 2]) || str[i + 2] == '/'))
+			return (ft_putendl_fd("bash: .: filename argument required", 2),
+				true);
+		while (str[i] && !isspace(str[i]))
+			i++;
+	}
+	return (false);
 }

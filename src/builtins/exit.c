@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 14:03:48 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:08:57 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ void	ft_exit_one_argument(t_data *data, char **argv)
 
 void	ft_exit(char **argv, t_data *data)
 {
+	dup2(data->stdin_backup, STDIN_FILENO);
+	close(data->stdin_backup);
+	dup2(data->stdout_backup, STDOUT_FILENO);
+	close(data->stdout_backup);
 	if (argv[1] && !ft_is_number(argv[1]))
 	{
 		ft_putstr_fd("exit: ", STDERR_FILENO);

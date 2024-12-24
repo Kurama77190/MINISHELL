@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/24 05:02:37 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/12/24 05:02:38 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -27,9 +39,8 @@
 # define BUFF_SIZE 4096
 
 //////////////////////////////////////////////////////////////////
-/*                            STRUCT						       */
+/*                            STRUCT							    */
 ////////////////////////////////////////////////////////////////
-
 
 typedef enum e_redir_type
 {
@@ -117,25 +128,26 @@ typedef struct s_data
 
 typedef struct s_expand
 {
-	char	*str;
-	char	*result;
-	t_envp	*envp;
-	int		exit_status;
-	int		i;
-	char	in_single;
-	char	in_double;
-}			t_expand;
+	char			*str;
+	char			*result;
+	t_envp			*envp;
+	int				exit_status;
+	int				i;
+	char			in_single;
+	char			in_double;
+}					t_expand;
 
 extern int			g_exit_status;
 
 //////////////////////////////////////////////////////////////////
-//                          PIPEX								   //
+//                          PIPEX									//
 ////////////////////////////////////////////////////////////////
 
 int					ft_exec_cmd(t_data *data, t_token *token);
 int					ft_exec_absolut_path_cmd(t_data *data, t_token *token);
 int					ft_search_path_cmd(t_data *data, t_token *token);
-int					ft_check_access_absolut_path_cmd(t_data *data, char **cmd_path);
+int					ft_check_access_absolut_path_cmd(t_data *data,
+						char **cmd_path);
 char				*get_cmd(t_data *data, t_token *token);
 char				**get_path(t_data *data);
 int					ft_exec_without_envp_set(t_data *data, t_token *token);
@@ -149,7 +161,7 @@ void				ft_error_permission(char *cmd);
 void				ft_error_file_directory(char *cmd);
 
 //////////////////////////////////////////////////////////////////
-//                          BUILTINS							    //
+//                          BUILTINS								 //
 ////////////////////////////////////////////////////////////////
 
 /**
@@ -172,7 +184,7 @@ char				*put_name(char *line);
 char				*put_value(char *line);
 t_envp				*new_node_env(char *line, t_data *data);
 void				push_node_to_env(t_data *data, char *line);
-int				ft_env(char **argv, t_data *data);
+int					ft_env(char **argv, t_data *data);
 
 /**
  * @file export.c
@@ -218,13 +230,13 @@ void				set_home(t_data *data);
 int					ft_cd(char **argv, t_data *data);
 
 //////////////////////////////////////////////////////////////////
-//                          EXEC							        //
+//                          EXEC								     //
 ////////////////////////////////////////////////////////////////
 
 /**
  * @file exec_cases.c
  */
-int 				exec_command1(t_data *data, t_token *current);
+int					exec_command1(t_data *data, t_token *current);
 int					exec_onecommand(char **cmd, t_data *data);
 int					ft_multi_pipe(t_token *node, t_data *data);
 int					ft_no_pipe(t_token *node, t_data *data);
@@ -283,12 +295,12 @@ int					ft_exec_redirs(t_token *node, t_data *data);
  * @file exec_start.c
  */
 
- int 				ft_execution(t_data *data);
- int 				exec_command(t_data *data, t_token *current);
- int 				exec_builtins(t_data *data, t_token *current);
+int					ft_execution(t_data *data);
+int					exec_command(t_data *data, t_token *current);
+int					exec_builtins(t_data *data, t_token *current);
 
 //////////////////////////////////////////////////////////////////
-//                          PARSING						           //
+//                          PARSING							        //
 ////////////////////////////////////////////////////////////////
 
 void				handle_prompt(t_data *data);
@@ -388,8 +400,7 @@ void				free_envp(t_data *data);
 void				free_redir(t_token *current);
 void				ft_free_all(t_data *data, bool free_env);
 void				ft_memory(t_data *data);
-void				ft_free_children(t_data *data, int	erro);
-
+void				ft_free_children(t_data *data, int erro);
 
 //////////////////////////////////////////////////////////////////
 //                          TOOLS

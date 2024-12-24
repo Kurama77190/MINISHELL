@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 03:10:24 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/24 04:21:09 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/24 05:39:29 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int	pars_expand(t_data *data)
 		set_expand_in(data, current_in);
 		while (current_out)
 		{
-			if (ft_expand_args(&current_out->file_name, data->e.envp,
+			if (ft_expand_args(&current_out->file_name, data,
 					data->exit_status) == ERROR)
 				return (ERROR);
 			current_out = current_out->next;
 		}
-		if (ft_expand_args(current_token->args, data->e.envp,
+		if (ft_expand_args(current_token->args, data,
 				data->exit_status) == ERROR)
 			return (data->exit_status = 127, ERROR);
 		current_token = current_token->next;
@@ -73,7 +73,7 @@ static int	set_expand_in(t_data *data, t_redir *current_in)
 		{
 			current_in->file_name = ft_remove_quotes(current_in->file_name);
 		}
-		else if (ft_expand_args(&current_in->file_name, data->e.envp,
+		else if (ft_expand_args(&current_in->file_name, data,
 				data->exit_status) == ERROR)
 			return (ERROR);
 		current_in = current_in->next;

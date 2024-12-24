@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 05:02:37 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/24 05:02:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/24 05:36:12 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,6 @@ typedef struct s_prompt
 	char			*read_line;
 }					t_prompt;
 
-typedef struct s_data
-{
-	int				exit_status;
-	t_token_manag	token_manag;
-	t_env_manag		e;
-	t_prompt		prompt;
-	int				stdin_backup;
-	int				stdout_backup;
-	char			**path_env;
-	int				fd[2];
-	struct termios	terminal;
-}					t_data;
-
 typedef struct s_expand
 {
 	char			*str;
@@ -136,6 +123,21 @@ typedef struct s_expand
 	char			in_single;
 	char			in_double;
 }					t_expand;
+
+typedef struct s_data
+{
+	int				exit_status;
+	t_token_manag	token_manag;
+	t_env_manag		e;
+	t_prompt		prompt;
+	t_expand		expand;
+	int				stdin_backup;
+	int				stdout_backup;
+	char			**path_env;
+	int				fd[2];
+	struct termios	terminal;
+}					t_data;
+
 
 extern int			g_exit_status;
 
@@ -353,8 +355,8 @@ char				*get_env_value(const char *key, t_envp *envp);
 char				*handle_expand_char(char *result, char c);
 char				*handle_expand_variable(char *result, char *str, int *i,
 						t_envp *envp);
-int					ft_expand_args(char **args, t_envp *envp, int exit_status);
-char				*expand_variable_in_str(char *str, t_envp *envp,
+int					ft_expand_args(char **args, t_data *data, int exit_status);
+char				*expand_variable_in_str(char *str, t_data *data,
 						int exit_status);
 char				*expand_dollar(char *str, int *i, t_envp *envp,
 						int exit_status);

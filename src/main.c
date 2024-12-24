@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/24 05:04:29 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/24 06:33:23 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_exit_status;
+
+void    put_tokenizer_data(t_data *data);
 
 int	main(int argc, char **argv, char **env)
 {
@@ -31,8 +33,54 @@ int	main(int argc, char **argv, char **env)
 			ft_execution(&data);
 			pid_controller(&data);
 		}
+		// put_tokenizer_data(&data);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}
 	return (0);
+}
+
+void    put_tokenizer_data(t_data *data)
+{
+    t_token    *current;
+    t_redir    *redir;
+    int        j;
+    int        i;
+
+    i = 1;
+    current = data->token_manag.token;
+    while (current)
+    {
+        printf("\n\033[1;34m[Token Data %i]\033[0m\n", i);
+        printf("\033[1;33mCommand:\033[0m %s\n", current->command);
+        printf("\033[1;33mArguments:\033[0m");
+        if (current->args)
+        {
+            j = 0;
+            while (current->args[j])
+            {
+                printf(" [%s]", current->args[j]);
+                j++;
+            }
+        }
+        else
+            printf(" None");
+        printf("\n");
+        redir = current->redir_in.head;
+        while (redir)
+        {
+            printf("\033[1;32mRedir In:\033[0m File: %s, Type: %s\n",
+                redir->file_name, redir->type);
+            redir = redir->next;
+        }
+        redir = current->redir_out.head;
+        while (redir)
+        {
+            printf("\033[1;31mRedir Out:\033[0m File: %s, Type: %s\n",
+                redir->file_name, redir->type);
+            redir = redir->next;
+        }
+        current = current->next;
+        i++;
+    }
 }

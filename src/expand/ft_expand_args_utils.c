@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_args_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 02:34:12 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/24 02:41:28 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 02:51:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_valid_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_' || c == '-');
+}
 
 char	*expand_dollar(char *str, int *i, t_envp *envp, int exit_status)
 {
@@ -25,7 +30,7 @@ char	*expand_dollar(char *str, int *i, t_envp *envp, int exit_status)
 		return (ft_itoa(exit_status));
 	}
 	start = *i;
-	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+	while (str[*i] && is_valid_var_char(str[*i]))
 		(*i)++;
 	if (*i == start)
 	{
@@ -42,6 +47,43 @@ char	*expand_dollar(char *str, int *i, t_envp *envp, int exit_status)
 	return (ft_strdup(""));
 }
 
+char	*expand_variable_in_str(char *str, t_envp *envp, int exit_status)
+{
+	char	*result;
+	int		i;
+	char	*tmp;
+	char	in_single;
+	char	in_double;
+
+	result = ft_strdup("");
+	i = 0;
+	in_single = 0;
+	in_double = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' && !in_double)
+		{
+			in_single = !in_single;
+			i++;
+		}
+		else if (str[i] == '\'' && in_double)
+			result = join_char_to_str(result, str[i++]);
+		else if (str[i] == '\"' && !in_single)
+		{
+			in_double = !in_double;
+			i++;
+		}
+		else if (str[i] == '$' && !in_single && str[i + 1])
+		{
+			tmp = expand_dollar(str, &i, envp, exit_status);
+			result = ft_strjoin(result, tmp);
+			ft_free((void **)&tmp);
+		}
+		else
+			result = join_char_to_str(result, str[i++]);
+	}
+	return (result);
+}
 
 char	*join_char_to_str(char *result, char c)
 {
@@ -68,13 +110,10 @@ void	remove_quotes(char *str)
 	{
 		if ((str[i] == '\'' || str[i] == '\"'))
 		{
-			if (in_quote == 0 || in_quote == str[i])
-			{
-				if (in_quote == 0)
-					in_quote = str[i];
-				else
-					in_quote = 0;
-			}
+			if (in_quote == str[i])
+				in_quote = 0;
+			else if (!in_quote)
+				in_quote = str[i];
 			else
 				str[j++] = str[i];
 		}

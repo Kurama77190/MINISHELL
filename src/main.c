@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 19:11:14 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/24 02:53:00 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 03:11:01 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ int	main(int argc, char **argv, char **env)
 		handle_prompt(&data);
 		if (pars_shell(&data, argc, argv) != ERROR)
 		{
-			// ft_execution(&data);
-			// pid_controller(&data);
+			ft_execution(&data);
+			pid_controller(&data);
 		}
-		put_tokenizer_data(&data);
+		// put_tokenizer_data(&data);
 		ft_free_all(&data, false);
 		ft_memory(&data);
 	}

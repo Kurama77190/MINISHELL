@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:55:31 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/23 22:40:46 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 04:06:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,28 @@ static bool	is_valided(char *str, int *exit_status)
 
 bool	is_solo_duo_point(char *str)
 {
-	int	i;
+	char	*trimmed;
 
-	if (!str || !*str)
+	if (!str)
 		return (false);
-	i = 0;
-	while (str[i])
+	trimmed = ft_strtrim(str, " \t\n\v\f\r");
+	if (!trimmed)
+		return (false);
+	if (ft_strcmp(trimmed, ".") == 0
+		|| ft_strcmp(trimmed, "..") == 0
+		|| ft_strcmp(trimmed, "./") == 0
+		|| ft_strcmp(trimmed, "../") == 0)
 	{
-		while (str[i] && isspace(str[i]))
-			i++;
-		if (str[i] == '.' && (!str[i + 1] || isspace(str[i + 1]) || str[i
-					+ 1] == '/'))
-		{
-			ft_putendl_fd("bash: .: filename argument required", 2);
-			return (true);
-		}
-		if (str[i] == '.' && str[i + 1] == '.' && (!str[i + 2] || isspace(str[i
-						+ 2]) || str[i + 2] == '/'))
-			return (ft_putendl_fd("bash: .: filename argument required", 2),
-				true);
-		while (str[i] && !isspace(str[i]))
-			i++;
+		ft_putendl_fd("bash: .: filename argument required", 2);
+		free(trimmed);
+		return (true);
 	}
+	if ((ft_strncmp(trimmed, "./", 2) == 0 && ft_strlen(trimmed) > 2)
+		|| (ft_strncmp(trimmed, "../", 3) == 0 && ft_strlen(trimmed) > 3))
+	{
+		free(trimmed);
+		return (false);
+	}
+	free(trimmed);
 	return (false);
 }

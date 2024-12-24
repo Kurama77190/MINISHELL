@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/24 02:32:27 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 03:51:42 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ int	ft_export(char **argv, t_data *data)
 				ft_putstr_fd("export: not a valid identifier\n", 2);
 				return (1);
 			}
-			if (check_ifvalue(argv[i]) == true && check_double(data, argv[i]) == false)
+			if (check_ifvalue(argv[i]) == true && check_double(data,
+					argv[i]) == false)
 				push_node_to_env(data, argv[i]);
 			i++;
 		}

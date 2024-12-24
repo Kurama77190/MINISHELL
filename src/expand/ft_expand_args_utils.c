@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 02:34:12 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/24 02:51:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/24 04:11:34 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ char	*expand_dollar(char *str, int *i, t_envp *envp, int exit_status)
 	if (!var_name)
 		return (NULL);
 	value = get_env_value(var_name, envp);
-	ft_free((void **)&var_name);
 	if (value)
-		return (ft_strdup(value));
-	return (ft_strdup(""));
+		return (ft_free((void **)&var_name), ft_strdup(value));
+	return (ft_free((void **)&var_name), ft_strdup(""));
 }
 
 char	*expand_variable_in_str(char *str, t_envp *envp, int exit_status)

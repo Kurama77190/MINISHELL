@@ -30,6 +30,7 @@
 /*                            STRUCT						       */
 ////////////////////////////////////////////////////////////////
 
+
 typedef enum e_redir_type
 {
 	NONE,
@@ -113,6 +114,17 @@ typedef struct s_data
 	int				fd[2];
 	struct termios	terminal;
 }					t_data;
+
+typedef struct s_expand
+{
+	char	*str;
+	char	*result;
+	t_envp	*envp;
+	int		exit_status;
+	int		i;
+	char	in_single;
+	char	in_double;
+}			t_expand;
 
 extern int			g_exit_status;
 
@@ -318,6 +330,8 @@ int					add_tab(t_data *data, char **envp);
 //
 ////////////////////////////////////////////////////////////////
 
+char				*expand_redir_value(char *str, t_envp *envp);
+int					is_valid_var_char(char c);
 int					pars_expand(t_data *data);
 int					ft_expand_redir(char **str, t_envp *env_list);
 bool				is_valid_redir(char *str);

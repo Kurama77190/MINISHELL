@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 05:02:37 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/24 05:36:12 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 07:57:45 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,16 +113,13 @@ typedef struct s_prompt
 	char			*read_line;
 }					t_prompt;
 
-typedef struct s_expand
+typedef struct ft_expand_args
 {
-	char			*str;
-	char			*result;
-	t_envp			*envp;
-	int				exit_status;
-	int				i;
-	char			in_single;
-	char			in_double;
-}					t_expand;
+	char	*result;
+	char	*tmp;
+	int		i;
+	int		in_single_quote;
+}			t_expand;
 
 typedef struct s_data
 {
@@ -137,7 +134,6 @@ typedef struct s_data
 	int				fd[2];
 	struct termios	terminal;
 }					t_data;
-
 
 extern int			g_exit_status;
 

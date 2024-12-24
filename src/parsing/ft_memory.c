@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 07:51:32 by sben-tay          #+#    #+#             */
-/*   Updated: 2024/12/24 06:38:32 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 07:49:40 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_memory(t_data *data)
 {
 	memset(&data->prompt, 0, sizeof(t_prompt));
 	memset(&data->token_manag, 0, sizeof(t_token_manag));
-	memset(&data->expand, 0, sizeof(t_expand));
 	data->path_env = NULL;
 }
 
@@ -24,9 +23,7 @@ void	ft_free_all_child(t_data *data)
 {
 	free_envp(data);
 	ft_free((void **)&data->prompt.read_line);
-	data->prompt.read_line = NULL; // Set to NULL after free
 	free_split(data->path_env);
-	data->path_env = NULL; // Set to NULL after free
 	free_token(data);
 }
 
@@ -38,10 +35,8 @@ void	ft_free_all(t_data *data, bool free_env)
 		free_envp(data);
 	}
 	ft_free((void **)&data->prompt.read_line);
-	data->prompt.read_line = NULL; // Set to NULL after free
 	free_token(data);
 	free_split(data->path_env);
-	data->path_env = NULL; // Set to NULL after free
 }
 
 void	free_envp(t_data *data)

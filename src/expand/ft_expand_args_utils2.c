@@ -3,12 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_args_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 05:01:13 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/24 06:51:25 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 07:04:35 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-

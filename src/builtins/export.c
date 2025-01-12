@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/24 03:51:42 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/01/12 16:05:38 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ bool	check_valid_identifier(char *str)
 		{
 			if (i == 0)
 				return (false);
-			if (ft_isdigit(str[i - 1]) || ft_is_operator(str[i - 1]))
+			if (ft_is_operator(str[i - 1]))
 				return (false);
 			return (true);
 		}

@@ -6,7 +6,7 @@
 /*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/23 18:18:31 by sben-tay         ###   ########.fr       */
+/*   Updated: 2024/12/24 08:43:19 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_envp	*new_node_env(char *line, t_data *data)
 	new_node->name = put_name(line);
 	new_node->value = put_value(line);
 	new_node->next = NULL;
+	new_node->prev = NULL;
 	return (new_node);
 }
 
@@ -98,6 +99,8 @@ void	push_node_to_env(t_data *data, char *env_line)
 		while (current->next != NULL)
 			current = current->next;
 		current->next = new_node;
+		new_node->prev = current;
+		new_node->next = NULL;
 	}
 }
 
